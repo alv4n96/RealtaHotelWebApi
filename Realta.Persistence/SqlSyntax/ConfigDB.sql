@@ -178,6 +178,7 @@ CREATE TABLE Hotel.Facility_Price_History
   faph_modified_date datetime,
   -- FOREIGN KEY
   faph_faci_id INT NOT NULL,
+  faph_user_id int NOT NULL,
   -- Add this later, on production
   CONSTRAINT faph_faci_id_fk FOREIGN KEY (faph_faci_id) REFERENCES Hotel.Facilities(faci_id) ON DELETE CASCADE ON UPDATE CASCADE,
 );

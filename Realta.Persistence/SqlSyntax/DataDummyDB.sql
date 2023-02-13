@@ -86,6 +86,7 @@ SELECT * FROM Hotel.Facility_Price_History
 -- DELETE FROM Hotel.Facility_Price_History
 -- DBCC CHECKIDENT ('Hotel.Facility_Price_History', RESEED, 0);
 
+
 -- THIS DUMMY FOR User_reviews 1,5,6,10,11,15
 -- DELETE FROM Hotel.Hotel_reviews
 -- DBCC CHECKIDENT ('Hotel.Hotel_Reviews', RESEED, 0);
@@ -104,12 +105,9 @@ VALUES
 ('Deskripsi ini sengaja di buat untuk pengecekan nilai NULL natinya', 1, NULL, 10, 1);
 SELECT * FROM Hotel.Hotel_Reviews
 
-
-
-
 SELECT * FROM Users.user_roles WHERE usro_role_id IN (2,4)
 
-
+SELECT * FROM Hotel.Facility_Photos
 
 
 
