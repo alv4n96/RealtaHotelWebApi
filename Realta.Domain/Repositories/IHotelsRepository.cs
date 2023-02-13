@@ -11,9 +11,9 @@ namespace Realta.Domain.Repositories
     {
         IEnumerable<Hotels> FindAllVendor();
         Task<IEnumerable<Hotels>> FindAllVendorAsync();
-        Hotels FindVendorById(int id);
-        int Insert(Hotels vendor);
-        void Edit(Hotels vendor);
-        void Remove(Hotels vendor);
+        Hotels FindVendorById(int hotelId);
+        void Insert(Hotels hotels);
+        void Edit(Hotels hotels);
+        void Remove(Hotels hotels);
     }
 }

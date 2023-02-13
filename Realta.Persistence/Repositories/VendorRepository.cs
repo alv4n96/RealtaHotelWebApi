@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Realta.Persistence.Repositories
 {
-    internal class VendorRepository : RepositoryBase<Vendor>, IHotelsRepository
+    internal class VendorRepository : RepositoryBase<Vendor>, IVendorRepository
     {
-        public VendorRepository(AdoDbContext AdoContext) : base (AdoContext) 
-        { 
+        public VendorRepository(AdoDbContext adoContext) : base(adoContext)
+        {
         }
 
         public void Edit(Vendor vendor)
@@ -24,13 +24,7 @@ namespace Realta.Persistence.Repositories
 
         public IEnumerable<Vendor> FindAllVendor()
         {
-            IEnumerator<Vendor> dataSet = FindAll<Vendor>("Select * From purchasing.vendor");
-
-            while (dataSet.MoveNext())
-            {
-                var data = dataSet.Current;
-                yield return data;
-            }
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<Vendor>> FindAllVendorAsync()

@@ -36,7 +36,7 @@ namespace Realta.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public int Insert(Hotels vendor)
+        public void Insert(Hotels vendor)
         {
             throw new NotImplementedException();
         }
