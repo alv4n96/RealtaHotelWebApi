@@ -9,9 +9,9 @@ namespace Realta.Domain.Repositories
 {
     public interface IHotelsRepository
     {
-        IEnumerable<Hotels> FindAllVendor();
-        Task<IEnumerable<Hotels>> FindAllVendorAsync();
-        Hotels FindVendorById(int hotelId);
+        IEnumerable<Hotels> FindAllHotels();
+        Task<IEnumerable<Hotels>> FindAllHotelsAsync();
+        Hotels FindHotelsById(int hotelId);
         void Insert(Hotels hotels);
         void Edit(Hotels hotels);
         void Remove(Hotels hotels);

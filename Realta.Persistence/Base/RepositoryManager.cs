@@ -13,13 +13,10 @@ namespace Realta.Persistence.Base
     public class RepositoryManager : IRepositoryManager
     {
         private AdoDbContext _adoContext;
-        private IVendorRepository _vendorRepository;
-        private IHotelsRepository _hotelsRepository;
+        private IVendorRepository? _vendorRepository;
+        private IHotelsRepository? _hotelsRepository;
 
-        public RepositoryManager(AdoDbContext adoContext)
-        {
-            _adoContext = adoContext;
-        }
+        public RepositoryManager(AdoDbContext adoContext) => _adoContext = adoContext;
 
         public IHotelsRepository HotelsRepository
         {
