@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Realta.Domain.Entities
 {
-    internal class Hotels
+    [Table("Hotels")]
+    public class Hotels
     {
+        [Key]
         public int hotel_id { get; set; }
         public string hotel_name { get; set; }
         public string hotel_description { get; set; }

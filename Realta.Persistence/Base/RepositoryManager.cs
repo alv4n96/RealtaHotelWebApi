@@ -13,14 +13,15 @@ namespace Realta.Persistence.Base
     public class RepositoryManager : IRepositoryManager
     {
         private AdoDbContext _adoContext;
-        private IVendorRepository _vendorRepository;
+        private IHotelsRepository _vendorRepository;
+        private IHotelsRepository _hotelsRepository;
 
         public RepositoryManager(AdoDbContext adoContext)
         {
             _adoContext = adoContext;
         }
 
-        public IVendorRepository VendorRepository 
+        public IHotelsRepository VendorRepository 
         { get 
             { 
                 if (_vendorRepository == null)
@@ -29,6 +30,19 @@ namespace Realta.Persistence.Base
                 }
                 return _vendorRepository;
             } 
+        }
+
+        public IHotelsRepository HotelsRepository
+        {
+            
+            get
+            {
+                if (_hotelsRepository == null)
+                {
+                    _hotelsRepository = new HotelsRepository(_adoContext);
+                }
+                return _hotelsRepository;
+            }
         }
     }
 }

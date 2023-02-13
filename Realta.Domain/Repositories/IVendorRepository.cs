@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Realta.Domain.Repositories
 {
-    public interface IVendorRepository
+    public interface IHotelsRepository
     {
         IEnumerable<Vendor> FindAllVendor();
         Task<IEnumerable<Vendor>> FindAllVendorAsync();
