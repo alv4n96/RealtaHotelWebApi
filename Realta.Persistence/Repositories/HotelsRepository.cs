@@ -16,32 +16,22 @@ namespace Realta.Persistence.Repositories
         {
         }
 
-        public void Edit(Vendor vendor)
+
+        public Task<IEnumerable<Hotels>> FindAllVendorAsync()
         {
             throw new NotImplementedException();
         }
-
         public void Edit(Hotels vendor)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Vendor> FindAllVendor()
+        public IEnumerable<Hotels> FindAllVendor()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Vendor>> FindAllVendorAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Vendor FindVendorById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(Vendor vendor)
+        public Hotels FindVendorById(int id)
         {
             throw new NotImplementedException();
         }
@@ -51,27 +41,7 @@ namespace Realta.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public void Remove(Vendor vendor)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(Hotels vendor)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<Hotels> IHotelsRepository.FindAllVendor()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Hotels>> IHotelsRepository.FindAllVendorAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Hotels IHotelsRepository.FindVendorById(int id)
         {
             throw new NotImplementedException();
         }
