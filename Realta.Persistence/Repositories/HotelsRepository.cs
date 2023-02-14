@@ -80,17 +80,115 @@ namespace Realta.Persistence.Repositories
 
         public void Insert(Hotels hotels)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_rating_star, hotel_phonenumber, " +
+                "hotel_modified_date, hotel_addr_id) " +
+                "VALUES (@hotel_name, @hotel_description, @hotel_rating_star, @hotel_phonenumber, GETDATE(), @hotel_addr_id);" +
+                " SELECT CAST(scope_identity() as int);",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_name",
+                        DataType = DbType.String,
+                        Value = hotels.hotel_name
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_description",
+                        DataType = DbType.String,
+                        Value = hotels.hotel_description
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_rating_star",
+                        DataType = DbType.Int16,
+                        Value = hotels.hotel_rating_star
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_phonenumber",
+                        DataType = DbType.String,
+                        Value = hotels.hotel_phonenumber
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_addr_id",
+                        DataType = DbType.Int32,
+                        Value = hotels.hotel_addr_id
+                    },
+                }
+            };
+
+            hotels.hotel_id = _adoContext.ExecuteScalar<int>(model);
+            _adoContext.Dispose();
         }
 
         public void Edit(Hotels hotels)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "UPDATE Hotel.Hotels " +
+                "SET hotel_name = @hotel_name, " +
+                "hotel_description = @hotel_description, " +
+                "hotel_rating_star = @hotel_rating_star, " +
+                "hotel_phonenumber = @hotel_phonenumber, " +
+                "hotel_modified_date = GETDATE(), " +
+                "hotel_addr_id = @hotel_addr_id " +
+                "WHERE hotel_id = @hotel_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotels.hotel_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_name",
+                        DataType = DbType.String,
+                        Value = hotels.hotel_name
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_description",
+                        DataType = DbType.String,
+                        Value = hotels.hotel_description
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_rating_star",
+                        DataType = DbType.Int16,
+                        Value = hotels.hotel_rating_star
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_phonenumber",
+                        DataType = DbType.String,
+                        Value = hotels.hotel_phonenumber
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_addr_id",
+                        DataType = DbType.Int32,
+                        Value = hotels.hotel_addr_id
+                    },
+                }
+            };
+
+            _adoContext.ExecuteNonQuery(model);
+            _adoContext.Dispose();
         }
 
         public void Remove(Hotels hotels)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "DELETE FROM [Hotel].[Hotels] " +
+                "WHERE [hotel_id] = @hotel_id",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotels.hotel_id
+                    }
+                }
+            };
+
+            _adoContext.ExecuteNonQuery(model);
+            _adoContext.Dispose();
         }
     }
 }
