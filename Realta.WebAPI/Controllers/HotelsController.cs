@@ -4,6 +4,7 @@ using Realta.Domain.Base;
 using Realta.Domain.Entities;
 using Realta.Persistence.Interface;
 using Realta.Services.Abstraction;
+using System.Runtime.InteropServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,16 +36,15 @@ namespace Realta.WebAPI.Controllers
 
         // GET api/<HotelsController>/5
         [HttpGet("{id}")]
-        public IActionResult GetHotel(int hotelId)
+        public IActionResult GetHotel(int id)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
 
             if (hotels == null)
             {
-                _logger.LogError("Region object sent from client is null");
-                return BadRequest("Region Model object is null");
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
             }
-
 
             var hotelDto = new HotelsDto
             {
@@ -57,7 +57,6 @@ namespace Realta.WebAPI.Controllers
                 hotel_addr_id = hotels.hotel_addr_id
             };
 
-
             return Ok(hotelDto);
 
 
@@ -65,8 +64,24 @@ namespace Realta.WebAPI.Controllers
 
         // POST api/<HotelsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] HotelsDto dto)
         {
+            if (dto == null)
+            {
+                _logger.LogError("Hotel region object sent from client is null");
+                return BadRequest("Some parameters are missing");
+            }
+
+            var hotel = new Hotels()
+            {
+                hotel_id = dto.hotel_id,
+                hotel_name = dto.hotel_name,
+                hotel_description = dto.hotel_description,
+                hotel_rating_star = dto.hotel_rating_star,
+                hotel_phonenumber = dto.hotel_phonenumber,
+                hotel_modified_date = dto.hotel_modified_date,
+                hotel_addr_id = dto.hotel_addr_id
+            }
         }
 
         // PUT api/<HotelsController>/5

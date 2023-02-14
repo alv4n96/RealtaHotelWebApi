@@ -55,26 +55,27 @@ namespace Realta.Persistence.Repositories
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_id = @hotelId;",
+                CommandText = "SELECT * FROM Hotel.Hotels WHERE hotel_id = @hotelId;",
                 CommandType = CommandType.Text,
-                CommandParameters = new SqlCommandParameterModel[] {
-                    new SqlCommandParameterModel() {
+                CommandParameters = new SqlCommandParameterModel[]
+                {
+                    new SqlCommandParameterModel()
+                    {
                         ParameterName = "@hotelId",
                         DataType = DbType.Int32,
                         Value = hotelId
                     }
                 }
             };
-
             var dataSet = FindByCondition<Hotels>(model);
-            Hotels? item = dataSet.Current;
+            Hotels? hotel = dataSet.Current;
 
             while (dataSet.MoveNext())
             {
-                item = dataSet.Current;
+                hotel = dataSet.Current;
             }
 
-            return item;
+            return hotel;
         }
 
         public void Insert(Hotels hotels)

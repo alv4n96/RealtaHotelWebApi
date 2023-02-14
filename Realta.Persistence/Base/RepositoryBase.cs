@@ -50,6 +50,12 @@ namespace Realta.Persistence.Base
             _adoContext.Dispose();
             return listOfData;
         }
+        //public IEnumerator<T> FindByConditionSp<T>(SqlCommandModel model)
+        //{
+        //    var listOfData = _adoContext.ExecuteNonQuery(model);
+        //    _adoContext.Dispose();
+        //    return listOfData;
+        //}
 
         public void Update(SqlCommandModel model)
         {
