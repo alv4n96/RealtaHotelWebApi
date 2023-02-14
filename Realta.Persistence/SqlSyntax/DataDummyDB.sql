@@ -107,6 +107,25 @@ SELECT * FROM Hotel.Hotel_Reviews
 
 SELECT * FROM Users.user_roles WHERE usro_role_id IN (2,4)
 
+
+-- DELETE FROM Hotel.Facility_Photos
+-- DBCC CHECKIDENT ('Hotel.Facility_Photos', RESEED, 0);
+
+
+INSERT INTO Hotel.Facility_Photos (fapho_thumbnail_filename, fapho_photo_filename, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id)
+VALUES ('thumbnail1.jpg', 'photo1.jpg', 1, 'https://example.com/thumbnail1', GETDATE(), 1),
+       ('thumbnail2.jpg', 'photo2.jpg', 0, 'https://example.com/thumbnail2', GETDATE(), 1),
+       ('thumbnail3.jpg', 'photo3.jpg', 0, 'https://example.com/thumbnail3', GETDATE(), 2),
+       ('thumbnail4.jpg', 'photo4.jpg', 1, 'https://example.com/thumbnail4', GETDATE(), 2),
+       ('thumbnail5.jpg', 'photo5.jpg', 0, 'https://example.com/thumbnail5', GETDATE(), 3);
+
+INSERT INTO Hotel.Facility_Photos (fapho_thumbnail_filename, fapho_photo_filename, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id)
+VALUES ('thumbnail6.jpg', 'photo6.jpg', 1, 'https://example.com/thumbnail6', GETDATE(), 3);
+
+INSERT INTO Hotel.Facility_Photos (fapho_thumbnail_filename, fapho_photo_filename, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id)
+VALUES ('thumbnail7.jpg', 'photo7.jpg', 1, 'https://example.com/thumbnail7', GETDATE(), 3);
+
+
 SELECT * FROM Hotel.Facility_Photos
 
 

@@ -11,7 +11,7 @@ namespace Realta.Contract.Models
     {
         [Required]
         public int hotel_id { get; set; }
-        [Required]
+        [Required] 
         public string? hotel_name { get; set; }
         public string? hotel_description { get; set; } 
         public Int16 hotel_rating_star { get; set; } 

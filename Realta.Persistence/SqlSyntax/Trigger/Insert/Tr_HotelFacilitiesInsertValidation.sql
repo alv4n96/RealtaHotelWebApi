@@ -18,4 +18,13 @@ BEGIN
         ROLLBACK TRANSACTION
         DBCC CHECKIDENT ('Hotel.Facilities', RESEED, @resetIndex );
     END
+    
+    IF EXISTS (SELECT faci_low_price, faci_high_price 
+               FROM inserted 
+               WHERE faci_high_price < faci_low_price) 
+    BEGIN 
+        RAISERROR ('High price cannot be lower than low price', 16, 1) 
+        ROLLBACK TRANSACTION
+        DBCC CHECKIDENT ('Hotel.Facilities', RESEED, @resetIndex ); 
+    END 
 END

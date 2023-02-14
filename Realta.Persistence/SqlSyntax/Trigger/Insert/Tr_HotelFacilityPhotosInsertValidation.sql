@@ -19,7 +19,3 @@ BEGIN
         DBCC CHECKIDENT ('Hotel.Facility_Photos', RESEED, @resetIndex );
     END
 END
-
-SELECT * FROM Hotel.Facility_Photos
-
-SELECT * FROM Hotel.Facilities

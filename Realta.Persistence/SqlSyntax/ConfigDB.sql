@@ -92,6 +92,10 @@ CREATE TABLE Hotel.Hotels
   hotel_id int IDENTITY(1,1) NOT NULL CONSTRAINT hotel_id_pk PRIMARY KEY, -- primary key column
   hotel_name nvarchar(85) NOT NULL,
   hotel_description nvarchar(500) NULL,
+  -- BEGIN UPDATE
+  hotel_status BIT NOT NULL CHECK(hotel_status IN(0,1)),
+  hotel_reason_status nvarchar(500) NULL,
+  -- END UPDATE
   hotel_rating_star smallint NULL,
   hotel_phonenumber nvarchar(25) NOT NULL,
   hotel_modified_date datetime NULL, 

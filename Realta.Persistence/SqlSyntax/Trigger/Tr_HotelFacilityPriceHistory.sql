@@ -9,9 +9,13 @@ BEGIN
     SET NOCOUNT ON;
     
     UPDATE Hotel.Facilities
-    SET faci_modified_date = GETDATE()
-    FROM Hotel.Facilities;
-
+    SET 
+        faci_rate_price = (faci_high_price + faci_low_price) / 2,
+        faci_modified_date = GETDATE()
+    FROM inserted
+    WHERE 
+        Hotel.Facilities.faci_id = inserted.faci_id
+        
     --Declare variable
     DECLARE @faci_id INT
     DECLARE @faci_startdate DATETIME
