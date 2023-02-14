@@ -10,3 +10,4 @@ SELECT * FROM Users.users;
 
 SELECT 1 FROM Users.user_roles WHERE usro_user_id = ___ AND usro_role_id IN (2, 4);
 
+SELECT * FROM [Hotel].[Hotels] WHERE hotel_id = 10;

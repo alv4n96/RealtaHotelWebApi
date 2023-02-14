@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Realta.Contract.Models;
 using Realta.Domain.Base;
+using Realta.Domain.Entities;
 using Realta.Persistence.Interface;
 using Realta.Services.Abstraction;
 
@@ -29,32 +30,37 @@ namespace Realta.WebAPI.Controllers
         public async Task<IActionResult> GetAllHotelAsync()
         {
             var hotels = await _repositoryManager.HotelsRepository.FindAllHotelsAsync();
-
             return Ok(hotels.ToList());
-
-            /* -- Synchronous
-            var hotels = _repositoryManager.HotelsRepository.FindAllHotels().ToList();
-
-            var hotelsDto = hotels.Select(h => new HotelsDto
-            {
-                hotel_id = h.hotel_id,
-                hotel_name = h.hotel_name,
-                hotel_description = h.hotel_description,
-                hotel_rating_star = h.hotel_rating_star,
-                hotel_phonenumber = h.hotel_phonenumber,
-                hotel_modified_date = h.hotel_modified_date,
-                hotel_addr_id = h.hotel_addr_id
-            });
-
-            return Ok(hotelsDto);
-            */
         }
 
         // GET api/<HotelsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetHotel(int hotelId)
         {
-            return "value";
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+
+            if (hotels == null)
+            {
+                _logger.LogError("Region object sent from client is null");
+                return BadRequest("Region Model object is null");
+            }
+
+
+            var hotelDto = new HotelsDto
+            {
+                hotel_id = hotels.hotel_id,
+                hotel_name = hotels.hotel_name,
+                hotel_description = hotels.hotel_description,
+                hotel_rating_star = hotels.hotel_rating_star,
+                hotel_phonenumber = hotels.hotel_phonenumber,
+                hotel_modified_date = hotels.hotel_modified_date,
+                hotel_addr_id = hotels.hotel_addr_id
+            };
+
+
+            return Ok(hotelDto);
+
+
         }
 
         // POST api/<HotelsController>

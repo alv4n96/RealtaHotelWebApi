@@ -38,7 +38,6 @@ namespace Realta.Persistence.Repositories
                 CommandText = "[Hotel].[spSelectHotel];",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] { }
-
             };
 
             IAsyncEnumerator<Hotels> dataSet = FindAllAsync<Hotels>(model);
@@ -54,7 +53,28 @@ namespace Realta.Persistence.Repositories
 
         public Hotels FindHotelsById(int hotelId)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_id = @hotelId;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotelId",
+                        DataType = DbType.Int32,
+                        Value = hotelId
+                    }
+                }
+            };
+
+            var dataSet = FindByCondition<Hotels>(model);
+            Hotels? item = dataSet.Current;
+
+            while (dataSet.MoveNext())
+            {
+                item = dataSet.Current;
+            }
+
+            return item;
         }
 
         public void Insert(Hotels hotels)
