@@ -16,7 +16,8 @@ SELECT * FROM [Hotel].[Hotels] WHERE hotel_id = 1;
 SELECT * FROM Hotel.Facility_Photos;
 
 UPDATE Hotel.Facility_Photos
-SET fapho_primary = 1
-WHERE fapho_id = 1;
+SET fapho_primary = 0
+WHERE fapho_id = 1; 
 SELECT * FROM Hotel.Facility_Photos;
 
+SELECT * FROM Hotel.Facilities

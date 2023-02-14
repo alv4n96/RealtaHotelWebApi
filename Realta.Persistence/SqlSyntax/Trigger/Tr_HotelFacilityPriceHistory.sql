@@ -10,11 +10,11 @@ BEGIN
     
     UPDATE Hotel.Facilities
     SET 
-        faci_rate_price = (faci_high_price + faci_low_price) / 2,
+        faci_rate_price = (i.faci_high_price + i.faci_low_price) / 2,
         faci_modified_date = GETDATE()
-    FROM inserted
+    FROM inserted i
     WHERE 
-        Hotel.Facilities.faci_id = inserted.faci_id
+        Hotel.Facilities.faci_id = i.faci_id
         
     --Declare variable
     DECLARE @faci_id INT
