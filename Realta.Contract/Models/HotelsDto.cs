@@ -18,17 +18,19 @@ namespace Realta.Contract.Models
         public string? hotel_name { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? hotel_description { get; set; }
+        [Required(ErrorMessage = "hotel status is required")]
+        public string? hotel_status { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? hotel_reason_status { get; set; }
+        [AllowNull]
+        public Int16 hotel_rating_star { get; set; }
 
         [Required(ErrorMessage = "hotel phone number is required")]
         [Phone]
         public string? hotel_phonenumber { get; set; }
 
-        [AllowNull]
-        public Int16 hotel_rating_star { get; set; }
-        [Required(ErrorMessage = "hotel status is required")]
-        public string? hotel_status { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? hotel_reason_status { get; set; }
+
+        
 
         [AllowNull]
         public DateTime hotel_modified_date { get; set; } = DateTime.Now;

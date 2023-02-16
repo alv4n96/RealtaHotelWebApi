@@ -52,6 +52,40 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
+
+
+        public Hotels FindHotelsByName(string name)
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%@hotelName%';",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@hotelName",
+                        DataType = DbType.String,
+                        Value = name,
+                    }
+                }
+            };
+
+            Console.WriteLine(model);
+
+            var dataSet = FindByCondition<Hotels>(model);
+            //var item = new List<Hotels>();
+
+            Hotels? item = dataSet.Current;
+
+            while (dataSet.MoveNext())
+            {
+                item = dataSet.Current;
+            }
+            return item;
+
+
+        }
+
         public Hotels FindHotelsById(int hotelId)
         {
             SqlCommandModel model = new SqlCommandModel()
@@ -194,31 +228,6 @@ namespace Realta.Persistence.Repositories
             _adoContext.ExecuteNonQuery(model);
             _adoContext.Dispose();
         }
-
-        public async Task<IEnumerable<Hotels>> FindHotelsByNameAsync(string name)
-        {
-            SqlCommandModel model = new SqlCommandModel()
-            {
-                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%@hotelName%';",
-                CommandType = CommandType.Text,
-                CommandParameters = new SqlCommandParameterModel[] {
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@hotelName",
-                        DataType = DbType.String,
-                        Value = name,
-                    }
-                }
-            };
-
-            IAsyncEnumerator<Hotels> dataSet = FindByNameAsync<Hotels>(model);
-            var item = new List<Hotels>();
-
-            while (await dataSet.MoveNextAsync())
-            {
-                item.Add(dataSet.Current);
-            }
-            return item;
-        }
+        
     }
 }

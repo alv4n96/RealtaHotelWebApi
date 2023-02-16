@@ -11,7 +11,7 @@ namespace Realta.Domain.Repositories
     {
         IEnumerable<Hotels> FindAllHotels();
         Task<IEnumerable<Hotels>> FindAllHotelsAsync();
-        Task<IEnumerable<Hotels>> FindHotelsByNameAsync(string name);
+        Hotels FindHotelsByName(string name);
         Hotels FindHotelsById(int hotelId);
         void Insert(Hotels hotels);
         void Edit(Hotels hotels);

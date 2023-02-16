@@ -47,18 +47,18 @@ namespace Realta.WebAPI.Controllers
             return Ok(hotelDto);
         }
 
-        // GET api/<HotelsController>/name
-        [HttpGet("name/{name}", Name = "GetHotelsByName")]
-        public async Task<IActionResult> GetHotelByName(string name)
+        // GET api/<HotelsController>/search/{name}
+        [HttpGet("search/{name}", Name = "GetHotelsByName")]
+        public IActionResult GetHotelByName(string name)
         {
-            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByNameAsync(name);
-
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsByName(name);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
-
+            return Ok(hotels);
+            /*
             var hotelDto = hotels.Select(h => new HotelsDto
             {
                 hotel_id = h.hotel_id,
@@ -70,37 +70,34 @@ namespace Realta.WebAPI.Controllers
             });
 
             return Ok(hotelDto);
-
+            */
 
         }
 
-        // GET api/<HotelsController>/5
-        //[HttpGet("id/{id}", Name = "GetHotelsById")]
-        //public IActionResult GetHotelById(int id)
-        //{
-        //    var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
+        //GET api/<HotelsController>/5
+        [HttpGet("{id}", Name = "GetHotelsById")]
+        public IActionResult GetHotelById(int id)
+        {
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
 
-        //    if (hotels == null)
-        //    {
-        //        _logger.LogError("Hotel object sent from client is null");
-        //        return BadRequest("Record doesn't exist or wrong parameter");
-        //    }
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
 
-        //    var hotelDto = new HotelsDto
-        //    {
-        //        hotel_id = hotels.hotel_id,
-        //        hotel_name = hotels.hotel_name,
-        //        hotel_description = hotels.hotel_description,
-        //        hotel_status = hotels.hotel_status ? "available" : "unavailable",
-        //        hotel_reason_status = hotels.hotel_reason_status,
-        //        hotel_rating_star = hotels.hotel_rating_star,
-        //        hotel_phonenumber = hotels.hotel_phonenumber,
-        //        hotel_modified_date = hotels.hotel_modified_date,
-        //        hotel_addr_id = hotels.hotel_addr_id
-        //    };
+            var hotelDto = new HotelsDto
+            {
+                hotel_id = hotels.hotel_id,
+                hotel_name = hotels.hotel_name,
+                hotel_rating_star = hotels.hotel_rating_star,
+                hotel_phonenumber = hotels.hotel_phonenumber,
+                hotel_status = hotels.hotel_status ? "available" : "unavailable",
+                hotel_modified_date = hotels.hotel_modified_date
+            };
 
-        //    return Ok("Status");
-        //}
+            return Ok(hotelDto);
+        }
 
         // POST api/<HotelsController>
         [HttpPost]

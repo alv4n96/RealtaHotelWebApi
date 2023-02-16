@@ -43,12 +43,6 @@ namespace Realta.Persistence.Base
             _adoContext.DisposeAsync();
             return dataT;
         }
-        public IAsyncEnumerator<T> FindByNameAsync<T>(SqlCommandModel model)
-        {
-            var dataT = _adoContext.ExecuteReaderAsync<T>(model);
-            _adoContext.DisposeAsync();
-            return dataT;
-        }
 
         public IEnumerator<T> FindByCondition<T>(SqlCommandModel model)
         {
