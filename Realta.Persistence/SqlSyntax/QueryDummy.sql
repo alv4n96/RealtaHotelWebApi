@@ -14,6 +14,8 @@ SELECT * FROM [Hotel].[Hotels] WHERE hotel_id = 1;
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%Hotel%';
 
+SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
+
 SELECT * FROM Hotel.Facility_Photos;
 
 UPDATE Hotel.Facility_Photos

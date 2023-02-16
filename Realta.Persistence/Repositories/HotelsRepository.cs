@@ -54,11 +54,11 @@ namespace Realta.Persistence.Repositories
 
 
 
-        public Hotels FindHotelsByName(string name)
+        public IEnumerable<Hotels> FindHotelsByName(string name)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%@hotelName%';",
+                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%' + @hotelName + '%';",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel()
@@ -73,15 +73,14 @@ namespace Realta.Persistence.Repositories
             Console.WriteLine(model);
 
             var dataSet = FindByCondition<Hotels>(model);
-            //var item = new List<Hotels>();
-
-            Hotels? item = dataSet.Current;
-
+            
+            
             while (dataSet.MoveNext())
             {
-                item = dataSet.Current;
+                var data = dataSet.Current;
+                yield return data;
             }
-            return item;
+            
 
 
         }

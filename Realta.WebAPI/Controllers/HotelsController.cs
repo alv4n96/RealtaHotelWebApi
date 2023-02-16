@@ -57,8 +57,8 @@ namespace Realta.WebAPI.Controllers
                 _logger.LogError("Hotel object sent from client is null");
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
-            return Ok(hotels);
-            /*
+
+
             var hotelDto = hotels.Select(h => new HotelsDto
             {
                 hotel_id = h.hotel_id,
@@ -70,7 +70,6 @@ namespace Realta.WebAPI.Controllers
             });
 
             return Ok(hotelDto);
-            */
 
         }
 
