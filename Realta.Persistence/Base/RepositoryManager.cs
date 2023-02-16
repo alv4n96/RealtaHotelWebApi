@@ -21,10 +21,7 @@ namespace Realta.Persistence.Base
         {
             get
             {
-                if (_hotelsRepository == null)
-                {
-                    _hotelsRepository = new HotelsRepository(_adoContext);
-                }
+                _hotelsRepository ??= new HotelsRepository(_adoContext);
                 return _hotelsRepository;
             }
         }

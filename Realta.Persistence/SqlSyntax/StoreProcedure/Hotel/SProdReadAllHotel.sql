@@ -7,6 +7,8 @@ BEGIN
 SELECT	hotel_id
 		,hotel_name
 		,hotel_description
+		,hotel_status
+		,hotel_reason_status
 		,hotel_rating_star
 		,hotel_phonenumber
 		,hotel_modified_date
@@ -18,3 +20,4 @@ GO;
 
 
 EXEC [Hotel].[spSelectHotel];
+

@@ -25,6 +25,7 @@ namespace Realta.WebAPI.Controllers
             _repositoryManager = repositoryManager;
         }
 
+        // create class for middleware auth
 
 
         // GET: api/<HotelsController>
@@ -32,14 +33,25 @@ namespace Realta.WebAPI.Controllers
         public async Task<IActionResult> GetAllHotelAsync()
         {
             var hotels = await _repositoryManager.HotelsRepository.FindAllHotelsAsync();
-            return Ok(hotels.ToList());
+
+            var hotelDto = hotels.Select(h => new HotelsDto
+            {
+                hotel_id = h.hotel_id,
+                hotel_name = h.hotel_name,
+                hotel_rating_star = h.hotel_rating_star,
+                hotel_phonenumber = h.hotel_phonenumber,
+                hotel_status = h.hotel_status ? "available" : "unavailable",
+                hotel_modified_date = h.hotel_modified_date,
+            });
+
+            return Ok(hotelDto);
         }
 
-        // GET api/<HotelsController>/5
-        [HttpGet("{id}", Name = "GetHotels")]
-        public IActionResult GetHotel(int id)
+        // GET api/<HotelsController>/name
+        [HttpGet("name/{name}", Name = "GetHotelsByName")]
+        public async Task<IActionResult> GetHotelByName(string name)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByNameAsync(name);
 
             if (hotels == null)
             {
@@ -47,21 +59,48 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
 
-            var hotelDto = new HotelsDto
+            var hotelDto = hotels.Select(h => new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_description = hotels.hotel_description,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
-                hotel_modified_date = hotels.hotel_modified_date,
-                hotel_addr_id = hotels.hotel_addr_id
-            };
+                hotel_id = h.hotel_id,
+                hotel_name = h.hotel_name,
+                hotel_rating_star = h.hotel_rating_star,
+                hotel_phonenumber = h.hotel_phonenumber,
+                hotel_status = h.hotel_status ? "available" : "unavailable",
+                hotel_modified_date = h.hotel_modified_date,
+            });
 
             return Ok(hotelDto);
 
 
         }
+
+        // GET api/<HotelsController>/5
+        //[HttpGet("id/{id}", Name = "GetHotelsById")]
+        //public IActionResult GetHotelById(int id)
+        //{
+        //    var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
+
+        //    if (hotels == null)
+        //    {
+        //        _logger.LogError("Hotel object sent from client is null");
+        //        return BadRequest("Record doesn't exist or wrong parameter");
+        //    }
+
+        //    var hotelDto = new HotelsDto
+        //    {
+        //        hotel_id = hotels.hotel_id,
+        //        hotel_name = hotels.hotel_name,
+        //        hotel_description = hotels.hotel_description,
+        //        hotel_status = hotels.hotel_status ? "available" : "unavailable",
+        //        hotel_reason_status = hotels.hotel_reason_status,
+        //        hotel_rating_star = hotels.hotel_rating_star,
+        //        hotel_phonenumber = hotels.hotel_phonenumber,
+        //        hotel_modified_date = hotels.hotel_modified_date,
+        //        hotel_addr_id = hotels.hotel_addr_id
+        //    };
+
+        //    return Ok("Status");
+        //}
 
         // POST api/<HotelsController>
         [HttpPost]
@@ -79,7 +118,7 @@ namespace Realta.WebAPI.Controllers
                 hotel_description = dto.hotel_description,
                 hotel_rating_star = dto.hotel_rating_star,
                 hotel_phonenumber = dto.hotel_phonenumber,
-                hotel_addr_id = dto.hotel_addr_id
+                hotel_addr_id = (int)dto.hotel_addr_id
             };
 
             //post data to db
@@ -108,7 +147,7 @@ namespace Realta.WebAPI.Controllers
                 hotel_description = dto.hotel_description,
                 hotel_rating_star = dto.hotel_rating_star,
                 hotel_phonenumber = dto.hotel_phonenumber,
-                hotel_addr_id = dto.hotel_addr_id
+                hotel_addr_id = (int)dto.hotel_addr_id
             };
 
             _repositoryManager.HotelsRepository.Edit(hotel);

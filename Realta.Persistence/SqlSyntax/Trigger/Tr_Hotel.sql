@@ -22,3 +22,6 @@ BEGIN
   JOIN inserted ON Hotel.Hotels.hotel_id = inserted.hore_hotel_id
   WHERE inserted.hore_rating IS NOT NULL
 END
+
+
+

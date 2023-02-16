@@ -5,6 +5,7 @@ using Realta.Persistence.RepositoryContext;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,10 +64,11 @@ namespace Realta.Persistence.Repositories
                     {
                         ParameterName = "@hotelId",
                         DataType = DbType.Int32,
-                        Value = hotelId
+                        Value = hotelId,
                     }
                 }
             };
+
             var dataSet = FindByCondition<Hotels>(model);
             Hotels? hotel = dataSet.Current;
 
@@ -77,6 +79,8 @@ namespace Realta.Persistence.Repositories
 
             return hotel;
         }
+
+
 
         public void Insert(Hotels hotels)
         {
@@ -189,6 +193,32 @@ namespace Realta.Persistence.Repositories
 
             _adoContext.ExecuteNonQuery(model);
             _adoContext.Dispose();
+        }
+
+        public async Task<IEnumerable<Hotels>> FindHotelsByNameAsync(string name)
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%@hotelName%';",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@hotelName",
+                        DataType = DbType.String,
+                        Value = name,
+                    }
+                }
+            };
+
+            IAsyncEnumerator<Hotels> dataSet = FindByNameAsync<Hotels>(model);
+            var item = new List<Hotels>();
+
+            while (await dataSet.MoveNextAsync())
+            {
+                item.Add(dataSet.Current);
+            }
+            return item;
         }
     }
 }
