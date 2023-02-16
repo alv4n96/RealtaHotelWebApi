@@ -24,7 +24,7 @@ WHERE fapho_id = 1;
 SELECT * FROM Hotel.Facility_Photos;
 
 
-DBCC CHECKIDENT ('Hotel.Hotels', RESEED,0 );
+DBCC CHECKIDENT ('Hotel.Hotels', RESEED,10 );
 
 SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
 
