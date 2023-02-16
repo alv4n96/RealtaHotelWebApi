@@ -23,4 +23,9 @@ SET fapho_primary = 0
 WHERE fapho_id = 1; 
 SELECT * FROM Hotel.Facility_Photos;
 
-SELECT * FROM Hotel.Facilities
+SELECT * FROM Hotel.Hotels
+
+INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_status, hotel_rating_star, hotel_phonenumber, hotel_modified_date, hotel_addr_id)
+VALUES (@hotel_name, @hotel_description, @hotel_status, @hotel_rating_star, @hotel_phonenumber, GETDATE(), @hotel_addr_id);
+
+

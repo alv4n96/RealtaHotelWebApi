@@ -119,10 +119,9 @@ namespace Realta.Persistence.Repositories
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_rating_star, hotel_phonenumber, " +
-                "hotel_modified_date, hotel_addr_id) " +
-                "VALUES (@hotel_name, @hotel_description, @hotel_rating_star, @hotel_phonenumber, GETDATE(), @hotel_addr_id);" +
-                " SELECT CAST(scope_identity() as int);",
+                CommandText = "INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_status, hotel_rating_star, hotel_phonenumber, hotel_modified_date, hotel_addr_id) " +
+                "VALUES(@hotel_name, @hotel_description, @hotel_status, @hotel_rating_star, @hotel_phonenumber, GETDATE(), @hotel_addr_id);" +
+                "SELECT CAST(scope_identity() as int);",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel() {
@@ -134,6 +133,11 @@ namespace Realta.Persistence.Repositories
                         ParameterName = "@hotel_description",
                         DataType = DbType.String,
                         Value = hotels.hotel_description
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_status",
+                        DataType = DbType.Boolean,
+                        Value = hotels.hotel_status
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_rating_star",
