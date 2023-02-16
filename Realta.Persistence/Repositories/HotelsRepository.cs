@@ -168,6 +168,7 @@ namespace Realta.Persistence.Repositories
                 CommandText = "UPDATE Hotel.Hotels " +
                 "SET hotel_name = @hotel_name, " +
                 "hotel_description = @hotel_description, " +
+                "hotel_status = @hotel_status, " +
                 "hotel_rating_star = @hotel_rating_star, " +
                 "hotel_phonenumber = @hotel_phonenumber, " +
                 "hotel_modified_date = GETDATE(), " +
@@ -189,6 +190,11 @@ namespace Realta.Persistence.Repositories
                         ParameterName = "@hotel_description",
                         DataType = DbType.String,
                         Value = hotels.hotel_description
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_status",
+                        DataType = DbType.Boolean,
+                        Value = hotels.hotel_status
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_rating_star",

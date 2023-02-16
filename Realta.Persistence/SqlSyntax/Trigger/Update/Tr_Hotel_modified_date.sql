@@ -8,3 +8,6 @@ BEGIN
     FROM inserted
     WHERE inserted.hotel_id = Hotel.Hotels.hotel_id
 END
+
+
+DROP TRIGGER hotels.tr_update_hotel_modified_date;

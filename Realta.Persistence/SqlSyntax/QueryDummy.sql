@@ -23,9 +23,17 @@ SET fapho_primary = 0
 WHERE fapho_id = 1; 
 SELECT * FROM Hotel.Facility_Photos;
 
-SELECT * FROM Hotel.Hotels
 
-INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_status, hotel_rating_star, hotel_phonenumber, hotel_modified_date, hotel_addr_id)
-VALUES (@hotel_name, @hotel_description, @hotel_status, @hotel_rating_star, @hotel_phonenumber, GETDATE(), @hotel_addr_id);
+DBCC CHECKIDENT ('Hotel.Hotels', RESEED,0 );
 
+SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
 
+UPDATE Hotel.Hotels  
+SET hotel_name = 'TestEdit Hotel Malang',
+    hotel_description = 'Hotel dengan percobaan test post di Malang',
+    hotel_status = 1,
+    hotel_rating_star = 5,  
+    hotel_phonenumber = '+62 823 1234 5680',  
+    hotel_modified_date = GETDATE(),  
+    hotel_addr_id = 4  
+WHERE hotel_id = 11;
