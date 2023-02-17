@@ -102,7 +102,6 @@ namespace Realta.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] HotelsDto dto)
         {
-            var statusCheker = dto.hotel_status == "available" ? true : false;
 
             if (dto == null)
             {
@@ -114,7 +113,7 @@ namespace Realta.WebAPI.Controllers
             {
                 hotel_name = dto.hotel_name,
                 hotel_description = dto.hotel_description,
-                hotel_status = statusCheker,
+                hotel_status = dto.hotel_status == "available" ? true : false,
                 hotel_rating_star = dto.hotel_rating_star,
                 hotel_phonenumber = dto.hotel_phonenumber,
                 hotel_addr_id = (int)dto.hotel_addr_id
@@ -125,37 +124,44 @@ namespace Realta.WebAPI.Controllers
 
             var result = _repositoryManager.HotelsRepository.FindHotelsById(hotel.hotel_id);
 
+
+            var resDto = new HotelsDto
+            {
+                hotel_id = hotel.hotel_id,
+                hotel_name = hotel.hotel_name,
+                hotel_description = hotel.hotel_description,
+                hotel_status = hotel.hotel_status ? "available" : "unavailable",
+                hotel_reason_status = hotel.hotel_reason_status,
+                hotel_rating_star = hotel.hotel_rating_star,
+                hotel_phonenumber = hotel.hotel_phonenumber,
+                hotel_modified_date = hotel.hotel_modified_date,
+                hotel_addr_id = hotel.hotel_addr_id
+            };
             //forward 
-            return CreatedAtRoute("GetHotelsById", new { id = hotel.hotel_id }, result);
+            return CreatedAtRoute("GetHotelsById", new { id = resDto.hotel_id }, resDto);
         }
 
         // PUT api/<HotelsController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] HotelsDto dto)
         {
-            var statusCheker = dto.hotel_status == "available" ? true : false;
 
             if (dto == null)
             {
                 _logger.LogError("Hotels when update object sent from client is null");
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
-            
 
             var hotel = new Hotels()
             {
+                hotel_id = id,
                 hotel_name = dto.hotel_name,
                 hotel_description = dto.hotel_description,
-                hotel_status = statusCheker,
+                hotel_status = dto.hotel_status == "available" ? true : false,
                 hotel_rating_star = dto.hotel_rating_star,
                 hotel_phonenumber = dto.hotel_phonenumber,
                 hotel_addr_id = (int)dto.hotel_addr_id
             };
-            if (hotel == null)
-            {
-                _logger.LogError("Hotels when update object sent from client is null");
-                return BadRequest("input record for hotel error");
-            }
 
             _repositoryManager.HotelsRepository.Edit(hotel);
             if (hotel == null)
@@ -164,7 +170,21 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Internal edit record hotel error");
             }
 
-            return CreatedAtRoute("GetHotelsById", new { id = hotel.hotel_id }, hotel);
+
+            var result = new HotelsDto
+            {
+                hotel_id = hotel.hotel_id,
+                hotel_name = hotel.hotel_name,
+                hotel_description = hotel.hotel_description,
+                hotel_status = hotel.hotel_status ? "available" : "unavailable",
+                hotel_reason_status = hotel.hotel_reason_status,
+                hotel_rating_star = hotel.hotel_rating_star,
+                hotel_phonenumber = hotel.hotel_phonenumber,
+                hotel_modified_date = hotel.hotel_modified_date,
+                hotel_addr_id = hotel.hotel_addr_id
+            };
+
+            return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
         }
 
         // DELETE api/<HotelsController>/5
