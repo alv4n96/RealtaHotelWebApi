@@ -66,8 +66,6 @@ namespace Realta.Persistence.Repositories
                 }
             };
 
-            Console.WriteLine(model);
-
             var dataSet = FindByCondition<Hotels>(model);
             
             

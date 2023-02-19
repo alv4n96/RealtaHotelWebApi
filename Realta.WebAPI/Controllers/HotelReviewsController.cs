@@ -30,7 +30,6 @@ namespace Realta.WebAPI.Controllers
         [HttpGet("{hotelId}/reviews")]
         public async Task<IActionResult> GetAsync(int hotelId)
         {
-
             var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
             if (hotels == null)
             {
@@ -39,21 +38,7 @@ namespace Realta.WebAPI.Controllers
             }
 
             var hotelReviews = await _repositoryManager.HotelReviewsRepository.FindAllHotelReviewsAsync(hotelId);
-            if (hotelReviews == null)
-            {
-                _logger.LogError("Hotel object sent from client is null");
-                return BadRequest("Data Not Found!");
-            }
 
-            var hotelReviewsDto = hotelReviews.Select(hr => new HotelReviewsDto
-            {
-                hore_id = hr.hore_id,
-                hore_user_review = hr.hore_user_review,
-                hore_user_id = hr.hore_user_id,
-                hore_rating = hr.hore_rating,
-                hore_created_on = hr.hore_created_on,
-                hore_hotel_id = hr.hore_hotel_id
-            });
 
             var hotelDto = new HotelsDto
             {
@@ -65,13 +50,32 @@ namespace Realta.WebAPI.Controllers
                 hotel_modified_date = hotels.hotel_modified_date
             };
 
-            var result = new {
-                //hotel = hotelDto,
-                reviews = hotelReviewsDto
-            };
+            if (hotelReviews.Count() == 0)
+            {
+                return Ok(new
+                {
+                    hotel = hotelDto,
+                    reviews = "Reviews Not Found"
+                }) ;
+            } 
+            else
+            {
+                var hotelReviewsDto = hotelReviews.Select(hr => new HotelReviewsDto
+                {
+                    hore_id = hr.hore_id,
+                    hore_user_review = hr.hore_user_review,
+                    hore_user_id = hr.hore_user_id,
+                    hore_rating = hr.hore_rating,
+                    hore_created_on = hr.hore_created_on,
+                    hore_hotel_id = hr.hore_hotel_id
+                });
+                return Ok(new
+                {
+                    hotel = hotelDto,
+                    reviews = hotelReviewsDto
+                });
+            }
 
-
-            return Ok(result);
 
         }
 

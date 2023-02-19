@@ -11,10 +11,10 @@ namespace Realta.Domain.Repositories
     {
         IEnumerable<Hotel_Reviews> FindAllHotelReviews();
         Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId);
-        Hotel_Reviews FindHotelReviewsById(int hoReId);
-        void Insert(Hotel_Reviews hotels);
-        void Edit(Hotel_Reviews hotels);
-        void EditStatus(Hotel_Reviews hotels);
-        void Remove(Hotel_Reviews hotels);
+        Hotel_Reviews FindHotelReviewsById(int hotelId, int hotelReviewsId);
+        void Insert(Hotel_Reviews hotelReviews);
+        void Edit(Hotel_Reviews hotelReviews);
+        void EditStatus(Hotel_Reviews hotelReviews);
+        void Remove(Hotel_Reviews hotelReviews);
     }
 }

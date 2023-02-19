@@ -16,6 +16,22 @@ namespace Realta.Persistence.Repositories
         public HotelReviewsRepository(AdoDbContext adoContext) : base(adoContext)
         {
         }
+
+        public void Edit(Hotel_Reviews hotelReviews)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditStatus(Hotel_Reviews hotelReviews)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Hotel_Reviews> FindAllHotelReviews()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId)
         {
             SqlCommandModel model = new SqlCommandModel()
@@ -25,7 +41,7 @@ namespace Realta.Persistence.Repositories
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_hotel_id",
-                        DataType = DbType.Boolean,
+                        DataType = DbType.Int32,
                         Value = hotelId
                     },}
             };
@@ -41,33 +57,17 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public void Edit(Hotel_Reviews hotels)
+        public Hotel_Reviews FindHotelReviewsById(int hotelId, int hotelReviewsId)
         {
             throw new NotImplementedException();
         }
 
-        public void EditStatus(Hotel_Reviews hotels)
+        public void Insert(Hotel_Reviews hotelReviews)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Hotel_Reviews> FindAllHotelReviews()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Hotel_Reviews FindHotelReviewsById(int hoReId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(Hotel_Reviews hotels)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Hotel_Reviews hotels)
+        public void Remove(Hotel_Reviews hotelReviews)
         {
             throw new NotImplementedException();
         }
