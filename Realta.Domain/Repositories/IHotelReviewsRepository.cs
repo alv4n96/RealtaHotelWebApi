@@ -11,7 +11,7 @@ namespace Realta.Domain.Repositories
     {
         IEnumerable<Hotel_Reviews> FindAllHotelReviews();
         Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId);
-        Hotel_Reviews FindHotelReviewsById(int hotelId, int hotelReviewsId);
+        Task<Hotel_Reviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId);
         void Insert(Hotel_Reviews hotelReviews);
         void Edit(Hotel_Reviews hotelReviews);
         void EditStatus(Hotel_Reviews hotelReviews);

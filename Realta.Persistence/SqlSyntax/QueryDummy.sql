@@ -6,7 +6,7 @@ USE WEBApiDbDemo
 
 SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 1;
 
-SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 2;
+SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 1 AND hore_id = 1;
 
 SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 2
 
