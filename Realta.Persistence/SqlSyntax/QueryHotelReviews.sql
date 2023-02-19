@@ -13,7 +13,7 @@ SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 2
 DELETE FROM Hotel.Hotel_Reviews
 WHERE hore_id = 7;
 
--- DBCC CHECKIDENT ('Hotel.Hotel_Reviews', RESEED, 4);
+-- DBCC CHECKIDENT ('Hotel.Hotel_Reviews', RESEED, 5);
 
 INSERT INTO Hotel.Hotel_Reviews (hore_user_review, hore_rating, hore_created_on, hore_user_id, hore_hotel_id)
 VALUES (@hore_user_review, @hore_rating, GETDATE(), @hore_user_id, @hore_hotel_id);

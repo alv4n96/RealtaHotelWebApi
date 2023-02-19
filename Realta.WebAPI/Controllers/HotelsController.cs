@@ -238,7 +238,7 @@ namespace Realta.WebAPI.Controllers
             var hotel = _repositoryManager.HotelsRepository.FindHotelsById(id);
             if (hotel == null)
             {
-                _logger.LogError($"Region with id {id} Record doesn't exist or wrong parameter");
+                _logger.LogError($"Hotel with id {id} Record doesn't exist or wrong parameter");
                 return NotFound();
             }
 

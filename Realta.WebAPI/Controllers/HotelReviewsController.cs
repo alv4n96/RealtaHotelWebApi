@@ -214,9 +214,26 @@ namespace Realta.WebAPI.Controllers
         }
 
         // DELETE api/<HotelReviewsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{hotelId}/reviews/{hotelReviewsId}")]
+        public async Task<IActionResult> DeleteAsync(int hotelId, int hotelReviewsId)
         {
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
+
+            //2. Find id first
+            var hotelReviews = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviewsId);
+            if (hotelReviews == null)
+            {
+                _logger.LogError($"Reviews with id {hotelReviewsId} Record doesn't exist or wrong parameter");
+                return NotFound();
+            }
+
+            _repositoryManager.HotelReviewsRepository.Remove(hotelReviews);
+            return Ok("Data Has Been Remove.");
         }
     }
 }
