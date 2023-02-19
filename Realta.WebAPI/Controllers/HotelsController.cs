@@ -192,7 +192,6 @@ namespace Realta.WebAPI.Controllers
         [HttpPut("switch/{id}")]
         public IActionResult Put(int id, [FromBody] HotelSwitchDto dto)
         {
-
             if (dto == null)
             {
                 _logger.LogError("Hotels when update object sent from client is null");
@@ -207,11 +206,6 @@ namespace Realta.WebAPI.Controllers
             };
 
             _repositoryManager.HotelsRepository.EditStatus(hotel);
-            if (hotel == null)
-            {
-                _logger.LogError("Hotels when update object sent from client is null");
-                return BadRequest("Internal edit record hotel error");
-            }
 
             var dataResult = _repositoryManager.HotelsRepository.FindHotelsById(id);
 

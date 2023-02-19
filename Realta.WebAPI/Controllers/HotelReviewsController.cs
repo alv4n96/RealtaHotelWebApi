@@ -78,7 +78,7 @@ namespace Realta.WebAPI.Controllers
         }
 
         // GET api/<HotelReviewsController>/5
-        [HttpGet("{hotelId}/reviews/{hotelReviewsId}")]
+        [HttpGet("{hotelId}/reviews/{hotelReviewsId}", Name = "GetHotelReviewsById")]
         public async Task<IActionResult> GetHotelReviewsAsync(int hotelId, int hotelReviewsId)
         {
             var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
@@ -127,7 +127,7 @@ namespace Realta.WebAPI.Controllers
 
         // POST api/<HotelReviewsController>
         [HttpPost("{hotelId}/reviews/")]
-        public IActionResult Post(int hotelId, [FromBody] HotelReviewsDto dto)
+        public async Task<IActionResult> PostAsync(int hotelId, [FromBody] HotelReviewsDto dto)
         {
             var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
             if (hotels == null)
@@ -153,29 +153,64 @@ namespace Realta.WebAPI.Controllers
             //post data to db
             _repositoryManager.HotelReviewsRepository.Insert(hotelReviews);
 
-            var result = _repositoryManager.HotelsRepository.FindHotelsById(hotelReviews.hore_id);
+            var result = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviews.hore_id);
 
 
-            var resDto = new HotelsDto
-            {
-                hotel_id = hotel.hotel_id,
-                hotel_name = hotel.hotel_name,
-                hotel_description = hotel.hotel_description,
-                hotel_status = hotel.hotel_status ? "available" : "unavailable",
-                hotel_reason_status = hotel.hotel_reason_status,
-                hotel_rating_star = hotel.hotel_rating_star,
-                hotel_phonenumber = hotel.hotel_phonenumber,
-                hotel_modified_date = hotel.hotel_modified_date,
-                hotel_addr_id = hotel.hotel_addr_id
+            var resDto = new HotelReviewsDto()
+            {   
+                hore_id = result.hore_id,
+                hore_user_review = result.hore_user_review,
+                hore_user_id = result.hore_user_id,
+                hore_rating = result.hore_rating,
+                hore_created_on = result.hore_created_on,
+                hore_hotel_id = result.hore_hotel_id
             };
+
             //forward 
-            return CreatedAtRoute("GetHotelsById", new { id = resDto.hotel_id }, resDto);
+            return CreatedAtRoute("GetHotelReviewsById", new { hotelId = resDto.hore_hotel_id, hotelReviewsId = resDto.hore_id }, resDto);
         }
 
         // PUT api/<HotelReviewsController>/5
         [HttpPut("{hotelId}/reviews/{hotelReviewsId}")]
-        public void Put(int hotelId, int hotelReviewsId, [FromBody] string value)
+        public async Task<IActionResult> Put(int hotelId, int hotelReviewsId, [FromBody] HotelReviewsDto dto)
         {
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
+
+            if (dto == null)
+            {
+                _logger.LogError("Hotel region object sent from client is null");
+                return BadRequest("Some parameters are missing");
+            }
+
+            var hotelReviews = new Hotel_Reviews()
+            {
+                hore_id = hotelReviewsId,
+                hore_hotel_id = hotelId,
+                hore_user_review = dto.hore_user_review,
+                hore_rating = dto.hore_rating,
+                hore_user_id = dto.hore_user_id
+            };
+
+            _repositoryManager.HotelReviewsRepository.Edit(hotelReviews);
+
+            var dataResult = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviewsId);
+
+            var resDto = new HotelReviewsDto()
+            {
+                hore_id = dataResult.hore_id,
+                hore_user_review = dataResult.hore_user_review,
+                hore_user_id = dataResult.hore_user_id,
+                hore_rating = dataResult.hore_rating,
+                hore_created_on = dataResult.hore_created_on,
+                hore_hotel_id = dataResult.hore_hotel_id
+            };
+
+            return CreatedAtRoute("GetHotelReviewsById", new { hotelId = resDto.hore_hotel_id, hotelReviewsId = resDto.hore_id }, resDto);
         }
 
         // DELETE api/<HotelReviewsController>/5

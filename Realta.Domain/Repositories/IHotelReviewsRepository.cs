@@ -14,7 +14,6 @@ namespace Realta.Domain.Repositories
         Task<Hotel_Reviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId);
         void Insert(Hotel_Reviews hotelReviews);
         void Edit(Hotel_Reviews hotelReviews);
-        void EditStatus(Hotel_Reviews hotelReviews);
         void Remove(Hotel_Reviews hotelReviews);
     }
 }

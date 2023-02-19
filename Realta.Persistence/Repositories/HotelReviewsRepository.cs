@@ -1,4 +1,5 @@
-﻿using Realta.Domain.Entities;
+﻿using Microsoft.VisualBasic;
+using Realta.Domain.Entities;
 using Realta.Domain.Repositories;
 using Realta.Persistence.Base;
 using Realta.Persistence.RepositoryContext;
@@ -19,18 +20,50 @@ namespace Realta.Persistence.Repositories
 
         public void Edit(Hotel_Reviews hotelReviews)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "UPDATE Hotel.Hotel_Reviews " +
+                "SET hore_user_review = @hore_user_review, " +
+                "hore_rating = @hore_rating, " +
+                "hore_created_on = GETDATE(), " +
+                "hore_user_id = @hore_user_id, " +
+                "hore_hotel_id = @hore_hotel_id " +
+                "WHERE hore_id = @hore_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_user_review",
+                        DataType = DbType.String,
+                        Value = hotelReviews.hore_user_review
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_rating",
+                        DataType = DbType.Byte,
+                        Value = hotelReviews.hore_rating
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_user_id",
+                        DataType = DbType.Int32,
+                        Value = hotelReviews.hore_user_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotelReviews.hore_hotel_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_id",
+                        DataType = DbType.Int32,
+                        Value = hotelReviews.hore_id
+                    },
+                }
+            };
+
+            _adoContext.ExecuteNonQuery(model);
+            _adoContext.Dispose();
         }
 
-        public void EditStatus(Hotel_Reviews hotelReviews)
-        {
-            throw new NotImplementedException();
-        }
 
-        public IEnumerable<Hotel_Reviews> FindAllHotelReviews()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId)
         {
@@ -90,12 +123,51 @@ namespace Realta.Persistence.Repositories
 
         public void Insert(Hotel_Reviews hotelReviews)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText =   "INSERT INTO Hotel.Hotel_Reviews (hore_user_review, hore_rating, hore_created_on, hore_user_id, hore_hotel_id) " +
+                                "VALUES(@hore_user_review, @hore_rating, GETDATE(), @hore_user_id, @hore_hotel_id); " +
+                                "SELECT CAST(scope_identity() as int);",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_user_review",
+                        DataType = DbType.String,
+                        Value = hotelReviews.hore_user_review
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_rating",
+                        DataType = DbType.Byte,
+                        Value = hotelReviews.hore_rating
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_user_id",
+                        DataType = DbType.Int32,
+                        Value = hotelReviews.hore_user_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hore_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotelReviews.hore_hotel_id
+                    },
+                }
+            };
+
+            hotelReviews.hore_id = _adoContext.ExecuteScalar<int>(model);
+            _adoContext.Dispose();
         }
 
         public void Remove(Hotel_Reviews hotelReviews)
         {
             throw new NotImplementedException();
         }
+
+
+        public IEnumerable<Hotel_Reviews> FindAllHotelReviews()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

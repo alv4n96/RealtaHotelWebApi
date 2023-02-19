@@ -15,13 +15,13 @@ namespace Realta.Contract.Models
         public int hore_id { get; set; }
         [Required(ErrorMessage = "user review is required")]
         public string? hore_user_review { get; set; }
+        [Required(ErrorMessage = "rating is required")]
+        [Range(1, 5, ErrorMessage = "Value for Rating must be between {1} and {2}.")]
+        public Byte hore_rating { get; set; } = 5;
         [Required(ErrorMessage = "user id is required")]
         public int hore_user_id { get; set; }
         [Required(ErrorMessage = "hotel id is required")]
         public int hore_hotel_id { get; set; }
-        [Required(ErrorMessage = "rating is required")]
-        [Range(1, 5, ErrorMessage = "Value for Rating must be between {1} and {2}.")]
-        public Byte hore_rating { get; set; } = 5;
         [AllowNull]
         public DateTime hore_created_on { get; set; } = DateTime.Now;
     }
