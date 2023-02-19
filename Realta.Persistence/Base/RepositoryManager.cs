@@ -14,17 +14,12 @@ namespace Realta.Persistence.Base
     {
         private AdoDbContext _adoContext;
         private IHotelsRepository? _hotelsRepository;
+        private IHotelReviewsRepository? _hotelReviewsRepository;
 
         public RepositoryManager(AdoDbContext adoContext) => _adoContext = adoContext;
 
-        public IHotelsRepository HotelsRepository
-        {
-            get
-            {
-                _hotelsRepository ??= new HotelsRepository(_adoContext);
-                return _hotelsRepository;
-            }
-        }
+        public IHotelsRepository HotelsRepository => _hotelsRepository ??= new HotelsRepository(_adoContext);
 
+        public IHotelReviewsRepository HotelReviewsRepository => _hotelReviewsRepository ??= new HotelReviewsRepository(_adoContext);
     }
 }

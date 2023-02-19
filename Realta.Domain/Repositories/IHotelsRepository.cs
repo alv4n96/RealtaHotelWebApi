@@ -15,6 +15,7 @@ namespace Realta.Domain.Repositories
         Hotels FindHotelsById(int hotelId);
         void Insert(Hotels hotels);
         void Edit(Hotels hotels);
+        void EditStatus(Hotels hotels);
         void Remove(Hotels hotels);
     }
 }

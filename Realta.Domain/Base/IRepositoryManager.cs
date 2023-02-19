@@ -10,5 +10,6 @@ namespace Realta.Domain.Base
     public interface IRepositoryManager
     {
         IHotelsRepository HotelsRepository { get; }
+        IHotelReviewsRepository HotelReviewsRepository { get; }
     }
 }

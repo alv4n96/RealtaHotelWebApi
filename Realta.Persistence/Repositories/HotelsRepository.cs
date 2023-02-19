@@ -18,8 +18,6 @@ namespace Realta.Persistence.Repositories
         {
         }
 
-
-
         public IEnumerable<Hotels> FindAllHotels()
         {
             IEnumerator<Hotels> dataSet = FindAll<Hotels>("[Hotel].[spSelectHotel];");
@@ -51,8 +49,6 @@ namespace Realta.Persistence.Repositories
 
             return item;
         }
-
-
 
         public IEnumerable<Hotels> FindHotelsByName(string name)
         {
@@ -112,8 +108,6 @@ namespace Realta.Persistence.Repositories
 
             return hotel;
         }
-
-
 
         public void Insert(Hotels hotels)
         {
@@ -218,6 +212,39 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
+        public void EditStatus(Hotels hotels)
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "UPDATE Hotel.Hotels " +
+                              "SET hotel_status = @hotel_status, " +
+                              "hotel_reason_status = @hotel_reason_status " +
+                              "WHERE hotel_id = @hotel_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotels.hotel_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@hotel_status",
+                        DataType = DbType.Boolean,
+                        Value = hotels.hotel_status
+                    },
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@hotel_reason_status",
+                        DataType = DbType.String,
+                        Value = string.IsNullOrEmpty(hotels.hotel_reason_status) ? DBNull.Value : hotels.hotel_reason_status
+                    }
+                }
+            };
+
+            _adoContext.ExecuteNonQuery(model);
+            _adoContext.Dispose();
+        }
+
         public void Remove(Hotels hotels)
         {
             SqlCommandModel model = new SqlCommandModel()
@@ -237,6 +264,6 @@ namespace Realta.Persistence.Repositories
             _adoContext.ExecuteNonQuery(model);
             _adoContext.Dispose();
         }
-        
+
     }
 }

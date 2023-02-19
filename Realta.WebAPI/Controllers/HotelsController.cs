@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
-using Realta.Contract.Models;
+using Realta.Contract.Models.Hotels;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
 using Realta.Persistence.Interface;
@@ -25,8 +25,8 @@ namespace Realta.WebAPI.Controllers
             _repositoryManager = repositoryManager;
         }
 
-        // create class for middleware auth
 
+        // create class for middleware auth
 
         // GET: api/<HotelsController>
         [HttpGet]
@@ -143,7 +143,7 @@ namespace Realta.WebAPI.Controllers
 
         // PUT api/<HotelsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] HotelsDto dto)
+        public IActionResult EditHotel (int id, [FromBody] HotelsDto dto)
         {
 
             if (dto == null)
@@ -187,6 +187,48 @@ namespace Realta.WebAPI.Controllers
             return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
         }
 
+
+        // PUT api/<HotelsController>/switch/5
+        [HttpPut("switch/{id}")]
+        public IActionResult Put(int id, [FromBody] HotelSwitchDto dto)
+        {
+
+            if (dto == null)
+            {
+                _logger.LogError("Hotels when update object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
+
+            var hotel = new Hotels()
+            {
+                hotel_id = id,
+                hotel_status = dto.hotel_status == "available" ? true : false,
+                hotel_reason_status = string.IsNullOrEmpty(dto.hotel_reason_status) ? string.Empty : dto.hotel_reason_status,
+            };
+
+            _repositoryManager.HotelsRepository.EditStatus(hotel);
+            if (hotel == null)
+            {
+                _logger.LogError("Hotels when update object sent from client is null");
+                return BadRequest("Internal edit record hotel error");
+            }
+
+            var dataResult = _repositoryManager.HotelsRepository.FindHotelsById(id);
+
+            var result = new HotelsDto
+            {
+                hotel_id = hotel.hotel_id,
+                hotel_name = dataResult.hotel_name,
+                hotel_status = hotel.hotel_status ? "available" : "unavailable",
+                hotel_reason_status = hotel.hotel_reason_status,
+                hotel_rating_star = dataResult.hotel_rating_star,
+                hotel_phonenumber = dataResult.hotel_phonenumber,
+                hotel_modified_date = dataResult.hotel_modified_date
+            };
+
+            return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
+        }
+
         // DELETE api/<HotelsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
@@ -199,14 +241,14 @@ namespace Realta.WebAPI.Controllers
             }
 
             //2. Find id first
-            var region = _repositoryManager.HotelsRepository.FindHotelsById(id);
-            if (region == null)
+            var hotel = _repositoryManager.HotelsRepository.FindHotelsById(id);
+            if (hotel == null)
             {
                 _logger.LogError($"Region with id {id} Record doesn't exist or wrong parameter");
                 return NotFound();
             }
 
-            _repositoryManager.HotelsRepository.Remove(region);
+            _repositoryManager.HotelsRepository.Remove(hotel);
             return Ok("Data Has Been Remove.");
         }
     }

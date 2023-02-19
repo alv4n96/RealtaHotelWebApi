@@ -4,7 +4,9 @@ WHERE TABLE_NAME = 'Hotels';
 
 USE WEBApiDbDemo
 
-SELECT * FROM Hotel.Hotels;
+SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 1;
+
+SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 2
 
 SELECT * FROM Users.users;
 
@@ -37,3 +39,16 @@ SET hotel_name = 'TestEdit Hotel Malang',
     hotel_modified_date = GETDATE(),  
     hotel_addr_id = 4  
 WHERE hotel_id = 11;
+
+
+UPDATE Hotel.Hotels
+SET hotel_status = @hotel_status,
+    hotel_reason_status = @hotel_reason_status
+WHERE hotel_id = @hotel_id;
+SELECT * FROM Hotel.Hotels WHERE hotel_id = 10;
+
+SELECT * FROM Hotel.Hotel_Reviews;
+
+SELECT DATA_TYPE, COLUMN_NAME, IS_NULLABLE 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Hotel_Reviews';
