@@ -63,8 +63,6 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-
-
         public async Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId)
         {
             SqlCommandModel model = new SqlCommandModel()

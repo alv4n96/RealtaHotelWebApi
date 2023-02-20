@@ -34,7 +34,7 @@ namespace Realta.Contract.Models.Hotels
 
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public DateTime hotel_modified_date { get; set; } = DateTime.Now;
+        public DateTime hotel_modified_date { get; set; }
         [Required(ErrorMessage = "hotel address is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? hotel_addr_id { get; set; }

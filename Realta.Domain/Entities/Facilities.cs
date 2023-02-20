@@ -22,18 +22,17 @@ namespace Realta.Domain.Entities
         [AllowNull]
         public int faci_max_number { get; set; }
         [AllowNull]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public faci_measure_unit? faci_measure_unit { get; set; }
+        public string? faci_measure_unit { get; set; }
         public string? faci_room_number { get; set; }
         public DateTime faci_startdate { get; set; }
         public DateTime faci_endate { get; set; }
-        public decimal   faci_low_price { get; set; }
-        public decimal faci_high_price { get; set; }
-        public decimal   faci_rate_price { get; set; }
+        public Decimal faci_low_price { get; set; }
+        public Decimal faci_high_price { get; set; }
+        public Decimal faci_rate_price { get; set; }
         [AllowNull]
-        public float faci_discount { get; set; }
+        public Decimal faci_discount { get; set; }
         [AllowNull]
-        public float  faci_tax_rate { get; set; }
+        public Decimal  faci_tax_rate { get; set; }
         [AllowNull]
         public DateTime faci_modified_date { get; set; }
         public int faci_cagro_id { get; set; }

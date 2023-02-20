@@ -23,6 +23,6 @@ namespace Realta.Contract.Models
         [Required(ErrorMessage = "hotel id is required")]
         public int hore_hotel_id { get; set; }
         [AllowNull]
-        public DateTime hore_created_on { get; set; } = DateTime.Now;
+        public DateTime hore_created_on { get; set; }
     }
 }

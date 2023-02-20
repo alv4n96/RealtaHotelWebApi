@@ -11,5 +11,7 @@ namespace Realta.Domain.Base
     {
         IHotelsRepository HotelsRepository { get; }
         IHotelReviewsRepository HotelReviewsRepository { get; }
+        IFacilitiesRepository FacilitiesRepository { get; }
+
     }
 }
