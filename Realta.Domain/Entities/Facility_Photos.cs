@@ -19,7 +19,7 @@ namespace Realta.Domain.Entities
         [AllowNull]
         public string fapho_photo_filename { get; set; }
         [AllowNull]
-        public Byte fapho_primary { get; set; }
+        public Boolean fapho_primary { get; set; }
         [AllowNull]
         public string fapho_url { get; set; }
         [AllowNull]

@@ -22,8 +22,7 @@ namespace Realta.Contract.Models
         [RegularExpression(@"^.*\.(jpg|jpeg|png)$", ErrorMessage = "Photo files must be JPEG or PNG files")]
         public string fapho_photo_filename { get; set; }
         [AllowNull]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Byte fapho_primary { get; set; }
+        public Boolean fapho_primary { get; set; }
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [RegularExpression(@"^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$", ErrorMessage = "URL Not valid.")]
