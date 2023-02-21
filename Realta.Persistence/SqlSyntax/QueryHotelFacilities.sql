@@ -15,28 +15,41 @@ SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id AND faci_id = @faci_id;
 
-SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
+SELECT * FROM [Hotel].Facilities WHERE faci_id = 30;
+
+DBCC CHECKIDENT ('Hotel.Facilities', RESEED,29 );
+
+DELETE FROM Hotel.Facilities WHERE faci_id = 30;
 
 SELECT * FROM Hotel.Facility_Photos;
+
 
 INSERT INTO Hotel.Facilities 
         (faci_name, faci_description, faci_max_number, faci_measure_unit, faci_room_number, faci_startdate, faci_endate, faci_low_price, faci_high_price, faci_discount, faci_tax_rate, faci_cagro_id, faci_hotel_id, faci_user_id)
 VALUES (@faci_name, @faci_description, @faci_max_number, faci_measure_unit, @faci_room_number, @faci_startdate, @faci_endate, @faci_low_price, @faci_high_price, @faci_discount, @faci_tax_rate, @faci_cagro_id, @faci_hotel_id, @faci_user_id);
 
 
-DBCC CHECKIDENT ('Hotel.Hotels', RESEED,10 );
 
 SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
 
-UPDATE Hotel.Hotels  
-SET hotel_name = 'TestEdit Hotel Malang',
-    hotel_description = 'Hotel dengan percobaan test post di Malang',
-    hotel_status = 1,
-    hotel_rating_star = 5,  
-    hotel_phonenumber = '+62 823 1234 5680',  
-    hotel_modified_date = GETDATE(),  
-    hotel_addr_id = 4  
-WHERE hotel_id = 11;
+UPDATE Hotel.Facilities
+SET 
+  faci_name = @faci_name,
+  faci_description = @faci_description,
+  faci_max_number = @faci_max_number,
+  faci_measure_unit = @faci_measure_unit,
+  faci_room_number = @faci_room_number,
+  faci_startdate = @faci_startdate,
+  faci_endate = @faci_endate,
+  faci_low_price = @faci_low_price,
+  faci_high_price = @faci_high_price,
+  faci_discount = @faci_discount,
+  faci_tax_rate = @faci_tax_rate,
+  faci_cagro_id = @faci_cagro_id,
+  faci_hotel_id = @faci_hotel_id,
+  faci_user_id = @faci_user_id
+WHERE faci_id = @faci_id;
+
 
 
 UPDATE Hotel.Hotels

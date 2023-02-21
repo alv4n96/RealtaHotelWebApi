@@ -8,13 +8,15 @@ BEGIN
     --Inser New Record to H.Faci_P_H for each insert/update data row in H.Faci
     SET NOCOUNT ON;
     
+
+
     UPDATE Hotel.Facilities
     SET 
         faci_rate_price = CASE
                              WHEN i.faci_discount IS NULL AND i.faci_tax_rate IS NULL THEN (i.faci_high_price + i.faci_low_price) / 2
-                             WHEN i.faci_discount IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100))
-                             WHEN i.faci_tax_rate IS NULL THEN ((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_discount /100)
-                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100))* (i.faci_discount/100)
+                             WHEN i.faci_discount IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) + (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100)))
+                             WHEN i.faci_tax_rate IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_discount/100)))
+                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * i.faci_discount/100)) +	( (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * i.faci_discount/100)) * (i.faci_tax_rate/100))
                          END,
         faci_modified_date = GETDATE()
     FROM inserted i
@@ -41,9 +43,9 @@ BEGIN
         ,@faci_high_price = i.faci_high_price
         ,@faci_rate_price = CASE
                              WHEN i.faci_discount IS NULL AND i.faci_tax_rate IS NULL THEN (i.faci_high_price + i.faci_low_price) / 2
-                             WHEN i.faci_discount IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100))
-                             WHEN i.faci_tax_rate IS NULL THEN ((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_discount /100)
-                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100)) * (i.faci_discount/100)
+                             WHEN i.faci_discount IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) + (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100)))
+                             WHEN i.faci_tax_rate IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_discount/100)))
+                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * i.faci_discount/100)) +	( (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * i.faci_discount/100)) * (i.faci_tax_rate/100))
                          END
         ,@faci_discount = ISNULL(i.faci_discount, 0)
         ,@faci_tax_rate =  ISNULL(i.faci_tax_rate, 0)
