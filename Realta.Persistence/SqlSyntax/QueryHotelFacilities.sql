@@ -10,7 +10,7 @@ SELECT NULL / 100
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
 
-SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%Hotel%';
+SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id AND faci_id = @faci_id;
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
 

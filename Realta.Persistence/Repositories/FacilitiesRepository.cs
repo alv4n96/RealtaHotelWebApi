@@ -44,9 +44,35 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public Task<Facilities> FindFacilitiesByIdAsync(int hotelId, int facilitiesId)
+        public async Task<Facilities> FindFacilitiesByIdAsync(int hotelId, int facilitiesId)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id AND faci_id = @faci_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotelId
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_id",
+                        DataType = DbType.Int32,
+                        Value = facilitiesId
+                    },
+                }
+            };
+
+            IAsyncEnumerator<Facilities> dataSet = FindAllAsync<Facilities>(model);
+            Facilities? item = dataSet.Current;
+
+            while (await dataSet.MoveNextAsync())
+            {
+                item = dataSet.Current;
+            }
+
+            return item;
         }
 
         public void Insert(Facilities hotelReviews)

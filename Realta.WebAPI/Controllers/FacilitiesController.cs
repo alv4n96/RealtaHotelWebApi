@@ -79,10 +79,57 @@ namespace Realta.WebAPI.Controllers
         }
 
         // GET api/<FacilitiesController>/5
-        [HttpGet("{id}")]
-        public string GetFacilitiesById(int id)
+        [HttpGet("{hotelId}/facilities/{faciId}", Name = "GetHotelFaciById")]
+        public async Task<IActionResult> GetFacilitiesByIdAsync(int hotelId, int faciId)
         {
-            return "value";
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
+
+            var hotelDto = new HotelsDto
+            {
+                hotel_id = hotels.hotel_id,
+                hotel_name = hotels.hotel_name,
+                hotel_rating_star = hotels.hotel_rating_star,
+                hotel_phonenumber = hotels.hotel_phonenumber,
+            };
+
+            var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
+
+            if (facilities != null)
+            {
+                var facilitiesDto = new FacilitiesDto()
+                {
+                    faci_id = facilities.faci_id,
+                    faci_name = facilities.faci_name,
+                    faci_room_number = facilities.faci_room_number,
+                    faci_max_number = facilities.faci_max_number,
+                    faci_measure_unit = facilities.faci_measure_unit,
+                    faci_startdate = facilities.faci_startdate,
+                    faci_endate = facilities.faci_endate,
+                    faci_low_price = facilities.faci_low_price,
+                    faci_high_price = facilities.faci_high_price,
+                    faci_discount = facilities.faci_discount,
+                    faci_rate_price = facilities.faci_rate_price,
+                    faci_tax_rate = facilities.faci_tax_rate
+                };
+                return Ok(new
+                {
+                    hotel = hotelDto,
+                    facilities = facilitiesDto
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    hotel = hotelDto,
+                    facilities = "Data Not Found!"
+                });
+            }
         }
 
         // POST api/<FacilitiesController>
