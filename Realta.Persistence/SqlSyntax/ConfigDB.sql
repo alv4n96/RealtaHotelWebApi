@@ -146,7 +146,7 @@ CREATE TABLE Hotel.Facilities
   faci_endate datetime NOT NULL,
   faci_low_price MONEY NOT NULL,
   faci_high_price MONEY NOT NULL,
-  faci_rate_price MONEY NOT NULL,
+  faci_rate_price MONEY NULL,
   faci_discount SMALLMONEY NULL,
   faci_tax_rate SMALLMONEY NULL,
   faci_modified_date datetime NULL,

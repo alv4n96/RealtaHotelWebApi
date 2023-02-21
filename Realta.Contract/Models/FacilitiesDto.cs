@@ -20,7 +20,7 @@ namespace Realta.Contract.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? faci_description { get; set; }
         [AllowNull]
-        public int faci_max_number { get; set; }
+        public int? faci_max_number { get; set; }
         [AllowNull]
         [MaxLength(15, ErrorMessage = "Max length for input is 15")]
         public string? faci_measure_unit { get; set; }
@@ -33,24 +33,22 @@ namespace Realta.Contract.Models
         public DateTime faci_endate { get; set; }
         [Required(ErrorMessage = "facility low price is required")]
         public Decimal faci_low_price { get; set; }
-        [Required(ErrorMessage = "__ is required")]
+        [Required(ErrorMessage = "faci high price is required")]
         public Decimal faci_high_price { get; set; }
-        [Required(ErrorMessage = "__ is required")]
         public Decimal faci_rate_price { get; set; }
         [AllowNull]
-        public Decimal faci_discount { get; set; }
+        public Decimal? faci_discount { get; set; }
         [AllowNull]
-        public Decimal faci_tax_rate { get; set; }
+        public Decimal? faci_tax_rate { get; set; }
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public DateTime faci_modified_date { get; set; }
-        [Required(ErrorMessage = "hotel id is required")]
+        [Required(ErrorMessage = "Cagro id is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int faci_cagro_id { get; set; }
-        [Required(ErrorMessage = "hotel id is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int faci_hotel_id { get; set; }
-        [Required(ErrorMessage = "hotel id is required")]
+        [Required(ErrorMessage = "user id is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int faci_user_id { get; set; }
     }

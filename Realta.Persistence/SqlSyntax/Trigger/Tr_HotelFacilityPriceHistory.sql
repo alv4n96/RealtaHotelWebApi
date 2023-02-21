@@ -14,7 +14,7 @@ BEGIN
                              WHEN i.faci_discount IS NULL AND i.faci_tax_rate IS NULL THEN (i.faci_high_price + i.faci_low_price) / 2
                              WHEN i.faci_discount IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100))
                              WHEN i.faci_tax_rate IS NULL THEN ((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_discount /100)
-                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100)) * (i.faci_discount/100)
+                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) - (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100))* (i.faci_discount/100)
                          END,
         faci_modified_date = GETDATE()
     FROM inserted i
@@ -39,7 +39,12 @@ BEGIN
         ,@faci_endate = i.faci_endate
         ,@faci_low_price =  i.faci_low_price
         ,@faci_high_price = i.faci_high_price
-        ,@faci_rate_price = i.faci_rate_price
+        ,@faci_rate_price = CASE
+                             WHEN i.faci_discount IS NULL AND i.faci_tax_rate IS NULL THEN (i.faci_high_price + i.faci_low_price) / 2
+                             WHEN i.faci_discount IS NULL THEN (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100))
+                             WHEN i.faci_tax_rate IS NULL THEN ((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_discount /100)
+                             ELSE (((i.faci_high_price + i.faci_low_price) / 2) * (i.faci_tax_rate/100)) * (i.faci_discount/100)
+                         END
         ,@faci_discount = ISNULL(i.faci_discount, 0)
         ,@faci_tax_rate =  ISNULL(i.faci_tax_rate, 0)
         ,@faci_modified_date = GETDATE()

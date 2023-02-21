@@ -2,11 +2,14 @@
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'Facilities';
 
+-- ALTER TABLE Hotel.Facilities ALTER COLUMN faci_rate_price MONEY NULL;
+
+
 USE WEBApiDbDemo
 
 SELECT faci_measure_unit FROM Hotel.Facilities;
 
-SELECT NULL / 100
+SELECT * from hotel.Facilities
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
 
@@ -16,10 +19,9 @@ SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
 
 SELECT * FROM Hotel.Facility_Photos;
 
-UPDATE Hotel.Facility_Photos
-SET fapho_primary = 0
-WHERE fapho_id = 1; 
-SELECT * FROM Hotel.Facility_Photos;
+INSERT INTO Hotel.Facilities 
+        (faci_name, faci_description, faci_max_number, faci_measure_unit, faci_room_number, faci_startdate, faci_endate, faci_low_price, faci_high_price, faci_discount, faci_tax_rate, faci_cagro_id, faci_hotel_id, faci_user_id)
+VALUES (@faci_name, @faci_description, @faci_max_number, faci_measure_unit, @faci_room_number, @faci_startdate, @faci_endate, @faci_low_price, @faci_high_price, @faci_discount, @faci_tax_rate, @faci_cagro_id, @faci_hotel_id, @faci_user_id);
 
 
 DBCC CHECKIDENT ('Hotel.Hotels', RESEED,10 );

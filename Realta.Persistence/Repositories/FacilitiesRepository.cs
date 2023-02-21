@@ -75,9 +75,95 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public void Insert(Facilities hotelReviews)
+        public void Insert(Facilities facilities)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "INSERT INTO Hotel.Facilities " +
+                "(faci_name, faci_description, faci_max_number, faci_measure_unit, faci_room_number, faci_startdate, faci_endate, faci_low_price, faci_high_price, faci_discount, faci_tax_rate, faci_cagro_id, faci_hotel_id, faci_user_id)" +
+                "VALUES(@faci_name, @faci_description, @faci_max_number, " +
+                "@faci_measure_unit, @faci_room_number, @faci_startdate, " +
+                "@faci_endate, @faci_low_price, @faci_high_price, " +
+                "@faci_discount, @faci_tax_rate, @faci_cagro_id, " +
+                "@faci_hotel_id, @faci_user_id);" +
+                "SELECT CAST(scope_identity() as int);",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_name",
+                        DataType = DbType.String,
+                        Value = facilities.faci_name
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_description",
+                        DataType = DbType.String,
+                        Value = string.IsNullOrEmpty(facilities.faci_description) ? DBNull.Value : facilities.faci_description
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_max_number",
+                        DataType = DbType.Int32,
+                        Value = facilities.faci_max_number == 0 ? DBNull.Value : facilities.faci_max_number
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_measure_unit",
+                        DataType = DbType.String,
+                        Value = string.IsNullOrEmpty(facilities.faci_measure_unit) ? DBNull.Value : facilities.faci_measure_unit
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_room_number",
+                        DataType = DbType.String,
+                        Value = facilities.faci_room_number
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_startdate",
+                        DataType = DbType.DateTime,
+                        Value = facilities.faci_startdate
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_endate",
+                        DataType = DbType.DateTime,
+                        Value = facilities.faci_endate
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_low_price",
+                        DataType = DbType.Decimal,
+                        Value = facilities.faci_low_price
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_high_price",
+                        DataType = DbType.Decimal,
+                        Value = facilities.faci_high_price
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_discount",
+                        DataType = DbType.Decimal,
+                        Value = facilities.faci_discount == 0 ? DBNull.Value : facilities.faci_discount
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_tax_rate",
+                        DataType = DbType.Decimal,
+                        Value = facilities.faci_tax_rate == 0 ? DBNull.Value : facilities.faci_tax_rate
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_cagro_id",
+                        DataType = DbType.Int32,
+                        Value = facilities.faci_cagro_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = facilities.faci_hotel_id
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_user_id",
+                        DataType = DbType.Int32,
+                        Value = facilities.faci_user_id
+                    },
+                }
+            };
+
+            facilities.faci_id = _adoContext.ExecuteScalar<int>(model);
+            _adoContext.Dispose();
         }
         public void Edit(Facilities hotelReviews)
         {

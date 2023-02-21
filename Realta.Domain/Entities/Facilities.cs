@@ -20,7 +20,7 @@ namespace Realta.Domain.Entities
         [AllowNull]
         public string? faci_description { get; set; }
         [AllowNull]
-        public int faci_max_number { get; set; }
+        public int? faci_max_number { get; set; }
         [AllowNull]
         public string? faci_measure_unit { get; set; }
         public string? faci_room_number { get; set; }
