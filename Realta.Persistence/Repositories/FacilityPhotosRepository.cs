@@ -76,7 +76,44 @@ namespace Realta.Persistence.Repositories
 
         public void Insert(Facility_Photos facilityPhotos)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "INSERT INTO Hotel.Facility_Photos " +
+                "(fapho_thumbnail_filename, fapho_photo_filename, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id) " +
+                "VALUES(@fapho_thumbnail_filename, @fapho_photo_filename, @fapho_primary, @fapho_url, GETDATE(), @fapho_faci_id); " +
+                "SELECT CAST(scope_identity() as int);",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_thumbnail_filename",
+                        DataType = DbType.String,
+                        Value = facilityPhotos.fapho_thumbnail_filename
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_photo_filename",
+                        DataType = DbType.String,
+                        Value = facilityPhotos.fapho_photo_filename
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_primary",
+                        DataType = DbType.Boolean,
+                        Value = facilityPhotos.fapho_primary
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_url",
+                        DataType = DbType.String,
+                        Value = facilityPhotos.fapho_url
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_faci_id",
+                        DataType = DbType.Int32,
+                        Value = facilityPhotos.fapho_faci_id
+                    },
+                }
+            };
+
+            facilityPhotos.fapho_id = _adoContext.ExecuteScalar<int>(model);
+            _adoContext.Dispose();
         }
 
         public void Edit(Facility_Photos facilityPhotos)

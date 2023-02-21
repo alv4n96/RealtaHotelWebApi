@@ -96,7 +96,7 @@ namespace Realta.WebAPI.Controllers
         }
 
         // GET api/<FacilityPhotosController>/5
-        [HttpGet("{hotelId}/facilities/{faciId}/photos/{faphoId}")]
+        [HttpGet("{hotelId}/facilities/{faciId}/photos/{faphoId}", Name = "GetHotelFacilityPhotosById")]
         public async Task<IActionResult> GetByIdAsync(int hotelId, int faciId, int faphoId)
         {
             var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
@@ -169,9 +169,53 @@ namespace Realta.WebAPI.Controllers
         }
 
         // POST api/<FacilityPhotosController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("{hotelId}/facilities/{faciId}/photos")]
+        public async Task<IActionResult> PostAsync(int hotelId, int faciId, [FromBody] FacilityPhotosDto dto)
         {
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Hotel doesn't exist or wrong parameter");
+            }
+
+            var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
+            if (facilities == null)
+            {
+                _logger.LogError("facility object sent from client is null");
+                return BadRequest("Facility doesn't exist or wrong parameter");
+            }
+
+            if (dto == null)
+            {
+                _logger.LogError("Hotel region object sent from client is null");
+                return BadRequest("Some parameters are missing");
+            }
+
+            var facilityPhotos = new Facility_Photos()
+            {
+                fapho_thumbnail_filename = dto.fapho_thumbnail_filename,
+                fapho_photo_filename = dto.fapho_photo_filename,
+                fapho_primary = dto.fapho_primary,
+                fapho_url = dto.fapho_url,
+                fapho_faci_id = faciId
+            };
+
+            _repositoryManager.FacilityPhotosRepository.Insert(facilityPhotos);
+
+            var result = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, facilityPhotos.fapho_id);
+
+            var resDto = new FacilityPhotosDto
+            {
+                fapho_id = result.fapho_id,
+                fapho_thumbnail_filename = result.fapho_thumbnail_filename,
+                fapho_photo_filename = result.fapho_photo_filename,
+                fapho_primary = result.fapho_primary,
+                fapho_url = result.fapho_url,
+                fapho_modified_date = result.fapho_modified_date
+            };
+
+            return CreatedAtRoute("GetHotelFacilityPhotosById", new { hotelId = hotelId, faciId = resDto.fapho_faci_id, faphoId = resDto.fapho_id}, resDto);
         }
 
         // PUT api/<FacilityPhotosController>/5

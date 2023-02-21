@@ -152,7 +152,7 @@ namespace Realta.WebAPI.Controllers
 
             if (dto == null)
             {
-                _logger.LogError("Hotel region object sent from client is null");
+                _logger.LogError("Hotel facility photos object sent from client is null");
                 return BadRequest("Some parameters are missing");
             }
 
