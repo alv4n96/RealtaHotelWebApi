@@ -219,15 +219,83 @@ namespace Realta.WebAPI.Controllers
         }
 
         // PUT api/<FacilityPhotosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{hotelId}/facilities/{faciId}/photos/{faphoId}")]
+        public async Task<IActionResult> PutAsync(int hotelId, int faciId, int faphoId, [FromBody] FacilityPhotosDto dto)
         {
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Hotel doesn't exist or wrong parameter");
+            }
+
+            var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
+            if (facilities == null)
+            {
+                _logger.LogError("facility object sent from client is null");
+                return BadRequest("Facility doesn't exist or wrong parameter");
+            }
+
+            if (dto == null)
+            {
+                _logger.LogError("Hotel region object sent from client is null");
+                return BadRequest("Some parameters are missing");
+            }
+
+            var facilityPhotos = new Facility_Photos()
+            {
+                fapho_id = faphoId,
+                fapho_thumbnail_filename = dto.fapho_thumbnail_filename,
+                fapho_photo_filename = dto.fapho_photo_filename,
+                fapho_primary = dto.fapho_primary,
+                fapho_url = dto.fapho_url,
+                fapho_faci_id = faciId
+            };
+
+            _repositoryManager.FacilityPhotosRepository.Edit(facilityPhotos);
+
+            var result = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, faphoId);
+
+            var resDto = new FacilityPhotosDto
+            {
+                fapho_id = result.fapho_id,
+                fapho_thumbnail_filename = result.fapho_thumbnail_filename,
+                fapho_photo_filename = result.fapho_photo_filename,
+                fapho_primary = result.fapho_primary,
+                fapho_url = result.fapho_url,
+                fapho_modified_date = result.fapho_modified_date
+            };
+
+            return CreatedAtRoute("GetHotelFacilityPhotosById", new { hotelId = hotelId, faciId = resDto.fapho_faci_id, faphoId = resDto.fapho_id }, resDto);
         }
 
         // DELETE api/<FacilityPhotosController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{hotelId}/facilities/{faciId}/photos/{faphoId}")]
+        public async Task<IActionResult> DeleteAsync(int hotelId, int faciId, int faphoId)
         {
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Hotel doesn't exist or wrong parameter");
+            }
+
+            var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
+            if (facilities == null)
+            {
+                _logger.LogError("facility object sent from client is null");
+                return BadRequest("Facility doesn't exist or wrong parameter");
+            }
+
+            var facilityPhotos = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, faphoId);
+            if (facilityPhotos == null)
+            {
+                _logger.LogError($"Facility Photos with id {faphoId} Record doesn't exist or wrong parameter");
+                return NotFound("Facility Photos id Not Found!");
+            }
+
+            _repositoryManager.FacilityPhotosRepository.Remove(facilityPhotos);
+            return Ok("Data Has Been Remove.");
         }
     }
 }

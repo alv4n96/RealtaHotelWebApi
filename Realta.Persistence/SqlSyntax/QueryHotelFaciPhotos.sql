@@ -17,7 +17,6 @@ SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id AND faci_id 
 
 SELECT * FROM [Hotel].Facilities WHERE faci_id = 30;
 
-DBCC CHECKIDENT ('Hotel.Facilities', RESEED,29 );
 
 DELETE FROM Hotel.Facilities WHERE faci_id = 30;
 
@@ -29,27 +28,20 @@ INSERT INTO Hotel.Facility_Photos
 VALUES  (@fapho_thumbnail_filename, @fapho_photo_filename, @fapho_primary, @fapho_url, GETDATE(), @fapho_faci_id);
 
 
+DELETE FROM Hotel.Facility_Photos WHERE fapho_id = @fapho_id;
+DBCC CHECKIDENT ('Hotel.Facility_Photos', RESEED,7 );
 
 SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
 
-UPDATE Hotel.Facilities
+UPDATE Hotel.Facility_Photos
 SET 
-  faci_name = @faci_name,
-  faci_description = @faci_description,
-  faci_max_number = @faci_max_number,
-  faci_measure_unit = @faci_measure_unit,
-  faci_room_number = @faci_room_number,
-  faci_startdate = @faci_startdate,
-  faci_endate = @faci_endate,
-  faci_low_price = @faci_low_price,
-  faci_high_price = @faci_high_price,
-  faci_discount = @faci_discount,
-  faci_tax_rate = @faci_tax_rate,
-  faci_cagro_id = @faci_cagro_id,
-  faci_hotel_id = @faci_hotel_id,
-  faci_user_id = @faci_user_id
-WHERE faci_id = @faci_id;
-
+    fapho_thumbnail_filename = @fapho_thumbnail_filename,
+    fapho_photo_filename = @fapho_photo_filename,
+    fapho_primary = @fapho_primary,
+    fapho_url = @fapho_url,
+    fapho_modified_date = GETDATE(),
+    fapho_faci_id = @fapho_faci_id
+WHERE fapho_id = @fapho_id
 
 
 UPDATE Hotel.Hotels

@@ -286,8 +286,8 @@ namespace Realta.WebAPI.Controllers
             var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
             if (facilities == null)
             {
-                _logger.LogError($"Reviews with id {faciId} Record doesn't exist or wrong parameter");
-                return NotFound();
+                _logger.LogError($"Facility with id {faciId} Record doesn't exist or wrong parameter");
+                return NotFound("Facility Not Found");
             }
 
             _repositoryManager.FacilitiesRepository.Remove(facilities);
