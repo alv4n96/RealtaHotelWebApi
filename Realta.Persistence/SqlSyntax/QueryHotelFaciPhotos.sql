@@ -9,7 +9,7 @@ USE WEBApiDbDemo
 
 SELECT faci_measure_unit FROM Hotel.Facilities;
 
-SELECT * from hotel.Facility_Photos WHERE fapho_faci_id = @fapho_faci_id;
+SELECT * from hotel.Facility_Photos WHERE fapho_faci_id = @fapho_faci_id AND fapho_id = @fapho_id;
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
 

@@ -43,9 +43,35 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public Task<Facility_Photos> FindFacilityPhotosByIdAsync(int faciId, int faPhoId)
+        public async Task<Facility_Photos> FindFacilityPhotosByIdAsync(int faciId, int faphoId)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT * from hotel.Facility_Photos WHERE fapho_faci_id = @fapho_faci_id AND fapho_id = @fapho_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_faci_id",
+                        DataType = DbType.Int32,
+                        Value = faciId
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@fapho_id",
+                        DataType = DbType.Int32,
+                        Value = faphoId
+                    },
+                }
+            };
+
+            IAsyncEnumerator<Facility_Photos> dataSet = FindAllAsync<Facility_Photos>(model);
+            Facility_Photos? item = dataSet.Current;
+
+            while (await dataSet.MoveNextAsync())
+            {
+                item = dataSet.Current;
+            }
+
+            return item;
         }
 
         public void Insert(Facility_Photos facilityPhotos)

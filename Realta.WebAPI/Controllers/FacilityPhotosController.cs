@@ -96,10 +96,76 @@ namespace Realta.WebAPI.Controllers
         }
 
         // GET api/<FacilityPhotosController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{hotelId}/facilities/{faciId}/photos/{faphoId}")]
+        public async Task<IActionResult> GetByIdAsync(int hotelId, int faciId, int faphoId)
         {
-            return "value";
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Hotel doesn't exist or wrong parameter");
+            }
+
+            var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
+            if (facilities == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Facility doesn't exist or wrong parameter");
+            }
+
+            var hotelDto = new HotelsDto
+            {
+                hotel_id = hotels.hotel_id,
+                hotel_name = hotels.hotel_name,
+                hotel_rating_star = hotels.hotel_rating_star,
+                hotel_phonenumber = hotels.hotel_phonenumber,
+            };
+
+            var facilitiesDto = new FacilitiesDto()
+            {
+                faci_id = facilities.faci_id,
+                faci_name = facilities.faci_name,
+                faci_room_number = facilities.faci_room_number,
+                faci_max_number = facilities.faci_max_number,
+                faci_measure_unit = facilities.faci_measure_unit,
+                faci_startdate = facilities.faci_startdate,
+                faci_endate = facilities.faci_endate,
+                faci_low_price = facilities.faci_low_price,
+                faci_high_price = facilities.faci_high_price,
+                faci_discount = facilities.faci_discount,
+                faci_rate_price = facilities.faci_rate_price,
+                faci_tax_rate = facilities.faci_tax_rate
+            };
+
+            var facilityPhotos = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, faphoId);
+
+            if (facilityPhotos != null)
+            {
+                var facilityPhotosDto = new FacilityPhotosDto
+                {
+                    fapho_id = facilityPhotos.fapho_id,
+                    fapho_thumbnail_filename = facilityPhotos.fapho_thumbnail_filename,
+                    fapho_photo_filename = facilityPhotos.fapho_photo_filename,
+                    fapho_primary = facilityPhotos.fapho_primary,
+                    fapho_url = facilityPhotos.fapho_url,
+                    fapho_modified_date = facilityPhotos.fapho_modified_date
+                };
+                return Ok(new
+                {
+                    hotel = hotelDto,
+                    facility = facilitiesDto,
+                    photos = facilityPhotosDto
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    hotel = hotelDto,
+                    facilities = facilitiesDto,
+                    photos = "Data Not Found!"
+                });
+            }
         }
 
         // POST api/<FacilityPhotosController>
