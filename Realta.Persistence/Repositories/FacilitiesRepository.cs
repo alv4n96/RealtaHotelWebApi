@@ -270,9 +270,23 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-        public void Remove(Facilities hotelReviews)
+        public void Remove(Facilities facilities)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "DELETE FROM Hotel.Facilities WHERE faci_id = @faci_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_id",
+                        DataType = DbType.Int32,
+                        Value = facilities.faci_id
+                    }
+                }
+            };
+
+            _adoContext.ExecuteNonQuery(model);
+            _adoContext.Dispose();
         }
 
         public IEnumerable<Facilities> FindAllFacilities()
