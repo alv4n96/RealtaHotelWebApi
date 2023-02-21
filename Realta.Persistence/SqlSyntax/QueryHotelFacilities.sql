@@ -6,6 +6,8 @@ USE WEBApiDbDemo
 
 SELECT faci_measure_unit FROM Hotel.Facilities;
 
+SELECT NULL / 100
+
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%Hotel%';
