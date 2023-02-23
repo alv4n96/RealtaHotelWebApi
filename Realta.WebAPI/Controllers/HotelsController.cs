@@ -52,12 +52,12 @@ namespace Realta.WebAPI.Controllers
         public IActionResult GetHotelByName(string name)
         {
             var hotels = _repositoryManager.HotelsRepository.FindHotelsByName(name);
-            if (hotels == null)
+            if (hotels.ToList().Count() == 0)
             {
                 _logger.LogError("Hotel object sent from client is null");
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
-
+            Console.WriteLine(hotels);
 
             var hotelDto = hotels.Select(h => new HotelsDto
             {
@@ -138,7 +138,8 @@ namespace Realta.WebAPI.Controllers
                 hotel_addr_id = hotel.hotel_addr_id
             };
             //forward 
-            return CreatedAtRoute("GetHotelsById", new { id = resDto.hotel_id }, resDto);
+            //return CreatedAtRoute("GetHotelsById", new { id = resDto.hotel_id }, resDto);
+            return Ok(resDto);
         }
 
         // PUT api/<HotelsController>/5
@@ -184,7 +185,8 @@ namespace Realta.WebAPI.Controllers
                 hotel_addr_id = hotel.hotel_addr_id
             };
 
-            return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
+            //return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
+            return Ok(result);
         }
 
 
