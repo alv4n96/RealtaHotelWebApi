@@ -51,7 +51,7 @@ namespace Realta.WebAPI.Controllers
                 return Ok(new
                 {
                     hotel = hotelDto,
-                    reviews = "there aren\'t any facility for this hotel yet"
+                    facilities = "there aren\'t any facility for this hotel yet"
                 });
             }
             else
@@ -74,7 +74,7 @@ namespace Realta.WebAPI.Controllers
                 return Ok(new
                 {
                     hotel = hotelDto,
-                    reviews = hotelReviewsDto
+                    facilities = hotelReviewsDto
                 });
             }
         }
@@ -199,7 +199,8 @@ namespace Realta.WebAPI.Controllers
             };
 
             //forward 
-            return CreatedAtRoute("GetHotelFaciById", new { hotelId = result.faci_hotel_id, faciId = result.faci_id }, resDto);
+            //return CreatedAtRoute("GetHotelFaciById", new { hotelId = result.faci_hotel_id, faciId = result.faci_id }, resDto);
+            return Ok(resDto);
         }
 
         // PUT api/<FacilitiesController>/5
@@ -268,7 +269,8 @@ namespace Realta.WebAPI.Controllers
             };
 
             //forward 
-            return CreatedAtRoute("GetHotelFaciById", new { hotelId = result.faci_hotel_id, faciId = result.faci_id }, resDto);
+            //return CreatedAtRoute("GetHotelFaciById", new { hotelId = result.faci_hotel_id, faciId = result.faci_id }, resDto);
+            return Ok(resDto);
         }
 
         // DELETE api/<FacilitiesController>/5
