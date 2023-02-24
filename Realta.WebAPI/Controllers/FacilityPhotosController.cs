@@ -215,7 +215,8 @@ namespace Realta.WebAPI.Controllers
                 fapho_modified_date = result.fapho_modified_date
             };
 
-            return CreatedAtRoute("GetHotelFacilityPhotosById", new { hotelId = hotelId, faciId = resDto.fapho_faci_id, faphoId = resDto.fapho_id}, resDto);
+            //return CreatedAtRoute("GetHotelFacilityPhotosById", new { hotelId = hotelId, faciId = resDto.fapho_faci_id, faphoId = resDto.fapho_id}, resDto);
+            return Ok(resDto);
         }
 
         // PUT api/<FacilityPhotosController>/5
@@ -266,7 +267,8 @@ namespace Realta.WebAPI.Controllers
                 fapho_modified_date = result.fapho_modified_date
             };
 
-            return CreatedAtRoute("GetHotelFacilityPhotosById", new { hotelId = hotelId, faciId = resDto.fapho_faci_id, faphoId = resDto.fapho_id }, resDto);
+            //return CreatedAtRoute("GetHotelFacilityPhotosById", new { hotelId = hotelId, faciId = resDto.fapho_faci_id, faphoId = resDto.fapho_id }, resDto);
+            return Ok(resDto);
         }
 
         // DELETE api/<FacilityPhotosController>/5
