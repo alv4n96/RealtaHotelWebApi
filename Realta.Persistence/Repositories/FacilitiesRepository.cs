@@ -165,6 +165,7 @@ namespace Realta.Persistence.Repositories
             facilities.faci_id = _adoContext.ExecuteScalar<int>(model);
             _adoContext.Dispose();
         }
+        
         public void Edit(Facilities facilities)
         {
             SqlCommandModel model = new SqlCommandModel()
