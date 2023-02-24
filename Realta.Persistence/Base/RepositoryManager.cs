@@ -16,7 +16,8 @@ namespace Realta.Persistence.Base
         private IHotelsRepository? _hotelsRepository;
         private IHotelReviewsRepository? _hotelReviewsRepository;
         private IFacilitiesRepository? _facilitiesRepository;
-        private IFacilityPhotosRepository _facilityPhotosRepository;
+        private IFacilityPhotosRepository? _facilityPhotosRepository;
+        private IFacilityPriceHistoryRepository? _facilityPriceHistoryRepository;
 
         public RepositoryManager(AdoDbContext adoContext) => _adoContext = adoContext;
 
@@ -27,5 +28,7 @@ namespace Realta.Persistence.Base
         public IFacilitiesRepository FacilitiesRepository => _facilitiesRepository ??= new FacilitiesRepository(_adoContext);
 
         public IFacilityPhotosRepository FacilityPhotosRepository => _facilityPhotosRepository ??= new FacilityPhotosRepository(_adoContext);
+
+        public IFacilityPriceHistoryRepository FacilityPriceHistoryRepository => _facilityPriceHistoryRepository ??= new FacilityPriceHistoryRepository(_adoContext);
     }
 }
