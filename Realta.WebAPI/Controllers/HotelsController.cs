@@ -57,9 +57,8 @@ namespace Realta.WebAPI.Controllers
                 _logger.LogError("Hotel object sent from client is null");
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
-            Console.WriteLine(hotels);
 
-            var hotelDto = hotels.Select(h => new HotelsDto
+           var hotelDto = hotels.Select(h => new HotelsDto
             {
                 hotel_id = h.hotel_id,
                 hotel_name = h.hotel_name,
@@ -138,7 +137,6 @@ namespace Realta.WebAPI.Controllers
                 hotel_addr_id = hotel.hotel_addr_id
             };
             //forward 
-            //return CreatedAtRoute("GetHotelsById", new { id = resDto.hotel_id }, resDto);
             return Ok(resDto);
         }
 
@@ -222,7 +220,7 @@ namespace Realta.WebAPI.Controllers
                 hotel_modified_date = dataResult.hotel_modified_date
             };
 
-            return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
+            return Ok(result);
         }
 
         // DELETE api/<HotelsController>/5
