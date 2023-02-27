@@ -12,6 +12,8 @@ namespace Realta.Contract.Models.Hotels
     public class HotelsDto
     {
         [Required(ErrorMessage = "hotel id is required")]
+        // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int hotel_id { get; set; }
 
         [Required(ErrorMessage = "hotel name is required")]
