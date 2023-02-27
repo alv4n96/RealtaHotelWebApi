@@ -167,7 +167,6 @@ namespace Realta.WebAPI.Controllers
             };
 
             //forward 
-            //return CreatedAtRoute("GetHotelReviewsById", new { hotelId = resDto.hore_hotel_id, hotelReviewsId = resDto.hore_id }, resDto);
             return Ok(resDto);
         }
 
@@ -211,7 +210,6 @@ namespace Realta.WebAPI.Controllers
                 hore_hotel_id = dataResult.hore_hotel_id
             };
 
-            //return CreatedAtRoute("GetHotelReviewsById", new { hotelId = resDto.hore_hotel_id, hotelReviewsId = resDto.hore_id }, resDto);
             return Ok(resDto);
         }
 
