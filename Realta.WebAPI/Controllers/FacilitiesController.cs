@@ -198,8 +198,12 @@ namespace Realta.WebAPI.Controllers
                 faci_user_id = result.faci_user_id,
             };
 
-            //forward 
-            //return CreatedAtRoute("GetHotelFaciById", new { hotelId = result.faci_hotel_id, faciId = result.faci_id }, resDto);
+            if (resDto == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record Data Error!");
+            }
+
             return Ok(resDto);
         }
 
@@ -269,7 +273,6 @@ namespace Realta.WebAPI.Controllers
             };
 
             //forward 
-            //return CreatedAtRoute("GetHotelFaciById", new { hotelId = result.faci_hotel_id, faciId = result.faci_id }, resDto);
             return Ok(resDto);
         }
 
