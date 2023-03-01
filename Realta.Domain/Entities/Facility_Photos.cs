@@ -18,6 +18,10 @@ namespace Realta.Domain.Entities
         public string fapho_thumbnail_filename { get; set; }
         [AllowNull]
         public string fapho_photo_filename { get; set; }
+        public string? fapho_original_filename { get; set; }
+        [AllowNull]
+        public short fapho_file_size { get; set; }
+        public string? fapho_file_type { get; set; }
         [AllowNull]
         public Boolean fapho_primary { get; set; }
         [AllowNull]
