@@ -26,6 +26,6 @@ namespace Realta.Domain.Entities
         public string? hotel_phonenumber { get; set; }
         [AllowNull]
         public DateTime hotel_modified_date { get; set; } = DateTime.Now;
-        public int hotel_addr_id { get; set; } 
+        public int? hotel_addr_id { get; set; } 
     }
 }
