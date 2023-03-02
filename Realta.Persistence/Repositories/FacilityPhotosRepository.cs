@@ -87,32 +87,32 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_thumbnail_filename",
                         DataType = DbType.String,
-                        Value = facilityPhotos.fapho_thumbnail_filename
+                        Value = facilityPhotos.FaphoThumbnailFilename
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_photo_filename",
                         DataType = DbType.String,
-                        Value = facilityPhotos.fapho_photo_filename
+                        Value = facilityPhotos.FaphoPhotoFilename
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_primary",
                         DataType = DbType.Boolean,
-                        Value = facilityPhotos.fapho_primary
+                        Value = facilityPhotos.FaphoPrimary
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_url",
                         DataType = DbType.String,
-                        Value = facilityPhotos.fapho_url
+                        Value = facilityPhotos.FaphoUrl
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_faci_id",
                         DataType = DbType.Int32,
-                        Value = facilityPhotos.fapho_faci_id
+                        Value = facilityPhotos.FaphoFaciId
                     },
                 }
             };
 
-            facilityPhotos.fapho_id = _adoContext.ExecuteScalar<int>(model);
+            facilityPhotos.FaphoId = _adoContext.ExecuteScalar<int>(model);
             _adoContext.Dispose();
         }
 
@@ -134,32 +134,32 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_id",
                         DataType = DbType.Int32,
-                        Value = facilityPhotos.fapho_id
+                        Value = facilityPhotos.FaphoId
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_thumbnail_filename",
                         DataType = DbType.String,
-                        Value = facilityPhotos.fapho_thumbnail_filename
+                        Value = facilityPhotos.FaphoThumbnailFilename
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_photo_filename",
                         DataType = DbType.String,
-                        Value = facilityPhotos.fapho_photo_filename
+                        Value = facilityPhotos.FaphoPhotoFilename
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_primary",
                         DataType = DbType.Boolean,
-                        Value = facilityPhotos.fapho_primary
+                        Value = facilityPhotos.FaphoPrimary
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_url",
                         DataType = DbType.String,
-                        Value = facilityPhotos.fapho_url
+                        Value = facilityPhotos.FaphoUrl
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_faci_id",
                         DataType = DbType.Int32,
-                        Value = facilityPhotos.fapho_faci_id
+                        Value = facilityPhotos.FaphoFaciId
                     },
                 }
             };
@@ -179,7 +179,7 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@fapho_id",
                         DataType = DbType.Int32,
-                        Value = facilityPhotos.fapho_id
+                        Value = facilityPhotos.FaphoId
                     }
                 }
             };

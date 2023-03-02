@@ -15,6 +15,6 @@ namespace Realta.Domain.Repositories
         void Insert(FacilityPhotos facilityPhotos);
         void Edit(FacilityPhotos facilityPhotos);
         void Remove(FacilityPhotos facilityPhotos);
-        Task FindFacilityPhotosByIdAsync(int faphoId);
+        //Task FindFacilityPhotosByIdAsync(int faphoId);
     }
 }
