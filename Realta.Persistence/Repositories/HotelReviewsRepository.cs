@@ -34,27 +34,27 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_user_review",
                         DataType = DbType.String,
-                        Value = hotelReviews.hore_user_review
+                        Value = hotelReviews.HoreUserReview
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_rating",
                         DataType = DbType.Byte,
-                        Value = hotelReviews.hore_rating
+                        Value = hotelReviews.HoreRating
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_user_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.hore_user_id
+                        Value = hotelReviews.HoreUserId
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_hotel_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.hore_hotel_id
+                        Value = hotelReviews.HoreHotelId
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.hore_id
+                        Value = hotelReviews.HoreId
                     },
                 }
             };
@@ -131,27 +131,27 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_user_review",
                         DataType = DbType.String,
-                        Value = hotelReviews.hore_user_review
+                        Value = hotelReviews.HoreUserReview
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_rating",
                         DataType = DbType.Byte,
-                        Value = hotelReviews.hore_rating
+                        Value = hotelReviews.HoreRating
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_user_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.hore_user_id
+                        Value = hotelReviews.HoreUserId
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_hotel_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.hore_hotel_id
+                        Value = hotelReviews.HoreHotelId
                     },
                 }
             };
 
-            hotelReviews.hore_id = _adoContext.ExecuteScalar<int>(model);
+            hotelReviews.HoreId = _adoContext.ExecuteScalar<int>(model);
             _adoContext.Dispose();
         }
 
@@ -166,7 +166,7 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.hore_id
+                        Value = hotelReviews.HoreId
                     }
                 }
             };
