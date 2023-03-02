@@ -15,12 +15,15 @@ namespace Realta.WebAPI.Controllers
     {
         private readonly ILoggerManager _logger;
         private IRepositoryManager _repositoryManager;
+        private readonly IServiceManager _serviceManager;
 
-        public FacilityPhotosController(ILoggerManager logger, IRepositoryManager repositoryManager)
+        public FacilityPhotosController(ILoggerManager logger, IRepositoryManager repositoryManager, IServiceManager serviceManager)
         {
             _logger = logger;
             _repositoryManager = repositoryManager;
+            _serviceManager = serviceManager;
         }
+
 
         // GET: api/<FacilityPhotosController>
         [HttpGet("{hotelId}/facilities/{faciId}/photos")]
@@ -169,7 +172,7 @@ namespace Realta.WebAPI.Controllers
         }
 
         // POST api/<FacilityPhotosController>
-        [HttpPost("{hotelId}/facilities/{faciId}/photos")]
+        [HttpPost("{hotelId}/facilities/{faciId}/photos"), DisableRequestSizeLimit]
         public async Task<IActionResult> PostAsync(int hotelId, int faciId, [FromBody] FacilityPhotosDto dto)
         {
             var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
@@ -191,8 +194,52 @@ namespace Realta.WebAPI.Controllers
                 _logger.LogError("Hotel region object sent from client is null");
                 return BadRequest("Some parameters are missing");
             }
+            //1. declare formCollection to hold form-data
+            var formCollection = await Request.ReadFormAsync();
 
-            var facilityPhotos = new Facility_Photos()
+            //2. extract files to variable files
+            var files = formCollection.Files;
+
+            //3. hold each ouput formCollection to each variable
+            formCollection.TryGetValue("fapho_thumbnail_filename", out var fapho_thumbnail_filename);
+            formCollection.TryGetValue("fapho_photo_filename", out var fapho_photo_filename);
+            formCollection.TryGetValue("fapho_primary", out var fapho_primary);
+            formCollection.TryGetValue("fapho_url", out var fapho_url);
+            formCollection.TryGetValue("fapho_faci_id", out var fapho_faci_id);
+
+            //4. declare variable and store in object 
+            var facilityPhotoDto = new FacilityPhotosDto
+            {
+                fapho_thumbnail_filename = fapho_thumbnail_filename.ToString(),
+                fapho_photo_filename = fapho_photo_filename.ToString(),
+                fapho_primary = bool.Parse(fapho_primary.ToString()),
+                fapho_url = fapho_url.ToString(),
+                fapho_faci_id = int.Parse(fapho_faci_id.ToString())
+
+            };
+
+            //5. store to list
+            var allPhotos = new List<IFormFile>();
+            foreach (var file in formCollection.Files) allPhotos.Add(file);
+
+            //6. declare variable productphotogroup
+            var facilityPhotoGroup = new FacilityPhotoGroupDto
+            {
+                FacilityPhotos = facilityPhotoDto,
+                AllPhotos = allPhotos
+            };
+
+            if (allPhotos != null)
+            {
+                _serviceManager.FacilityPhotoServices.InsertFacilityAndFacilityPhoto(facilityPhotoGroup, out var faphoId);
+                var productResult = _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faphoId);
+                return Ok(productResult);
+            }
+
+            return BadRequest();
+
+            //End of file
+            var facilityPhotos = new FacilityPhotos()
             {
                 fapho_thumbnail_filename = dto.fapho_thumbnail_filename,
                 fapho_photo_filename = dto.fapho_photo_filename,
@@ -242,7 +289,7 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Some parameters are missing");
             }
 
-            var facilityPhotos = new Facility_Photos()
+            var facilityPhotos = new FacilityPhotos()
             {
                 fapho_id = faphoId,
                 fapho_thumbnail_filename = dto.fapho_thumbnail_filename,

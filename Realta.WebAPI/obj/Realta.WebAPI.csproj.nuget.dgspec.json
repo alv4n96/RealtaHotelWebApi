@@ -43,6 +43,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -218,7 +224,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.Contract\\Realta.Contract.csproj": {
+                "projectPath": "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.Contract\\Realta.Contract.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -230,6 +240,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -278,6 +294,9 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+              "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.Domain\\Realta.Domain.csproj": {
+                "projectPath": "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.Domain\\Realta.Domain.csproj"
+              },
               "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.Services.Abstraction\\Realta.Services.Abstraction.csproj": {
                 "projectPath": "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.Services.Abstraction\\Realta.Services.Abstraction.csproj"
               }

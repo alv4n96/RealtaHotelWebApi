@@ -24,7 +24,7 @@ namespace Realta.Services
         public void InsertFacilityAndFacilityPhoto(FacilityPhotoGroupDto facilityPhotoGroupDto, out int faphoId)
         {
             //1. insert into table Faciity photos
-            var facilitiesPhoto = new Facility_Photos()
+            var facilitiesPhoto = new FacilityPhotos()
             {
                 fapho_thumbnail_filename = facilityPhotoGroupDto.FacilityPhotos.fapho_thumbnail_filename,
                 fapho_photo_filename = facilityPhotoGroupDto.FacilityPhotos.fapho_photo_filename,
@@ -45,7 +45,7 @@ namespace Realta.Services
             foreach (var itemPhoto in allPhotos)
             {
                 var fileName = _utilityService.UploadSingleFile(itemPhoto);
-                var facilityPhotos = new Facility_Photos()
+                var facilityPhotos = new FacilityPhotos()
                 {
                     fapho_photo_filename = fileName,
                     fapho_file_size = (short)itemPhoto.Length,

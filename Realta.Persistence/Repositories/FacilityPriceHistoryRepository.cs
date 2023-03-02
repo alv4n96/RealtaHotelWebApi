@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Realta.Persistence.Repositories
 {
-    internal class FacilityPriceHistoryRepository : RepositoryBase<Facility_Price_History>, IFacilityPriceHistoryRepository
+    internal class FacilityPriceHistoryRepository : RepositoryBase<FacilityPriceHistory>, IFacilityPriceHistoryRepository
     {
         public FacilityPriceHistoryRepository(AdoDbContext adoContext) : base(adoContext)
         {
         }
 
-        public async Task<IEnumerable<Facility_Price_History>> FindAllFacilityPriceHistoryAsync(int hotelId)
+        public async Task<IEnumerable<FacilityPriceHistory>> FindAllFacilityPriceHistoryAsync(int hotelId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -36,8 +36,8 @@ namespace Realta.Persistence.Repositories
                     },}
             };
 
-            IAsyncEnumerator<Facility_Price_History> dataSet = FindAllAsync<Facility_Price_History>(model);
-            var item = new List<Facility_Price_History>();
+            IAsyncEnumerator<FacilityPriceHistory> dataSet = FindAllAsync<FacilityPriceHistory>(model);
+            var item = new List<FacilityPriceHistory>();
 
             while (await dataSet.MoveNextAsync())
             {
@@ -47,7 +47,7 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public async Task<IEnumerable<Facility_Price_History>> FindAllFacilityPriceHistoryByFacilityAsync(int hotelId, int faciId)
+        public async Task<IEnumerable<FacilityPriceHistory>> FindAllFacilityPriceHistoryByFacilityAsync(int hotelId, int faciId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -70,8 +70,8 @@ namespace Realta.Persistence.Repositories
                 }
             };
 
-            IAsyncEnumerator<Facility_Price_History> dataSet = FindAllAsync<Facility_Price_History>(model);
-            var item = new List<Facility_Price_History>();
+            IAsyncEnumerator<FacilityPriceHistory> dataSet = FindAllAsync<FacilityPriceHistory>(model);
+            var item = new List<FacilityPriceHistory>();
 
             while (await dataSet.MoveNextAsync())
             {
@@ -81,7 +81,7 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public async Task<Facility_Price_History> FindAllFacilityPriceHistoryByIdAsync(int faciId, int faphId)
+        public async Task<FacilityPriceHistory> FindAllFacilityPriceHistoryByIdAsync(int faciId, int faphId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -101,8 +101,8 @@ namespace Realta.Persistence.Repositories
                 }
             };
 
-            IAsyncEnumerator<Facility_Price_History> dataSet = FindAllAsync<Facility_Price_History>(model);
-            Facility_Price_History? item = dataSet.Current;
+            IAsyncEnumerator<FacilityPriceHistory> dataSet = FindAllAsync<FacilityPriceHistory>(model);
+            FacilityPriceHistory? item = dataSet.Current;
 
             while (await dataSet.MoveNextAsync())
             {

@@ -9,11 +9,11 @@ namespace Realta.Domain.Repositories
 {
     public interface IHotelReviewsRepository
     {
-        IEnumerable<Hotel_Reviews> FindAllHotelReviews();
-        Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId);
-        Task<Hotel_Reviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId);
-        void Insert(Hotel_Reviews hotelReviews);
-        void Edit(Hotel_Reviews hotelReviews);
-        void Remove(Hotel_Reviews hotelReviews);
+        IEnumerable<HotelReviews> FindAllHotelReviews();
+        Task<IEnumerable<HotelReviews>> FindAllHotelReviewsAsync(int hotelId);
+        Task<HotelReviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId);
+        void Insert(HotelReviews hotelReviews);
+        void Edit(HotelReviews hotelReviews);
+        void Remove(HotelReviews hotelReviews);
     }
 }

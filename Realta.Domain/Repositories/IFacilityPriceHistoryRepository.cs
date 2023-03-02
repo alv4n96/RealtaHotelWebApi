@@ -9,8 +9,8 @@ namespace Realta.Domain.Repositories
 {
     public interface IFacilityPriceHistoryRepository
     {
-        Task<IEnumerable<Facility_Price_History>> FindAllFacilityPriceHistoryAsync(int hotelId);
-        Task<IEnumerable<Facility_Price_History>> FindAllFacilityPriceHistoryByFacilityAsync(int hotelId, int faciId);
-        Task<Facility_Price_History> FindAllFacilityPriceHistoryByIdAsync(int faciId, int faphId);
+        Task<IEnumerable<FacilityPriceHistory>> FindAllFacilityPriceHistoryAsync(int hotelId);
+        Task<IEnumerable<FacilityPriceHistory>> FindAllFacilityPriceHistoryByFacilityAsync(int hotelId, int faciId);
+        Task<FacilityPriceHistory> FindAllFacilityPriceHistoryByIdAsync(int faciId, int faphId);
     }
 }

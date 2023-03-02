@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Realta.Persistence.Repositories
 {
-    internal class HotelReviewsRepository : RepositoryBase<Hotel_Reviews>, IHotelReviewsRepository
+    internal class HotelReviewsRepository : RepositoryBase<HotelReviews>, IHotelReviewsRepository
     {
         public HotelReviewsRepository(AdoDbContext adoContext) : base(adoContext)
         {
         }
 
-        public void Edit(Hotel_Reviews hotelReviews)
+        public void Edit(HotelReviews hotelReviews)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -63,7 +63,7 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-        public async Task<IEnumerable<Hotel_Reviews>> FindAllHotelReviewsAsync(int hotelId)
+        public async Task<IEnumerable<HotelReviews>> FindAllHotelReviewsAsync(int hotelId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -77,8 +77,8 @@ namespace Realta.Persistence.Repositories
                     },}
             };
 
-            IAsyncEnumerator<Hotel_Reviews> dataSet = FindAllAsync<Hotel_Reviews>(model);
-            var item = new List<Hotel_Reviews>();
+            IAsyncEnumerator<HotelReviews> dataSet = FindAllAsync<HotelReviews>(model);
+            var item = new List<HotelReviews>();
 
             while (await dataSet.MoveNextAsync())
             {
@@ -88,7 +88,7 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public async Task<Hotel_Reviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId)
+        public async Task<HotelReviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -108,8 +108,8 @@ namespace Realta.Persistence.Repositories
                 }
             };
 
-            IAsyncEnumerator<Hotel_Reviews> dataSet = FindAllAsync<Hotel_Reviews>(model);
-            Hotel_Reviews? item = dataSet.Current;
+            IAsyncEnumerator<HotelReviews> dataSet = FindAllAsync<HotelReviews>(model);
+            HotelReviews? item = dataSet.Current;
 
             while (await dataSet.MoveNextAsync())
             {
@@ -119,7 +119,7 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public void Insert(Hotel_Reviews hotelReviews)
+        public void Insert(HotelReviews hotelReviews)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -155,7 +155,7 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-        public void Remove(Hotel_Reviews hotelReviews)
+        public void Remove(HotelReviews hotelReviews)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -176,7 +176,7 @@ namespace Realta.Persistence.Repositories
         }
 
 
-        public IEnumerable<Hotel_Reviews> FindAllHotelReviews()
+        public IEnumerable<HotelReviews> FindAllHotelReviews()
         {
             throw new NotImplementedException();
         }

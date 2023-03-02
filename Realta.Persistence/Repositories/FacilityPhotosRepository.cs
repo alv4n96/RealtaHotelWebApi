@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Realta.Persistence.Repositories
 {
-    internal class FacilityPhotosRepository : RepositoryBase<Facility_Photos>, IFacilityPhotosRepository
+    internal class FacilityPhotosRepository : RepositoryBase<FacilityPhotos>, IFacilityPhotosRepository
     {
         public FacilityPhotosRepository(AdoDbContext adoContext) : base(adoContext)
         {
         }
 
-        public async Task<IEnumerable<Facility_Photos>> FindAllFacilityPhotosAsync(int faciId)
+        public async Task<IEnumerable<FacilityPhotos>> FindAllFacilityPhotosAsync(int faciId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -32,8 +32,8 @@ namespace Realta.Persistence.Repositories
                     },}
             };
 
-            IAsyncEnumerator<Facility_Photos> dataSet = FindAllAsync<Facility_Photos>(model);
-            var item = new List<Facility_Photos>();
+            IAsyncEnumerator<FacilityPhotos> dataSet = FindAllAsync<FacilityPhotos>(model);
+            var item = new List<FacilityPhotos>();
 
             while (await dataSet.MoveNextAsync())
             {
@@ -43,7 +43,7 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public async Task<Facility_Photos> FindFacilityPhotosByIdAsync(int faciId, int faphoId)
+        public async Task<FacilityPhotos> FindFacilityPhotosByIdAsync(int faciId, int faphoId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -63,8 +63,8 @@ namespace Realta.Persistence.Repositories
                 }
             };
 
-            IAsyncEnumerator<Facility_Photos> dataSet = FindAllAsync<Facility_Photos>(model);
-            Facility_Photos? item = dataSet.Current;
+            IAsyncEnumerator<FacilityPhotos> dataSet = FindAllAsync<FacilityPhotos>(model);
+            FacilityPhotos? item = dataSet.Current;
 
             while (await dataSet.MoveNextAsync())
             {
@@ -74,7 +74,7 @@ namespace Realta.Persistence.Repositories
             return item;
         }
 
-        public void Insert(Facility_Photos facilityPhotos)
+        public void Insert(FacilityPhotos facilityPhotos)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -116,7 +116,7 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-        public void Edit(Facility_Photos facilityPhotos)
+        public void Edit(FacilityPhotos facilityPhotos)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -168,7 +168,7 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-        public void Remove(Facility_Photos facilityPhotos)
+        public void Remove(FacilityPhotos facilityPhotos)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -188,7 +188,7 @@ namespace Realta.Persistence.Repositories
             _adoContext.Dispose();
         }
 
-        public IEnumerable<Facility_Photos> FindAllFacilityPhotos()
+        public IEnumerable<FacilityPhotos> FindAllFacilityPhotos()
         {
             throw new NotImplementedException();
         }

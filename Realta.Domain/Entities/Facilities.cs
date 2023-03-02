@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Realta.Domain.Entities
 {
@@ -15,28 +11,28 @@ namespace Realta.Domain.Entities
     public class Facilities
     {
         [Key]
-        public int faci_id { get; set; }
-        public string? faci_name { get; set; }
+        public int FaciId { get; set; }
+        public string? FaciName { get; set; }
         [AllowNull]
-        public string? faci_description { get; set; }
+        public string? FaciDescription { get; set; }
         [AllowNull]
-        public int? faci_max_number { get; set; }
+        public int? FaciMaxNumber { get; set; }
         [AllowNull]
-        public string? faci_measure_unit { get; set; }
-        public string? faci_room_number { get; set; }
-        public DateTime faci_startdate { get; set; }
-        public DateTime faci_endate { get; set; }
-        public Decimal faci_low_price { get; set; }
-        public Decimal faci_high_price { get; set; }
-        public Decimal faci_rate_price { get; set; }
+        public string? FaciMeasureUnit { get; set; }
+        public string? FaciRoomNumber { get; set; }
+        public DateTime FaciStartdate { get; set; }
+        public DateTime FaciEndate { get; set; }
+        public Decimal FaciLowPrice { get; set; }
+        public Decimal FaciHighPrice { get; set; }
+        public Decimal FaciRatePrice { get; set; }
         [AllowNull]
-        public Decimal faci_discount { get; set; }
+        public Decimal FaciDiscount { get; set; }
         [AllowNull]
-        public Decimal  faci_tax_rate { get; set; }
+        public Decimal  FaciTaxRate { get; set; }
         [AllowNull]
-        public DateTime faci_modified_date { get; set; }
-        public int faci_cagro_id { get; set; }
-        public int faci_hotel_id { get; set; }
-        public int faci_user_id { get; set; }
+        public DateTime FaciModifiedDate { get; set; }
+        public int FaciCagroId { get; set; }
+        public int FaciHotelId { get; set; }
+        public int FaciUserId { get; set; }
     }
 }

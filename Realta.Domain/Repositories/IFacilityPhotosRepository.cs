@@ -9,11 +9,12 @@ namespace Realta.Domain.Repositories
 {
     public interface IFacilityPhotosRepository
     {
-        IEnumerable<Facility_Photos> FindAllFacilityPhotos();
-        Task<IEnumerable<Facility_Photos>> FindAllFacilityPhotosAsync(int faciId);
-        Task<Facility_Photos> FindFacilityPhotosByIdAsync(int faciId, int faPhoId);
-        void Insert(Facility_Photos facilityPhotos);
-        void Edit(Facility_Photos facilityPhotos);
-        void Remove(Facility_Photos facilityPhotos);
+        IEnumerable<FacilityPhotos> FindAllFacilityPhotos();
+        Task<IEnumerable<FacilityPhotos>> FindAllFacilityPhotosAsync(int faciId);
+        Task<FacilityPhotos> FindFacilityPhotosByIdAsync(int faciId, int faPhoId);
+        void Insert(FacilityPhotos facilityPhotos);
+        void Edit(FacilityPhotos facilityPhotos);
+        void Remove(FacilityPhotos facilityPhotos);
+        Task FindFacilityPhotosByIdAsync(int faphoId);
     }
 }

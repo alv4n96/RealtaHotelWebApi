@@ -142,7 +142,7 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Some parameters are missing");
             }
 
-            var hotelReviews = new Hotel_Reviews()
+            var hotelReviews = new HotelReviews()
             {
                 hore_hotel_id = hotelId,
                 hore_user_review = dto.hore_user_review,
@@ -187,7 +187,7 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Some parameters are missing");
             }
 
-            var hotelReviews = new Hotel_Reviews()
+            var hotelReviews = new HotelReviews()
             {
                 hore_id = hotelReviewsId,
                 hore_hotel_id = hotelId,
