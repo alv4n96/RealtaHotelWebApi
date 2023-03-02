@@ -118,37 +118,37 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_name",
                         DataType = DbType.String,
-                        Value = hotels.hotel_name
+                        Value = hotels.hotelName
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_description",
                         DataType = DbType.String,
-                        Value = hotels.hotel_description
+                        Value = hotels.hotelDescription
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_status",
                         DataType = DbType.Boolean,
-                        Value = hotels.hotel_status
+                        Value = hotels.hotelStatus
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_rating_star",
                         DataType = DbType.Int16,
-                        Value = hotels.hotel_rating_star
+                        Value = hotels.hotelRatingStar
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_phonenumber",
                         DataType = DbType.String,
-                        Value = hotels.hotel_phonenumber
+                        Value = hotels.hotelPhonenumber
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_addr_id",
                         DataType = DbType.Int32,
-                        Value = hotels.hotel_addr_id
+                        Value = hotels.hotelAddrId
                     },
                 }
             };
 
-            hotels.hotel_id = _adoContext.ExecuteScalar<int>(model);
+            hotels.hotelId = _adoContext.ExecuteScalar<int>(model);
             _adoContext.Dispose();
         }
 
@@ -170,37 +170,37 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_id",
                         DataType = DbType.Int32,
-                        Value = hotels.hotel_id
+                        Value = hotels.hotelId
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_name",
                         DataType = DbType.String,
-                        Value = hotels.hotel_name
+                        Value = hotels.hotelName
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_description",
                         DataType = DbType.String,
-                        Value = hotels.hotel_description
+                        Value = hotels.hotelDescription
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_status",
                         DataType = DbType.Boolean,
-                        Value = hotels.hotel_status
+                        Value = hotels.hotelStatus
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_rating_star",
                         DataType = DbType.Int16,
-                        Value = hotels.hotel_rating_star
+                        Value = hotels.hotelRatingStar
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_phonenumber",
                         DataType = DbType.String,
-                        Value = hotels.hotel_phonenumber
+                        Value = hotels.hotelPhonenumber
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_addr_id",
                         DataType = DbType.Int32,
-                        Value = hotels.hotel_addr_id
+                        Value = hotels.hotelAddrId
                     },
                 }
             };
@@ -222,18 +222,18 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_id",
                         DataType = DbType.Int32,
-                        Value = hotels.hotel_id
+                        Value = hotels.hotelId
                     },
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_status",
                         DataType = DbType.Boolean,
-                        Value = hotels.hotel_status
+                        Value = hotels.hotelStatus
                     },
                     new SqlCommandParameterModel()
                     {
                         ParameterName = "@hotel_reason_status",
                         DataType = DbType.String,
-                        Value = string.IsNullOrEmpty(hotels.hotel_reason_status) ? DBNull.Value : hotels.hotel_reason_status
+                        Value = string.IsNullOrEmpty(hotels.hotelReasonStatus) ? DBNull.Value : hotels.hotelReasonStatus
                     }
                 }
             };
@@ -253,7 +253,7 @@ namespace Realta.Persistence.Repositories
                     new SqlCommandParameterModel() {
                         ParameterName = "@hotel_id",
                         DataType = DbType.Int32,
-                        Value = hotels.hotel_id
+                        Value = hotels.hotelId
                     }
                 }
             };
