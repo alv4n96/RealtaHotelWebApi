@@ -16,7 +16,7 @@ namespace Realta.Domain.Entities
         public int HoreId { get; set; }
         public string? HoreUserReview { get; set; }
         [Range(1,5, ErrorMessage = "Value for Rating must be between {1} and {2}.")]
-        public Byte Hore_rating { get; set; }
+        public Byte HoreRating { get; set; }
         [AllowNull]
         public DateTime HoreCreatedOn { get; set; } = DateTime.Now;
         public int HoreUserId { get; set; }
