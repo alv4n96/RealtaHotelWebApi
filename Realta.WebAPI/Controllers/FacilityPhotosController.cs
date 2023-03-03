@@ -47,26 +47,26 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var facilitiesDto = new FacilitiesDto()
             {
-                faci_id = facilities.faci_id,
-                faci_name = facilities.faci_name,
-                faci_room_number = facilities.faci_room_number,
-                faci_max_number = facilities.faci_max_number,
-                faci_measure_unit = facilities.faci_measure_unit,
-                faci_startdate = facilities.faci_startdate,
-                faci_endate = facilities.faci_endate,
-                faci_low_price = facilities.faci_low_price,
-                faci_high_price = facilities.faci_high_price,
-                faci_discount = facilities.faci_discount,
-                faci_rate_price = facilities.faci_rate_price,
-                faci_tax_rate = facilities.faci_tax_rate
+                FaciId = facilities.FaciId,
+                FaciName = facilities.FaciName,
+                FaciRoomNumber = facilities.FaciRoomNumber,
+                FaciMaxNumber = facilities.FaciMaxNumber,
+                FaciMeasureUnit = facilities.FaciMeasureUnit,
+                FaciStartdate = facilities.FaciStartdate,
+                FaciEndate = facilities.FaciEndate,
+                FaciLowPrice = facilities.FaciLowPrice,
+                FaciHighPrice = facilities.FaciHighPrice,
+                FaciDiscount = facilities.FaciDiscount,
+                FaciRatePrice = facilities.FaciRatePrice,
+                FaciTaxRate = facilities.FaciTaxRate
             };
 
             if (facilityPhotos.Count() == 0)
@@ -82,12 +82,12 @@ namespace Realta.WebAPI.Controllers
             {
                 var facilityPhotosDto = facilityPhotos.Select(f => new FacilityPhotosDto
                 {
-                    fapho_id = f.fapho_id,
-                    fapho_thumbnail_filename = f.fapho_thumbnail_filename,
-                    fapho_photo_filename = f.fapho_photo_filename,
-                    fapho_primary = f.fapho_primary,
-                    fapho_url = f.fapho_url,
-                    fapho_modified_date = f.fapho_modified_date,
+                    FaphoId = f.FaphoId,
+                    FaphoThumbnailFilename = f.FaphoThumbnailFilename,
+                    FaphoPhotoFilename = f.FaphoPhotoFilename,
+                    FaphoPrimary = f.FaphoPrimary,
+                    FaphoUrl = f.FaphoUrl,
+                    FaphoModifiedDate = f.FaphoModifiedDate,
                 });
                 return Ok(new
                 {
@@ -118,26 +118,26 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var facilitiesDto = new FacilitiesDto()
             {
-                faci_id = facilities.faci_id,
-                faci_name = facilities.faci_name,
-                faci_room_number = facilities.faci_room_number,
-                faci_max_number = facilities.faci_max_number,
-                faci_measure_unit = facilities.faci_measure_unit,
-                faci_startdate = facilities.faci_startdate,
-                faci_endate = facilities.faci_endate,
-                faci_low_price = facilities.faci_low_price,
-                faci_high_price = facilities.faci_high_price,
-                faci_discount = facilities.faci_discount,
-                faci_rate_price = facilities.faci_rate_price,
-                faci_tax_rate = facilities.faci_tax_rate
+                FaciId = facilities.FaciId,
+                FaciName = facilities.FaciName,
+                FaciRoomNumber = facilities.FaciRoomNumber,
+                FaciMaxNumber = facilities.FaciMaxNumber,
+                FaciMeasureUnit = facilities.FaciMeasureUnit,
+                FaciStartdate = facilities.FaciStartdate,
+                FaciEndate = facilities.FaciEndate,
+                FaciLowPrice = facilities.FaciLowPrice,
+                FaciHighPrice = facilities.FaciHighPrice,
+                FaciDiscount = facilities.FaciDiscount,
+                FaciRatePrice = facilities.FaciRatePrice,
+                FaciTaxRate = facilities.FaciTaxRate
             };
 
             var facilityPhotos = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, faphoId);
@@ -146,12 +146,12 @@ namespace Realta.WebAPI.Controllers
             {
                 var facilityPhotosDto = new FacilityPhotosDto
                 {
-                    fapho_id = facilityPhotos.fapho_id,
-                    fapho_thumbnail_filename = facilityPhotos.fapho_thumbnail_filename,
-                    fapho_photo_filename = facilityPhotos.fapho_photo_filename,
-                    fapho_primary = facilityPhotos.fapho_primary,
-                    fapho_url = facilityPhotos.fapho_url,
-                    fapho_modified_date = facilityPhotos.fapho_modified_date
+                    FaphoId = facilityPhotos.FaphoId,
+                    FaphoThumbnailFilename = facilityPhotos.FaphoThumbnailFilename,
+                    FaphoPhotoFilename = facilityPhotos.FaphoPhotoFilename,
+                    FaphoPrimary = facilityPhotos.FaphoPrimary,
+                    FaphoUrl = facilityPhotos.FaphoUrl,
+                    FaphoModifiedDate = facilityPhotos.FaphoModifiedDate
                 };
                 return Ok(new
                 {
@@ -201,20 +201,20 @@ namespace Realta.WebAPI.Controllers
             var files = formCollection.Files;
 
             //3. hold each ouput formCollection to each variable
-            formCollection.TryGetValue("fapho_thumbnail_filename", out var fapho_thumbnail_filename);
-            formCollection.TryGetValue("fapho_photo_filename", out var fapho_photo_filename);
-            formCollection.TryGetValue("fapho_primary", out var fapho_primary);
-            formCollection.TryGetValue("fapho_url", out var fapho_url);
-            formCollection.TryGetValue("fapho_faci_id", out var fapho_faci_id);
+            formCollection.TryGetValue("FaphoThumbnailFilename", out var FaphoThumbnailFilename);
+            formCollection.TryGetValue("FaphoPhotoFilename", out var FaphoPhotoFilename);
+            formCollection.TryGetValue("FaphoPrimary", out var FaphoPrimary);
+            formCollection.TryGetValue("FaphoUrl", out var FaphoUrl);
+            formCollection.TryGetValue("FaphoFaciId", out var FaphoFaciId);
 
             //4. declare variable and store in object 
             var facilityPhotoDto = new FacilityPhotosDto
             {
-                fapho_thumbnail_filename = fapho_thumbnail_filename.ToString(),
-                fapho_photo_filename = fapho_photo_filename.ToString(),
-                fapho_primary = bool.Parse(fapho_primary.ToString()),
-                fapho_url = fapho_url.ToString(),
-                fapho_faci_id = int.Parse(fapho_faci_id.ToString())
+                FaphoThumbnailFilename = FaphoThumbnailFilename.ToString(),
+                FaphoPhotoFilename = FaphoPhotoFilename.ToString(),
+                FaphoPrimary = bool.Parse(FaphoPrimary.ToString()),
+                FaphoUrl = FaphoUrl.ToString(),
+                FaphoFaciId = int.Parse(FaphoFaciId.ToString())
 
             };
 
@@ -232,7 +232,7 @@ namespace Realta.WebAPI.Controllers
             if (allPhotos != null)
             {
                 _serviceManager.FacilityPhotoServices.InsertFacilityAndFacilityPhoto(facilityPhotoGroup, out var faphoId);
-                var productResult = _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faphoId);
+                var productResult = _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, faphoId);
                 return Ok(productResult);
             }
 
@@ -241,25 +241,25 @@ namespace Realta.WebAPI.Controllers
             //End of file
             var facilityPhotos = new FacilityPhotos()
             {
-                fapho_thumbnail_filename = dto.fapho_thumbnail_filename,
-                fapho_photo_filename = dto.fapho_photo_filename,
-                fapho_primary = dto.fapho_primary,
-                fapho_url = dto.fapho_url,
-                fapho_faci_id = faciId
+                FaphoThumbnailFilename = dto.FaphoThumbnailFilename,
+                FaphoPhotoFilename = dto.FaphoPhotoFilename,
+                FaphoPrimary = dto.FaphoPrimary,
+                FaphoUrl = dto.FaphoUrl,
+                FaphoFaciId = faciId
             };
 
             _repositoryManager.FacilityPhotosRepository.Insert(facilityPhotos);
 
-            var result = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, facilityPhotos.fapho_id);
+            var result = await _repositoryManager.FacilityPhotosRepository.FindFacilityPhotosByIdAsync(faciId, facilityPhotos.FaphoId);
 
             var resDto = new FacilityPhotosDto
             {
-                fapho_id = result.fapho_id,
-                fapho_thumbnail_filename = result.fapho_thumbnail_filename,
-                fapho_photo_filename = result.fapho_photo_filename,
-                fapho_primary = result.fapho_primary,
-                fapho_url = result.fapho_url,
-                fapho_modified_date = result.fapho_modified_date
+                FaphoId = result.FaphoId,
+                FaphoThumbnailFilename = result.FaphoThumbnailFilename,
+                FaphoPhotoFilename = result.FaphoPhotoFilename,
+                FaphoPrimary = result.FaphoPrimary,
+                FaphoUrl = result.FaphoUrl,
+                FaphoModifiedDate = result.FaphoModifiedDate
             };
 
             return Ok(resDto);
@@ -291,12 +291,12 @@ namespace Realta.WebAPI.Controllers
 
             var facilityPhotos = new FacilityPhotos()
             {
-                fapho_id = faphoId,
-                fapho_thumbnail_filename = dto.fapho_thumbnail_filename,
-                fapho_photo_filename = dto.fapho_photo_filename,
-                fapho_primary = dto.fapho_primary,
-                fapho_url = dto.fapho_url,
-                fapho_faci_id = faciId
+                FaphoId = faphoId,
+                FaphoThumbnailFilename = dto.FaphoThumbnailFilename,
+                FaphoPhotoFilename = dto.FaphoPhotoFilename,
+                FaphoPrimary = dto.FaphoPrimary,
+                FaphoUrl = dto.FaphoUrl,
+                FaphoFaciId = faciId
             };
 
             _repositoryManager.FacilityPhotosRepository.Edit(facilityPhotos);
@@ -305,12 +305,12 @@ namespace Realta.WebAPI.Controllers
 
             var resDto = new FacilityPhotosDto
             {
-                fapho_id = result.fapho_id,
-                fapho_thumbnail_filename = result.fapho_thumbnail_filename,
-                fapho_photo_filename = result.fapho_photo_filename,
-                fapho_primary = result.fapho_primary,
-                fapho_url = result.fapho_url,
-                fapho_modified_date = result.fapho_modified_date
+                FaphoId = result.FaphoId,
+                FaphoThumbnailFilename = result.FaphoThumbnailFilename,
+                FaphoPhotoFilename = result.FaphoPhotoFilename,
+                FaphoPrimary = result.FaphoPrimary,
+                FaphoUrl = result.FaphoUrl,
+                FaphoModifiedDate = result.FaphoModifiedDate
             };
 
             return Ok(resDto);

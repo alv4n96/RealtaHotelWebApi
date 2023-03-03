@@ -35,10 +35,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var facilityPriceHistory = await _repositoryManager.FacilityPriceHistoryRepository.FindAllFacilityPriceHistoryAsync(hotelId);
@@ -55,15 +55,15 @@ namespace Realta.WebAPI.Controllers
             {
                 var facilityPriceHistoryDto = facilityPriceHistory.Select(faph => new FacilityPriceHistoryDto
                 {
-                    faph_id = faph.faph_id,
-                    faph_startdate = faph.faph_startdate,
-                    faph_enddate = faph.faph_enddate,
-                    faph_low_price = faph.faph_low_price,
-                    faph_high_price = faph.faph_high_price,
-                    faph_rate_price = faph.faph_rate_price,
-                    faph_discount = faph.faph_discount,
-                    faph_tax_rate = faph.faph_tax_rate,
-                    faph_modified_date = faph.faph_modified_date
+                    FaphId = faph.FaphId,
+                    FaphStartdate = faph.FaphStartdate,
+                    FaphEnddate = faph.FaphEnddate,
+                    FaphLowPrice = faph.FaphLowPrice,
+                    FaphHighPrice = faph.FaphHighPrice,
+                    FaphRatePrice = faph.FaphRatePrice,
+                    FaphDiscount = faph.FaphDiscount,
+                    FaphTaxRate = faph.FaphTaxRate,
+                    FaphModifiedDate = faph.FaphModifiedDate
                 });
 
                 return Ok(new
@@ -88,10 +88,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var facilityPriceHistory = await _repositoryManager.FacilityPriceHistoryRepository.FindAllFacilityPriceHistoryByFacilityAsync(hotelId, faciId);
@@ -108,15 +108,15 @@ namespace Realta.WebAPI.Controllers
             {
                 var facilityPriceHistoryDto = facilityPriceHistory.Select(faph => new FacilityPriceHistoryDto
                 {
-                    faph_id = faph.faph_id,
-                    faph_startdate = faph.faph_startdate,
-                    faph_enddate = faph.faph_enddate,
-                    faph_low_price = faph.faph_low_price,
-                    faph_high_price = faph.faph_high_price,
-                    faph_rate_price = faph.faph_rate_price,
-                    faph_discount = faph.faph_discount,
-                    faph_tax_rate = faph.faph_tax_rate,
-                    faph_modified_date = faph.faph_modified_date
+                    FaphId = faph.FaphId,
+                    FaphStartdate = faph.FaphStartdate,
+                    FaphEnddate = faph.FaphEnddate,
+                    FaphLowPrice = faph.FaphLowPrice,
+                    FaphHighPrice = faph.FaphHighPrice,
+                    FaphRatePrice = faph.FaphRatePrice,
+                    FaphDiscount = faph.FaphDiscount,
+                    FaphTaxRate = faph.FaphTaxRate,
+                    FaphModifiedDate = faph.FaphModifiedDate
                 });
 
                 return Ok(new
@@ -140,10 +140,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var facilityPriceHistory = await _repositoryManager.FacilityPriceHistoryRepository.FindAllFacilityPriceHistoryByIdAsync(faciId, faphId);
@@ -152,15 +152,15 @@ namespace Realta.WebAPI.Controllers
             {
                 var facilityPriceHistoryDto =  new FacilityPriceHistoryDto
                 {
-                    faph_id = facilityPriceHistory.faph_id,
-                    faph_startdate = facilityPriceHistory.faph_startdate,
-                    faph_enddate = facilityPriceHistory.faph_enddate,
-                    faph_low_price = facilityPriceHistory.faph_low_price,
-                    faph_high_price = facilityPriceHistory.faph_high_price,
-                    faph_rate_price = facilityPriceHistory.faph_rate_price,
-                    faph_discount = facilityPriceHistory.faph_discount,
-                    faph_tax_rate = facilityPriceHistory.faph_tax_rate,
-                    faph_modified_date = facilityPriceHistory.faph_modified_date
+                    FaphId = facilityPriceHistory.FaphId,
+                    FaphStartdate = facilityPriceHistory.FaphStartdate,
+                    FaphEnddate = facilityPriceHistory.FaphEnddate,
+                    FaphLowPrice = facilityPriceHistory.FaphLowPrice,
+                    FaphHighPrice = facilityPriceHistory.FaphHighPrice,
+                    FaphRatePrice = facilityPriceHistory.FaphRatePrice,
+                    FaphDiscount = facilityPriceHistory.FaphDiscount,
+                    FaphTaxRate = facilityPriceHistory.FaphTaxRate,
+                    FaphModifiedDate = facilityPriceHistory.FaphModifiedDate
                 };
 
                 return Ok(new

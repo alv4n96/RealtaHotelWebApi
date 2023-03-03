@@ -40,10 +40,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             if (facilities.Count() == 0)
@@ -58,18 +58,18 @@ namespace Realta.WebAPI.Controllers
             {
                 var hotelReviewsDto = facilities.Select(f => new FacilitiesDto
                 {
-                    faci_id = f.faci_id,
-                    faci_name = f.faci_name,
-                    faci_room_number = f.faci_room_number,
-                    faci_max_number = f.faci_max_number,
-                    faci_measure_unit = f.faci_measure_unit,
-                    faci_startdate = f.faci_startdate,
-                    faci_endate = f.faci_endate,
-                    faci_low_price = f.faci_low_price,
-                    faci_high_price = f.faci_high_price,
-                    faci_discount = f.faci_discount,
-                    faci_rate_price = f.faci_rate_price,
-                    faci_tax_rate = f.faci_tax_rate
+                    FaciId = f.FaciId,
+                    FaciName = f.FaciName,
+                    FaciRoomNumber = f.FaciRoomNumber,
+                    FaciMaxNumber = f.FaciMaxNumber,
+                    FaciMeasureUnit = f.FaciMeasureUnit,
+                    FaciStartdate = f.FaciStartdate,
+                    FaciEndate = f.FaciEndate,
+                    FaciLowPrice = f.FaciLowPrice,
+                    FaciHighPrice = f.FaciHighPrice,
+                    FaciDiscount = f.FaciDiscount,
+                    FaciRatePrice = f.FaciRatePrice,
+                    FaciTaxRate = f.FaciTaxRate
                 });
                 return Ok(new
                 {
@@ -92,10 +92,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
@@ -104,18 +104,18 @@ namespace Realta.WebAPI.Controllers
             {
                 var facilitiesDto = new FacilitiesDto()
                 {
-                    faci_id = facilities.faci_id,
-                    faci_name = facilities.faci_name,
-                    faci_room_number = facilities.faci_room_number,
-                    faci_max_number = facilities.faci_max_number,
-                    faci_measure_unit = facilities.faci_measure_unit,
-                    faci_startdate = facilities.faci_startdate,
-                    faci_endate = facilities.faci_endate,
-                    faci_low_price = facilities.faci_low_price,
-                    faci_high_price = facilities.faci_high_price,
-                    faci_discount = facilities.faci_discount,
-                    faci_rate_price = facilities.faci_rate_price,
-                    faci_tax_rate = facilities.faci_tax_rate
+                    FaciId = facilities.FaciId,
+                    FaciName = facilities.FaciName,
+                    FaciRoomNumber = facilities.FaciRoomNumber,
+                    FaciMaxNumber = facilities.FaciMaxNumber,
+                    FaciMeasureUnit = facilities.FaciMeasureUnit,
+                    FaciStartdate = facilities.FaciStartdate,
+                    FaciEndate = facilities.FaciEndate,
+                    FaciLowPrice = facilities.FaciLowPrice,
+                    FaciHighPrice = facilities.FaciHighPrice,
+                    FaciDiscount = facilities.FaciDiscount,
+                    FaciRatePrice = facilities.FaciRatePrice,
+                    FaciTaxRate = facilities.FaciTaxRate
                 };
                 return Ok(new
                 {
@@ -144,7 +144,7 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
 
-            if (String.IsNullOrEmpty(dto.faci_measure_unit) || (dto.faci_measure_unit != "people" && dto.faci_measure_unit != "beds"))
+            if (String.IsNullOrEmpty(dto.FaciMeasureUnit) || (dto.FaciMeasureUnit != "people" && dto.FaciMeasureUnit != "beds"))
             {
                 _logger.LogError("facility measure unit got wrong parameter");
                 return BadRequest("facility measure unit should fill : people or beds");
@@ -158,44 +158,44 @@ namespace Realta.WebAPI.Controllers
 
             var facilities = new Facilities()
             {
-                faci_name= dto.faci_name,
-                faci_description= string.IsNullOrEmpty(dto.faci_description) ? string.Empty : dto.faci_description,
-                faci_max_number = dto.faci_max_number == null ? 0 : dto.faci_max_number,
-                faci_measure_unit = string.IsNullOrEmpty(dto.faci_measure_unit) ? string.Empty : dto.faci_measure_unit,
-                faci_room_number = dto.faci_room_number,
-                faci_startdate = dto.faci_startdate,
-                faci_endate = dto.faci_endate,
-                faci_low_price = dto.faci_low_price,
-                faci_high_price = dto.faci_high_price,
-                faci_discount = (decimal)(dto.faci_discount == null ? 0 : dto.faci_discount),
-                faci_tax_rate = (decimal)(dto.faci_tax_rate == null ? 0 : dto.faci_tax_rate),
-                faci_cagro_id = dto.faci_cagro_id,
-                faci_hotel_id = hotelId,
-                faci_user_id = dto.faci_user_id,
+                FaciName= dto.FaciName,
+                FaciDescription= string.IsNullOrEmpty(dto.FaciDescription) ? string.Empty : dto.FaciDescription,
+                FaciMaxNumber = dto.FaciMaxNumber == null ? 0 : dto.FaciMaxNumber,
+                FaciMeasureUnit = string.IsNullOrEmpty(dto.FaciMeasureUnit) ? string.Empty : dto.FaciMeasureUnit,
+                FaciRoomNumber = dto.FaciRoomNumber,
+                FaciStartdate = dto.FaciStartdate,
+                FaciEndate = dto.FaciEndate,
+                FaciLowPrice = dto.FaciLowPrice,
+                FaciHighPrice = dto.FaciHighPrice,
+                FaciDiscount = (decimal)(dto.FaciDiscount == null ? 0 : dto.FaciDiscount),
+                FaciTaxRate = (decimal)(dto.FaciTaxRate == null ? 0 : dto.FaciTaxRate),
+                FaciCagroId = dto.FaciCagroId,
+                FaciHotelId = hotelId,
+                FaciUserId = dto.FaciUserId,
             };
 
             //post data to db
             _repositoryManager.FacilitiesRepository.Insert(facilities);
 
-            var result = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, facilities.faci_id);
+            var result = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, facilities.FaciId);
 
 
             var resDto = new FacilitiesDto()
             {
-                faci_id = result.faci_id,
-                faci_name = result.faci_name,
-                faci_room_number = result.faci_room_number,
-                faci_max_number = result.faci_max_number,
-                faci_measure_unit = result.faci_measure_unit,
-                faci_startdate = result.faci_startdate,
-                faci_endate = result.faci_endate,
-                faci_low_price = result.faci_low_price,
-                faci_high_price = result.faci_high_price,
-                faci_discount = result.faci_discount,
-                faci_rate_price = result.faci_rate_price,
-                faci_tax_rate = result.faci_tax_rate,
-                faci_cagro_id = result.faci_cagro_id,
-                faci_user_id = result.faci_user_id,
+                FaciId = result.FaciId,
+                FaciName = result.FaciName,
+                FaciRoomNumber = result.FaciRoomNumber,
+                FaciMaxNumber = result.FaciMaxNumber,
+                FaciMeasureUnit = result.FaciMeasureUnit,
+                FaciStartdate = result.FaciStartdate,
+                FaciEndate = result.FaciEndate,
+                FaciLowPrice = result.FaciLowPrice,
+                FaciHighPrice = result.FaciHighPrice,
+                FaciDiscount = result.FaciDiscount,
+                FaciRatePrice = result.FaciRatePrice,
+                FaciTaxRate = result.FaciTaxRate,
+                FaciCagroId = result.FaciCagroId,
+                FaciUserId = result.FaciUserId,
             };
 
             if (resDto == null)
@@ -218,7 +218,7 @@ namespace Realta.WebAPI.Controllers
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
 
-            if (String.IsNullOrEmpty(dto.faci_measure_unit) || (dto.faci_measure_unit != "people" && dto.faci_measure_unit != "beds"))
+            if (String.IsNullOrEmpty(dto.FaciMeasureUnit) || (dto.FaciMeasureUnit != "people" && dto.FaciMeasureUnit != "beds"))
             {
                 _logger.LogError("facility measure unit got wrong parameter");
                 return BadRequest("facility measure unit should fill : people or beds");
@@ -232,44 +232,44 @@ namespace Realta.WebAPI.Controllers
 
             var facilities = new Facilities()
             {
-                faci_id = faciId,
-                faci_name = dto.faci_name,
-                faci_description = string.IsNullOrEmpty(dto.faci_description) ? string.Empty : dto.faci_description,
-                faci_max_number = dto.faci_max_number == null ? 0 : dto.faci_max_number,
-                faci_measure_unit = string.IsNullOrEmpty(dto.faci_measure_unit) ? string.Empty : dto.faci_measure_unit,
-                faci_room_number = dto.faci_room_number,
-                faci_startdate = dto.faci_startdate,
-                faci_endate = dto.faci_endate,
-                faci_low_price = dto.faci_low_price,
-                faci_high_price = dto.faci_high_price,
-                faci_discount = (decimal)(dto.faci_discount == null ? 0 : dto.faci_discount),
-                faci_tax_rate = (decimal)(dto.faci_tax_rate == null ? 0 : dto.faci_tax_rate),
-                faci_cagro_id = dto.faci_cagro_id,
-                faci_hotel_id = hotelId,
-                faci_user_id = dto.faci_user_id,
+                FaciId = dto.FaciId,
+                FaciName = dto.FaciName,
+                FaciDescription = string.IsNullOrEmpty(dto.FaciDescription) ? string.Empty : dto.FaciDescription,
+                FaciMaxNumber = dto.FaciMaxNumber == null ? 0 : dto.FaciMaxNumber,
+                FaciMeasureUnit = string.IsNullOrEmpty(dto.FaciMeasureUnit) ? string.Empty : dto.FaciMeasureUnit,
+                FaciRoomNumber = dto.FaciRoomNumber,
+                FaciStartdate = dto.FaciStartdate,
+                FaciEndate = dto.FaciEndate,
+                FaciLowPrice = dto.FaciLowPrice,
+                FaciHighPrice = dto.FaciHighPrice,
+                FaciDiscount = (decimal)(dto.FaciDiscount == null ? 0 : dto.FaciDiscount),
+                FaciTaxRate = (decimal)(dto.FaciTaxRate == null ? 0 : dto.FaciTaxRate),
+                FaciCagroId = dto.FaciCagroId,
+                FaciHotelId = hotelId,
+                FaciUserId = dto.FaciUserId,
             };
 
             _repositoryManager.FacilitiesRepository.Edit(facilities);
 
-            var result = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, facilities.faci_id);
+            var result = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, facilities.FaciId);
 
 
             var resDto = new FacilitiesDto()
             {
-                faci_id = result.faci_id,
-                faci_name = result.faci_name,
-                faci_room_number = result.faci_room_number,
-                faci_max_number = result.faci_max_number,
-                faci_measure_unit = result.faci_measure_unit,
-                faci_startdate = result.faci_startdate,
-                faci_endate = result.faci_endate,
-                faci_low_price = result.faci_low_price,
-                faci_high_price = result.faci_high_price,
-                faci_discount = result.faci_discount,
-                faci_rate_price = result.faci_rate_price,
-                faci_tax_rate = result.faci_tax_rate,
-                faci_cagro_id = result.faci_cagro_id,
-                faci_user_id = result.faci_user_id,
+                FaciId = result.FaciId,
+                FaciName = result.FaciName,
+                FaciRoomNumber = result.FaciRoomNumber,
+                FaciMaxNumber = result.FaciMaxNumber,
+                FaciMeasureUnit = result.FaciMeasureUnit,
+                FaciStartdate = result.FaciStartdate,
+                FaciEndate = result.FaciEndate,
+                FaciLowPrice = result.FaciLowPrice,
+                FaciHighPrice = result.FaciHighPrice,
+                FaciDiscount = result.FaciDiscount,
+                FaciRatePrice = result.FaciRatePrice,
+                FaciTaxRate = result.FaciTaxRate,
+                FaciCagroId = result.FaciCagroId,
+                FaciUserId = result.FaciUserId,
             };
 
             //forward 

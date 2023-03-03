@@ -36,12 +36,12 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = hotels.Select(h => new HotelsDto
             {
-                hotel_id = h.hotel_id,
-                hotel_name = h.hotel_name,
-                hotel_rating_star = h.hotel_rating_star,
-                hotel_phonenumber = h.hotel_phonenumber,
-                hotel_status = h.hotel_status ? "available" : "unavailable",
-                hotel_modified_date = h.hotel_modified_date,
+                HotelId = h.HotelId,
+                HotelName = h.HotelName,
+                HotelRatingStar = h.HotelRatingStar,
+                HotelPhonenumber = h.HotelPhonenumber,
+                HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                HotelModifiedDate = h.HotelModifiedDate,
             });
 
             return Ok(hotelDto);
@@ -60,12 +60,12 @@ namespace Realta.WebAPI.Controllers
 
            var hotelDto = hotels.Select(h => new HotelsDto
             {
-                hotel_id = h.hotel_id,
-                hotel_name = h.hotel_name,
-                hotel_rating_star = h.hotel_rating_star,
-                hotel_phonenumber = h.hotel_phonenumber,
-                hotel_status = h.hotel_status ? "available" : "unavailable",
-                hotel_modified_date = h.hotel_modified_date,
+                HotelId = h.HotelId,
+                HotelName = h.HotelName,
+                HotelRatingStar = h.HotelRatingStar,
+                HotelPhonenumber = h.HotelPhonenumber,
+                HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                HotelModifiedDate = h.HotelModifiedDate,
             });
 
             return Ok(hotelDto);
@@ -86,12 +86,12 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
-                hotel_status = hotels.hotel_status ? "available" : "unavailable",
-                hotel_modified_date = hotels.hotel_modified_date
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
+                HotelStatus = hotels.HotelStatus ? "available" : "unavailable",
+                HotelModifiedDate = hotels.HotelModifiedDate
             };
 
             return Ok(hotelDto);
@@ -110,31 +110,31 @@ namespace Realta.WebAPI.Controllers
 
             var hotel = new Hotels()
             {
-                hotel_name = dto.hotel_name,
-                hotel_description = dto.hotel_description,
-                hotel_status = dto.hotel_status == "available" ? true : false,
-                hotel_rating_star = dto.hotel_rating_star,
-                hotel_phonenumber = dto.hotel_phonenumber,
-                hotel_addr_id = (int)dto.hotel_addr_id
+                HotelName = dto.HotelName,
+                HotelDescription = dto.HotelDescription,
+                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelRatingStar = dto.HotelRatingStar,
+                HotelPhonenumber = dto.HotelPhonenumber,
+                HotelAddrId = (int)dto.HotelAddrId
             };
 
             //post data to db
             _repositoryManager.HotelsRepository.Insert(hotel);
 
-            var result = _repositoryManager.HotelsRepository.FindHotelsById(hotel.hotel_id);
+            var result = _repositoryManager.HotelsRepository.FindHotelsById(hotel.HotelId);
 
 
             var resDto = new HotelsDto
             {
-                hotel_id = hotel.hotel_id,
-                hotel_name = hotel.hotel_name,
-                hotel_description = hotel.hotel_description,
-                hotel_status = hotel.hotel_status ? "available" : "unavailable",
-                hotel_reason_status = hotel.hotel_reason_status,
-                hotel_rating_star = hotel.hotel_rating_star,
-                hotel_phonenumber = hotel.hotel_phonenumber,
-                hotel_modified_date = hotel.hotel_modified_date,
-                hotel_addr_id = hotel.hotel_addr_id
+                HotelId = hotel.HotelId,
+                HotelName = hotel.HotelName,
+                HotelDescription = hotel.HotelDescription,
+                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelReasonStatus = hotel.HotelReasonStatus,
+                HotelRatingStar = hotel.HotelRatingStar,
+                HotelPhonenumber = hotel.HotelPhonenumber,
+                HotelModifiedDate = hotel.HotelModifiedDate,
+                HotelAddrId = hotel.HotelAddrId
             };
             //forward 
             return Ok(resDto);
@@ -153,13 +153,13 @@ namespace Realta.WebAPI.Controllers
 
             var hotel = new Hotels()
             {
-                hotel_id = id,
-                hotel_name = dto.hotel_name,
-                hotel_description = dto.hotel_description,
-                hotel_status = dto.hotel_status == "available" ? true : false,
-                hotel_rating_star = dto.hotel_rating_star,
-                hotel_phonenumber = dto.hotel_phonenumber,
-                hotel_addr_id = (int)dto.hotel_addr_id
+                HotelId = id,
+                HotelName = dto.HotelName,
+                HotelDescription = dto.HotelDescription,
+                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelRatingStar = dto.HotelRatingStar,
+                HotelPhonenumber = dto.HotelPhonenumber,
+                HotelAddrId = (int)dto.HotelAddrId
             };
 
             _repositoryManager.HotelsRepository.Edit(hotel);
@@ -172,18 +172,18 @@ namespace Realta.WebAPI.Controllers
 
             var result = new HotelsDto
             {
-                hotel_id = hotel.hotel_id,
-                hotel_name = hotel.hotel_name,
-                hotel_description = hotel.hotel_description,
-                hotel_status = hotel.hotel_status ? "available" : "unavailable",
-                hotel_reason_status = hotel.hotel_reason_status,
-                hotel_rating_star = hotel.hotel_rating_star,
-                hotel_phonenumber = hotel.hotel_phonenumber,
-                hotel_modified_date = hotel.hotel_modified_date,
-                hotel_addr_id = hotel.hotel_addr_id
+                HotelId = hotel.HotelId,
+                HotelName = hotel.HotelName,
+                HotelDescription = hotel.HotelDescription,
+                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelReasonStatus = hotel.HotelReasonStatus,
+                HotelRatingStar = hotel.HotelRatingStar,
+                HotelPhonenumber = hotel.HotelPhonenumber,
+                HotelModifiedDate = hotel.HotelModifiedDate,
+                HotelAddrId = hotel.HotelAddrId
             };
 
-            //return CreatedAtRoute("GetHotelsById", new { id = result.hotel_id }, result);
+            //return CreatedAtRoute("GetHotelsById", new { id = result.HotelId }, result);
             return Ok(result);
         }
 
@@ -200,9 +200,9 @@ namespace Realta.WebAPI.Controllers
 
             var hotel = new Hotels()
             {
-                hotel_id = id,
-                hotel_status = dto.hotel_status == "available" ? true : false,
-                hotel_reason_status = string.IsNullOrEmpty(dto.hotel_reason_status) ? string.Empty : dto.hotel_reason_status,
+                HotelId = id,
+                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelReasonStatus = string.IsNullOrEmpty(dto.HotelReasonStatus) ? string.Empty : dto.HotelReasonStatus,
             };
 
             _repositoryManager.HotelsRepository.EditStatus(hotel);
@@ -211,13 +211,13 @@ namespace Realta.WebAPI.Controllers
 
             var result = new HotelsDto
             {
-                hotel_id = hotel.hotel_id,
-                hotel_name = dataResult.hotel_name,
-                hotel_status = hotel.hotel_status ? "available" : "unavailable",
-                hotel_reason_status = hotel.hotel_reason_status,
-                hotel_rating_star = dataResult.hotel_rating_star,
-                hotel_phonenumber = dataResult.hotel_phonenumber,
-                hotel_modified_date = dataResult.hotel_modified_date
+                HotelId = hotel.HotelId,
+                HotelName = dataResult.HotelName,
+                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelReasonStatus = hotel.HotelReasonStatus,
+                HotelRatingStar = dataResult.HotelRatingStar,
+                HotelPhonenumber = dataResult.HotelPhonenumber,
+                HotelModifiedDate = dataResult.HotelModifiedDate
             };
 
             return Ok(result);

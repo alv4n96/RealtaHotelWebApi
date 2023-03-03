@@ -13,19 +13,19 @@ namespace Realta.Domain.Entities
     public class Hotels
     {
         [Key]
-        public int hotelId { get; set; }
-        public string? hotelName { get; set; }
+        public int HotelId { get; set; }
+        public string? HotelName { get; set; }
         [AllowNull]
-        public string? hotelDescription { get; set; } = string.Empty;
-        public bool hotelStatus { get; set; }
+        public string? HotelDescription { get; set; } = string.Empty;
+        public bool HotelStatus { get; set; }
         [AllowNull]
-        public string? hotelReasonStatus { get; set; } = string.Empty;
+        public string? HotelReasonStatus { get; set; } = string.Empty;
         [AllowNull]
-        public Int16 hotelRatingStar { get; set; }
+        public Int16 HotelRatingStar { get; set; }
         [Phone]
-        public string? hotelPhonenumber { get; set; }
+        public string? HotelPhonenumber { get; set; }
         [AllowNull]
-        public DateTime hotelModifiedDate { get; set; } = DateTime.Now;
-        public int? hotelAddrId { get; set; } 
+        public DateTime HotelModifiedDate { get; set; } = DateTime.Now;
+        public int? HotelAddrId { get; set; } 
     }
 }

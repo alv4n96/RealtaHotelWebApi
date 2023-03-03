@@ -42,10 +42,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             if (hotelReviews.Count() == 0)
@@ -60,12 +60,12 @@ namespace Realta.WebAPI.Controllers
             {
                 var hotelReviewsDto = hotelReviews.Select(hr => new HotelReviewsDto
                 {
-                    hore_id = hr.hore_id,
-                    hore_user_review = hr.hore_user_review,
-                    hore_user_id = hr.hore_user_id,
-                    hore_rating = hr.hore_rating,
-                    hore_created_on = hr.hore_created_on,
-                    hore_hotel_id = hr.hore_hotel_id
+                    HoreId = hr.HoreId,
+                    HoreUserReview = hr.HoreUserReview,
+                    HoreUserId = hr.HoreUserId,
+                    HoreRating = hr.HoreRating,
+                    HoreCreatedOn = hr.HoreCreatedOn,
+                    HoreHotelId = hr.HoreHotelId
                 });
                 return Ok(new
                 {
@@ -90,10 +90,10 @@ namespace Realta.WebAPI.Controllers
 
             var hotelDto = new HotelsDto
             {
-                hotel_id = hotels.hotel_id,
-                hotel_name = hotels.hotel_name,
-                hotel_rating_star = hotels.hotel_rating_star,
-                hotel_phonenumber = hotels.hotel_phonenumber,
+                HotelId = hotels.HotelId,
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
             };
 
             var hotelReviews = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviewsId);
@@ -102,12 +102,12 @@ namespace Realta.WebAPI.Controllers
             {
                 var hotelReviewsDto = new HotelReviewsDto()
                 {
-                    hore_id = hotelReviews.hore_id,
-                    hore_user_review = hotelReviews.hore_user_review,
-                    hore_user_id = hotelReviews.hore_user_id,
-                    hore_rating = hotelReviews.hore_rating,
-                    hore_created_on = hotelReviews.hore_created_on,
-                    hore_hotel_id = hotelReviews.hore_hotel_id
+                    HoreId = hotelReviews.HoreId,
+                    HoreUserReview = hotelReviews.HoreUserReview,
+                    HoreUserId = hotelReviews.HoreUserId,
+                    HoreRating = hotelReviews.HoreRating,
+                    HoreCreatedOn = hotelReviews.HoreCreatedOn,
+                    HoreHotelId = hotelReviews.HoreHotelId
                 };
                 return Ok(new
                 {
@@ -144,26 +144,26 @@ namespace Realta.WebAPI.Controllers
 
             var hotelReviews = new HotelReviews()
             {
-                hore_hotel_id = hotelId,
-                hore_user_review = dto.hore_user_review,
-                hore_rating = dto.hore_rating,
-                hore_user_id = dto.hore_user_id
+                HoreHotelId = hotelId,
+                HoreUserReview = dto.HoreUserReview,
+                HoreRating = dto.HoreRating,
+                HoreUserId = dto.HoreUserId
             };
 
             //post data to db
             _repositoryManager.HotelReviewsRepository.Insert(hotelReviews);
 
-            var result = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviews.hore_id);
+            var result = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviews.HoreId);
 
 
             var resDto = new HotelReviewsDto()
             {   
-                hore_id = result.hore_id,
-                hore_user_review = result.hore_user_review,
-                hore_user_id = result.hore_user_id,
-                hore_rating = result.hore_rating,
-                hore_created_on = result.hore_created_on,
-                hore_hotel_id = result.hore_hotel_id
+                HoreId = result.HoreId,
+                HoreUserReview = result.HoreUserReview,
+                HoreUserId = result.HoreUserId,
+                HoreRating = result.HoreRating,
+                HoreCreatedOn = result.HoreCreatedOn,
+                HoreHotelId = result.HoreHotelId
             };
 
             //forward 
@@ -189,11 +189,11 @@ namespace Realta.WebAPI.Controllers
 
             var hotelReviews = new HotelReviews()
             {
-                hore_id = hotelReviewsId,
-                hore_hotel_id = hotelId,
-                hore_user_review = dto.hore_user_review,
-                hore_rating = dto.hore_rating,
-                hore_user_id = dto.hore_user_id
+                HoreId = hotelReviewsId,
+                HoreHotelId = hotelId,
+                HoreUserReview = dto.HoreUserReview,
+                HoreRating = dto.HoreRating,
+                HoreUserId = dto.HoreUserId
             };
 
             _repositoryManager.HotelReviewsRepository.Edit(hotelReviews);
@@ -202,12 +202,12 @@ namespace Realta.WebAPI.Controllers
 
             var resDto = new HotelReviewsDto()
             {
-                hore_id = dataResult.hore_id,
-                hore_user_review = dataResult.hore_user_review,
-                hore_user_id = dataResult.hore_user_id,
-                hore_rating = dataResult.hore_rating,
-                hore_created_on = dataResult.hore_created_on,
-                hore_hotel_id = dataResult.hore_hotel_id
+                HoreId = dataResult.HoreId,
+                HoreUserReview = dataResult.HoreUserReview,
+                HoreUserId = dataResult.HoreUserId,
+                HoreRating = dataResult.HoreRating,
+                HoreCreatedOn = dataResult.HoreCreatedOn,
+                HoreHotelId = dataResult.HoreHotelId
             };
 
             return Ok(resDto);
