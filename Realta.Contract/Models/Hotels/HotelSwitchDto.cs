@@ -12,10 +12,10 @@ namespace Realta.Contract.Models.Hotels
     public class HotelSwitchDto
     {
         [Required(ErrorMessage = "hotel id is required")]
-        public int hotel_id { get; set; }
-        [Required(ErrorMessage = "hotel status is required")]
-        public string? hotel_status { get; set; }
+        public int HotelId { get; set; }
+        [Required(ErrorMessage = "Hotel status is required")]
+        public string? HotelStatus { get; set; }
         [AllowNull]
-        public string? hotel_reason_status { get; set; }
+        public string? HotelReasonStatus { get; set; }
     }
 }

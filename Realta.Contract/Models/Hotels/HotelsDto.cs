@@ -12,33 +12,32 @@ namespace Realta.Contract.Models.Hotels
     public class HotelsDto
     {
         [Required(ErrorMessage = "hotel id is required")]
-        // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public int hotel_id { get; set; }
+        public int HotelId { get; set; }
 
-        [Required(ErrorMessage = "hotel name is required")]
+        [Required(ErrorMessage = "Hotel name is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? hotel_name { get; set; }
+        public string? HotelName { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? hotel_description { get; set; }
-        [Required(ErrorMessage = "hotel status is required")]
+        public string? HotelDescription { get; set; }
+        [Required(ErrorMessage = "Hotel status is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? hotel_status { get; set; }
+        public string? HotelStatus { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? hotel_reason_status { get; set; }
+        public string? HotelReasonStatus { get; set; }
         [AllowNull]
-        public short hotel_rating_star { get; set; }
+        public short HotelRatingStar { get; set; }
 
         [Phone]
-        [Required(ErrorMessage = "hotel phone number is required")]
+        [Required(ErrorMessage = "Hotel phone number is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? hotel_phonenumber { get; set; }
+        public string? HotelPhonenumber { get; set; }
 
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public DateTime hotel_modified_date { get; set; }
-        [Required(ErrorMessage = "hotel address is required")]
+        public DateTime HotelModifiedDate { get; set; }
+        [Required(ErrorMessage = "Hotel address is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? hotel_addr_id { get; set; }
+        public int? HotelAddrId { get; set; }
     }
 }

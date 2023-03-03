@@ -9,18 +9,18 @@ namespace Realta.Contract.Models
 {
     public class FacilityPriceHistoryDto
     {
-        public int faph_id { get; set; }
-        public DateTime faph_startdate { get; set; }
-        public DateTime faph_enddate { get; set; }
-        public Decimal faph_low_price { get; set; }
-        public Decimal faph_high_price { get; set; }
-        public Decimal faph_rate_price { get; set; }
-        public Decimal faph_discount { get; set; }
-        public Decimal faph_tax_rate { get; set; }
-        public DateTime faph_modified_date { get; set; }
+        public int FaphId { get; set; }
+        public DateTime FaphStartdate { get; set; }
+        public DateTime FaphEnddate { get; set; }
+        public Decimal FaphLowPrice { get; set; }
+        public Decimal FaphHighPrice { get; set; }
+        public Decimal FaphRatePrice { get; set; }
+        public Decimal FaphDiscount { get; set; }
+        public Decimal FaphTaxRate { get; set; }
+        public DateTime FaphModifiedDate { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public int faph_faci_id { get; set; }
+        public int FaphFaciId { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public int faph_user_id { get; set; }
+        public int FaphUserId { get; set; }
     }
 }

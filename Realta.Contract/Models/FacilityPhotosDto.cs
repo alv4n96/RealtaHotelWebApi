@@ -12,25 +12,25 @@ namespace Realta.Contract.Models
     public class FacilityPhotosDto
     {
         [Required(ErrorMessage = "facility photos id is required")]
-        public int fapho_id { get; set; }
+        public int FaphoId { get; set; }
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [RegularExpression(@"^.*\.(jpg|jpeg|png)$", ErrorMessage = "Photo files must be JPEG or PNG files")]
-        public string fapho_thumbnail_filename { get; set; }
+        public string FaphoThumbnailFilename { get; set; }
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [RegularExpression(@"^.*\.(jpg|jpeg|png)$", ErrorMessage = "Photo files must be JPEG or PNG files")]
-        public string fapho_photo_filename { get; set; }
+        public string FaphoPhotoFilename { get; set; }
         [AllowNull]
-        public Boolean fapho_primary { get; set; }
+        public Boolean FaphoPrimary { get; set; }
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [RegularExpression(@"^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$", ErrorMessage = "URL Not valid.")]
-        public string fapho_url { get; set; }
+        public string FaphoUrl { get; set; }
         [AllowNull]
-        public DateTime fapho_modified_date { get; set; }
+        public DateTime FaphoModifiedDate { get; set; }
         [Required(ErrorMessage = "facility id is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public int fapho_faci_id { get; set; }
+        public int FaphoFaciId { get; set; }
     }
 }

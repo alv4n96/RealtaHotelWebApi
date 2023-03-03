@@ -12,17 +12,17 @@ namespace Realta.Contract.Models
     public class HotelReviewsDto
     {
         [Required(ErrorMessage = "hotel review id is required")]
-        public int hore_id { get; set; }
+        public int HoreId { get; set; }
         [Required(ErrorMessage = "user review is required")]
-        public string? hore_user_review { get; set; }
+        public string? HoreUserReview { get; set; }
         [Required(ErrorMessage = "rating is required")]
         [Range(1, 5, ErrorMessage = "Value for Rating must be between {1} and {2}.")]
-        public Byte hore_rating { get; set; } = 5;
+        public Byte HoreRating { get; set; } = 5;
         [Required(ErrorMessage = "user id is required")]
-        public int hore_user_id { get; set; }
+        public int HoreUserId { get; set; }
         [Required(ErrorMessage = "hotel id is required")]
-        public int hore_hotel_id { get; set; }
+        public int HoreHotelId { get; set; }
         [AllowNull]
-        public DateTime hore_created_on { get; set; }
+        public DateTime HoreCreatedOn { get; set; }
     }
 }
