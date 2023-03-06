@@ -1,4 +1,4 @@
-﻿using Realta.Contract.Models;
+﻿using Realta.Contract.Models.v1;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
 using Realta.Services.Abstraction;

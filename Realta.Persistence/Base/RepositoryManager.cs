@@ -1,5 +1,5 @@
 ﻿using Realta.Domain.Base;
-using Realta.Domain.Repositories;
+using Realta.Domain.Repositories.v1;
 using Realta.Persistence.Repositories;
 using Realta.Persistence.RepositoryContext;
 using System;

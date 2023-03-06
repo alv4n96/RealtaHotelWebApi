@@ -1,4 +1,4 @@
-﻿using Realta.Contract.Models;
+﻿using Realta.Contract.Models.v1;
 using System;
 using System.Collections.Generic;
 using System.Linq;

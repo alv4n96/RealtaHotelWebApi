@@ -9,9 +9,45 @@ USE WEBApiDbDemo
 
 SELECT faci_measure_unit FROM Hotel.Facilities;
 
-SELECT * from hotel.Facilities
+SELECT 
+faci_id AS FaciId
+,faci_name AS FaciName
+,faci_description AS FaciDescription
+,faci_max_number AS FaciMaxNumber
+,faci_measure_unit AS FaciMeasureUnit
+,faci_room_number AS FaciRoomNumber
+,faci_startdate AS FaciStartdate
+,faci_endate AS FaciEndate
+,faci_low_price AS FaciLowPrice
+,faci_high_price AS FaciHighPrice
+,faci_rate_price AS FaciRatePrice
+,faci_discount AS FaciDiscount
+,faci_tax_rate AS FaciTaxRate
+,faci_modified_date AS FaciModifiedDate
+,faci_cagro_id AS FaciCagroId
+,faci_hotel_id AS FaciHotelId
+,faci_user_id AS FaciUserId
+from hotel.Facilities
 
-SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
+SELECT 
+faci_id AS FaciId
+,faci_name AS FaciName
+,faci_description AS FaciDescription
+,faci_max_number AS FaciMaxNumber
+,faci_measure_unit AS FaciMeasureUnit
+,faci_room_number AS FaciRoomNumber
+,faci_startdate AS FaciStartdate
+,faci_endate AS FaciEndate
+,faci_low_price AS FaciLowPrice
+,faci_high_price AS FaciHighPrice
+,faci_rate_price AS FaciRatePrice
+,faci_discount AS FaciDiscount
+,faci_tax_rate AS FaciTaxRate
+,faci_modified_date AS FaciModifiedDate
+,faci_cagro_id AS FaciCagroId
+,faci_hotel_id AS FaciHotelId
+,faci_user_id AS FaciUserId
+FROM Hotel.Facilities WHERE faci_hotel_id = 1 AND faci_id = 2;
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id AND faci_id = @faci_id;
 

@@ -7,9 +7,27 @@ WHERE TABLE_NAME = 'Facility_Photos';
 
 USE WEBApiDbDemo
 
-SELECT faci_measure_unit FROM Hotel.Facilities;
 
-SELECT * from hotel.Facility_Photos WHERE fapho_faci_id = @fapho_faci_id AND fapho_id = @fapho_id;
+SELECT 
+fapho_id AS FaphoId
+,fapho_thumbnail_filename AS FaphoThumbnailFilename
+,fapho_photo_filename AS FaphoPhotoFilename
+,fapho_primary AS FaphoPrimary
+,fapho_url AS FaphoUrl 
+,fapho_modified_date AS FaphoModifiedDate
+,fapho_faci_id AS FaphoFaciId
+,fapho_original_filename AS FaphoOriginalFilename
+,fapho_file_size AS FaphoFileSize 
+,fapho_file_type AS FaphoFileType 
+from hotel.Facility_Photos WHERE fapho_faci_id = @fapho_faci_id;
+
+ALTER TABLE Hotel.Facility_Photos
+ADD fapho_original_filename nvarchar(50) NULL,
+    fapho_file_size INT NULL,
+    fapho_file_type nvarchar(50) NULL;
+
+
+SELECT * FROM Hotel.Facility_Photos
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;
 

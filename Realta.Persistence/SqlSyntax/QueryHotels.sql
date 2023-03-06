@@ -4,17 +4,19 @@ WHERE TABLE_NAME = 'Hotels';
 
 USE WEBApiDbDemo
 
-SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 1;
 
-SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 1 AND hore_id = 1;
+SELECT hotel_id AS HotelId
+,hotel_name AS HotelName
+,hotel_description AS HotelDescription
+,hotel_status AS HotelStatus
+,hotel_reason_status AS HotelReasonStatus
+,hotel_rating_star AS HotelRatingStar
+,hotel_phonenumber AS HotelPhonenumber
+,hotel_modified_date AS HotelModifiedDate
+,hotel_addr_id AS HotelAddrId
+FROM Hotel.Hotels
 
-SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 2
-
-SELECT * FROM Users.users;
-
-SELECT 1 FROM Users.user_roles WHERE usro_user_id = ___ AND usro_role_id IN (2, 4);
-
-SELECT * FROM [Hotel].[Hotels] WHERE hotel_id = 1;
+[Hotel].[spSelectHotel]
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%Hotel%';
 

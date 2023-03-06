@@ -9,7 +9,35 @@ USE WEBApiDbDemo
 
 SELECT faci_measure_unit FROM Hotel.Facilities;
 
-SELECT * from hotel.Facility_Price_History;
+SELECT 
+faph.faph_id AS FaphId
+,faph.faph_startdate AS FaphStartdate
+,faph.faph_enddate AS FaphEnddate
+,faph.faph_low_price AS FaphLowPrice
+,faph.faph_high_price AS FaphHighPrice
+,faph.faph_rate_price AS FaphRatePrice
+,faph.faph_discount AS FaphDiscount
+,faph.faph_tax_rate AS FaphTaxRate
+,faph.faph_modified_date AS FaphModifiedDate
+,faph.faph_faci_id AS FaphFaciId
+,faph.faph_user_id AS FaphUserId
+FROM Hotel.Facility_Price_History faph
+
+SELECT  
+faph.faph_id AS FaphId 
+,faph.faph_startdate AS FaphStartdate 
+,faph.faph_enddate AS FaphEnddate 
+,faph.faph_low_price AS FaphLowPrice 
+,faph.faph_high_price AS FaphHighPrice 
+,faph.faph_rate_price AS FaphRatePrice 
+,faph.faph_discount AS FaphDiscount 
+,faph.faph_tax_rate AS FaphTaxRate 
+,faph.faph_modified_date AS FaphModifiedDate 
+,faph.faph_faci_id AS FaphFaciId 
+,faph.faph_user_id AS FaphUserId  
+FROM Hotel.Facility_Price_History faph  
+
+
 SELECT * from hotel.Facility_Price_History WHERE faph_faci_id = @faph_faci_id;
 SELECT * from hotel.Facility_Price_History WHERE faph_faci_id = @faph_faci_id AND faph_id = @faph_id;
 

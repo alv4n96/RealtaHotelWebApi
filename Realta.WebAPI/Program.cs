@@ -4,7 +4,6 @@ using Realta.WebAPI.Extensions;
 
 internal class Program
 {
-
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
