@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Realta.Contract.Models.Hotels;
+using Realta.Contract.Models;
 using Realta.Contract.Models.v1;
+using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
 using Realta.Services.Abstraction;

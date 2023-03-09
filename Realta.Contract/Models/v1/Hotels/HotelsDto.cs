@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Realta.Contract.Models.v1.Hotels
 {
@@ -17,6 +12,7 @@ namespace Realta.Contract.Models.v1.Hotels
 
         [Required(ErrorMessage = "Hotel name is required")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        
         public string? HotelName { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? HotelDescription { get; set; }
