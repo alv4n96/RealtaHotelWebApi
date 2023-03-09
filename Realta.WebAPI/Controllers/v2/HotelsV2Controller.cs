@@ -36,6 +36,7 @@ namespace Realta.WebAPI.Controllers.v2
                 HotelPhonenumber = h.HotelPhonenumber,
                 HotelRatingStar = h.HotelRatingStar,
                 HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                HotelReasonStatus = h.HotelReasonStatus
             });
 
             return Ok(hotelDto);
