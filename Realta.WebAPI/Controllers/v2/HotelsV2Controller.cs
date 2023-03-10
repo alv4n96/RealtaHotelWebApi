@@ -66,10 +66,47 @@ namespace Realta.WebAPI.Controllers.v2
             return Ok(hotelDto);
         }
 
-        // POST api/<HotelsV2Controller>
+        // POST api/<HotelsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] HotelsDto dto)
         {
+
+            if (dto == null)
+            {
+                _logger.LogError("Hotel region object sent from client is null");
+                return BadRequest("Some parameters are missing");
+            }
+
+            var hotel = new Hotels()
+            {
+                HotelName = dto.HotelName,
+                HotelDescription = dto.HotelDescription,
+                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelRatingStar = dto.HotelRatingStar,
+                HotelPhonenumber = dto.HotelPhonenumber,
+                HotelAddrId = (int)dto.HotelAddrId
+            };
+
+            //post data to db
+            _repositoryManager.HotelsRepository.Insert(hotel);
+
+            var result = _repositoryManager.HotelsRepository.FindHotelsById(hotel.HotelId);
+
+
+            var resDto = new HotelsDto
+            {
+                HotelId = hotel.HotelId,
+                HotelName = hotel.HotelName,
+                HotelDescription = hotel.HotelDescription,
+                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelReasonStatus = hotel.HotelReasonStatus,
+                HotelRatingStar = hotel.HotelRatingStar,
+                HotelPhonenumber = hotel.HotelPhonenumber,
+                HotelModifiedDate = hotel.HotelModifiedDate,
+                HotelAddrId = hotel.HotelAddrId
+            };
+            //forward 
+            return Ok(resDto);
         }
 
         // PUT api/<HotelsV2Controller>/5
