@@ -2,7 +2,7 @@
 
 CREATE TRIGGER Hotel.Facilities_insert_validation
 ON Hotel.Facilities
-AFTER INSERT
+BEFORE INSERT
 AS
 BEGIN
     DECLARE @faci_user_id INT
