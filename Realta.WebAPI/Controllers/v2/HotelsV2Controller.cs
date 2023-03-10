@@ -43,11 +43,27 @@ namespace Realta.WebAPI.Controllers.v2
 
         }
 
-        // GET api/<HotelsV2Controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetHotelsById")]
+        public IActionResult GetHotelById(int id)
         {
-            return "value";
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
+
+            if (hotels == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
+
+            var hotelDto = new HotelsDto
+            {
+                HotelName = hotels.HotelName,
+                HotelRatingStar = hotels.HotelRatingStar,
+                HotelPhonenumber = hotels.HotelPhonenumber,
+                HotelStatus = hotels.HotelStatus ? "available" : "unavailable",
+                HotelModifiedDate = hotels.HotelModifiedDate
+            };
+
+            return Ok(hotelDto);
         }
 
         // POST api/<HotelsV2Controller>
