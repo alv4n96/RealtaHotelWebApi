@@ -4,30 +4,25 @@ WHERE TABLE_NAME = 'Hotels';
 
 USE WEBApiDbDemo
 
+SELECT * FROM Hotel.Hotels;
 
-SELECT hotel_id AS HotelId
-,hotel_name AS HotelName
-,hotel_description AS HotelDescription
-,hotel_status AS HotelStatus
-,hotel_reason_status AS HotelReasonStatus
-,hotel_rating_star AS HotelRatingStar
-,hotel_phonenumber AS HotelPhonenumber
-,hotel_modified_date AS HotelModifiedDate
-,hotel_addr_id AS HotelAddrId
-FROM Hotel.Hotels
+UPDATE Hotel.Hotels
+SET hotel_name = 'Hotel Nyoba Palembang'
+WHERE hotel_id = 1;
 
-[Hotel].[spSelectHotel]
+-- 2023-03-13 03:00:06.273
+-- 2023-03-13 03:00:06.273
+-- 2023-03-13 03:01:54.983
+-- 2023-03-13 03:01:54.983ZZ
+
+UPDATE Hotel.Hotels
+SET hotel_rating_star = 5
+WHERE hotel_id = 1;
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%Hotel%';
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
 
-SELECT * FROM Hotel.Facility_Photos;
-
-UPDATE Hotel.Facility_Photos
-SET fapho_primary = 0
-WHERE fapho_id = 1; 
-SELECT * FROM Hotel.Facility_Photos;
 
 
 DBCC CHECKIDENT ('Hotel.Hotels', RESEED,10 );

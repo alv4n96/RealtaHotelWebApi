@@ -5,6 +5,7 @@ ON Hotel.Facility_Photos
 AFTER INSERT, UPDATE
 AS
 BEGIN
+  SET NOCOUNT ON;
 
     IF NOT EXISTS (SELECT 1 FROM inserted) RETURN; -- return if no rows inserted or updated
     -- update other records with the same fapho_faci_id to have fapho_primary = 0

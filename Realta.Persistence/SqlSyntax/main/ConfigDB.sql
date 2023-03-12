@@ -85,7 +85,6 @@ CREATE TABLE Master.category_group (
 -- Drop the table if it already exists
 IF OBJECT_ID('Hotel.Hotels', 'U') IS NOT NULL
 DROP TABLE Hotel.Hotels
-GO
 -- Create the table in the specified schema
 CREATE TABLE Hotel.Hotels
 (
@@ -96,21 +95,21 @@ CREATE TABLE Hotel.Hotels
   hotel_status BIT NOT NULL CHECK(hotel_status IN(0,1)),
   hotel_reason_status nvarchar(500) NULL,
   -- END UPDATE
-  hotel_rating_star smallint NULL,
+  hotel_rating_star numeric(2,1) NULL,
   hotel_phonenumber nvarchar(25) NOT NULL,
   hotel_modified_date datetime NULL, 
   -- Primary Key
   hotel_addr_id INT NOT NULL,
+  hotel_addr_description nvarchar(500) NULL,
   -- Add this later, on production
   CONSTRAINT hotel_addr_id_fk FOREIGN KEY (hotel_addr_id) REFERENCES Master.Address(addr_id)
 );
-GO
 
 -- Create a new table called 'Hotel_Reviews' in schema 'Hotel'
 -- Drop the table if it already exists
 IF OBJECT_ID('Hotel.Hotel_Reviews', 'U') IS NOT NULL
 DROP TABLE Hotel.Hotel_Reviews
-GO
+
 -- Create the table in the specified schema
 CREATE TABLE Hotel.Hotel_Reviews
 (
@@ -125,14 +124,14 @@ CREATE TABLE Hotel.Hotel_Reviews
   CONSTRAINT hore_user_id_pk FOREIGN KEY (hore_user_id) REFERENCES Users.Users(user_id),
   CONSTRAINT hore_hotel_id_fk FOREIGN KEY (hore_hotel_id) REFERENCES Hotel.Hotels(hotel_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-GO
+
 
 
 -- Create a new table called 'Facilities' in schema 'Hotel'
 -- Drop the table if it already exists
 IF OBJECT_ID('Hotel.Facilities', 'U') IS NOT NULL
 DROP TABLE Hotel.Facilities
-GO
+
 -- Create the table in the specified schema
 CREATE TABLE Hotel.Facilities
 (
@@ -161,13 +160,13 @@ CREATE TABLE Hotel.Facilities
   CONSTRAINT faci_hotel_id_fk FOREIGN KEY (faci_hotel_id) REFERENCES Hotel.Hotels(hotel_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT faci_user_id_fk FOREIGN KEY (faci_user_id) REFERENCES Users.users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-GO
+
 
 -- Create a new table called 'Facility_Price_History' in schema 'Hotel'
 -- Drop the table if it already exists
 IF OBJECT_ID('Hotel.Facility_Price_History', 'U') IS NOT NULL
 DROP TABLE Hotel.Facility_Price_History
-GO
+
 -- Create the table in the specified schema
 CREATE TABLE Hotel.Facility_Price_History
 (
@@ -186,24 +185,26 @@ CREATE TABLE Hotel.Facility_Price_History
   -- Add this later, on production
   CONSTRAINT faph_faci_id_fk FOREIGN KEY (faph_faci_id) REFERENCES Hotel.Facilities(faci_id) ON DELETE CASCADE ON UPDATE CASCADE,
 );
-GO
+
 
 -- Create a new table called 'Facility_Photos' in schema 'Hotel'
 -- Drop the table if it already exists
 IF OBJECT_ID('Hotel.Facility_Photos', 'U') IS NOT NULL
 DROP TABLE Hotel.Facility_Photos
-GO
+
 -- Create the table in the specified schema
 CREATE TABLE Hotel.Facility_Photos
 (
   fapho_id INT IDENTITY(1,1) NOT NULL CONSTRAINT fapho_id_pk PRIMARY KEY, -- primary key column
-  fapho_thumbnail_filename nvarchar(50) NULL,
   fapho_photo_filename nvarchar(50) NULL,
+  fapho_thumbnail_filename nvarchar(50) NOT NULL,
+  fapho_original_filename nvarchar(50) NOT NULL,
+  fapho_file_size smallint NOT NULL,
+  fapho_file_type nvarchar(50) NOT NULL,
   fapho_primary BIT NULL CHECK(fapho_primary IN(0,1)),
   fapho_url nvarchar(255) NULL,
   fapho_modified_date datetime,
   -- FOREIGN KEY
   fapho_faci_id INT NOT NULL,
-  CONSTRAINT fapho_faci_id_pk FOREIGN KEY (fapho_faci_id) REFERENCES Hotel.Facilities(faci_id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT fapho_faci_id_fk FOREIGN KEY (fapho_faci_id) REFERENCES Hotel.Facilities(faci_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-GO

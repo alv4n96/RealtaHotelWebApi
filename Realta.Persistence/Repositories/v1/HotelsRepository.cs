@@ -106,18 +106,19 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "SELECT " +
-                "hotel_id AS HotelId " +
-                ",hotel_name AS HotelName " +
-                ",hotel_description AS HotelDescription" +
-                ",hotel_status AS HotelStatus " +
-                ",hotel_reason_status AS HotelReasonStatus " +
-                ",hotel_rating_star AS HotelRatingStar " +
-                ",hotel_phonenumber AS HotelPhonenumber " +
-                ",hotel_modified_date AS HotelModifiedDate " +
-                ",hotel_addr_id AS HotelAddrId " +
-                "FROM Hotel.Hotels WHERE hotel_id = @hotelId;",
-                CommandType = CommandType.Text,
+                //CommandText = "SELECT " +
+                //"hotel_id AS HotelId " +
+                //",hotel_name AS HotelName " +
+                //",hotel_description AS HotelDescription" +
+                //",hotel_status AS HotelStatus " +
+                //",hotel_reason_status AS HotelReasonStatus " +
+                //",hotel_rating_star AS HotelRatingStar " +
+                //",hotel_phonenumber AS HotelPhonenumber " +
+                //",hotel_modified_date AS HotelModifiedDate " +
+                //",hotel_addr_id AS HotelAddrId " +
+                //"FROM Hotel.Hotels WHERE hotel_id = @hotelId;",
+                CommandText = "Hotel.spSelectHotelById",
+                CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
                 {
                     new SqlCommandParameterModel()
