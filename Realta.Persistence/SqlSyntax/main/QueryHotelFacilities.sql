@@ -7,7 +7,30 @@ WHERE TABLE_NAME = 'Facilities';
 
 USE WEBApiDbDemo
 
-SELECT faci_measure_unit FROM Hotel.Facilities;
+SELECT faci_endate FROM Hotel.Facilities;
+
+SELECT * FROM Hotel.Facility_Price_History where faph_faci_id = 43; SELECT * FROM Hotel.Facilities ORDER BY faci_id DESC;
+
+SELECT faci_modified_date FROM Hotel.Facilities WHERE faci_room_number = 'COBAC0'
+
+
+UPDATE Hotel.Facilities
+SET faci_discount = 15 
+WHERE faci_id = 43;
+
+INSERT INTO Hotel.Facilities
+(faci_name, faci_description, faci_max_number, faci_measure_unit, faci_room_number, 
+faci_startdate, faci_endate, faci_low_price, faci_high_price, 
+faci_discount, faci_tax_rate, 
+faci_cagro_id, faci_hotel_id, faci_user_id)
+VALUES
+('Swimming Pool', 'An outdoor swimming pool', 50, 'people', 'COBAC1',
+'2022-01-01', '2022-12-31', 100000, 200000, 10, 10,
+1, 4, 4);
+
+
+SELECT 1 FROM Users.user_roles WHERE usro_user_id = 4 AND usro_role_id IN (2, 4)
+
 
 SELECT 
 faci_id AS FaciId

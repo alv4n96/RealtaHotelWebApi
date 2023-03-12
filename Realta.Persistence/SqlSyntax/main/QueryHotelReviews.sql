@@ -5,7 +5,7 @@ WHERE TABLE_NAME = 'Hotel_Reviews';
 USE WEBApiDbDemo
 
 UPDATE hotel.Hotel_Reviews
-SET hore_rating = 2
+SET hore_rating = 3
 WHERE hore_id = 6
 
 -- 2023-03-13 03:01:54.983
