@@ -1,21 +1,28 @@
 ﻿-- DROP TRIGGER Hotel.Hotel_Facility_Photos_insert_validation
 
-CREATE TRIGGER Hotel.Hotel_Facility_Photos_insert_validation
+CREATE OR ALTER TRIGGER Hotel.Hotel_Facility_Photos_insert_validation
 ON Hotel.Facility_Photos
-AFTER INSERT
+INSTEAD OF INSERT
 AS
 BEGIN
     DECLARE @fapho_faci_id INT
-    DECLARE @resetIndex INT
 
-    SELECT @fapho_faci_id = fapho_faci_id
+    SELECT 
+        @fapho_faci_id = fapho_faci_id
     FROM inserted
+
+ 
 
     IF NOT EXISTS (SELECT 1 FROM Hotel.Facilities WHERE faci_id = @fapho_faci_id)
     BEGIN
-        SELECT @resetIndex = (IDENT_CURRENT('Hotel.Facility_Photos') - 1);
         RAISERROR ('Facility does not exist!', 16, 1);
         ROLLBACK TRANSACTION;
-        DBCC CHECKIDENT ('Hotel.Facility_Photos', RESEED, @resetIndex );
+    END
+    ELSE
+    BEGIN
+        INSERT INTO Hotel.Facility_Photos (fapho_photo_filename, fapho_thumbnail_filename, fapho_original_filename, fapho_file_size, fapho_file_type, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id)
+		SELECT fapho_photo_filename, fapho_thumbnail_filename, fapho_original_filename, fapho_file_size, fapho_file_type, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id
+	    FROM inserted;
     END
 END
+

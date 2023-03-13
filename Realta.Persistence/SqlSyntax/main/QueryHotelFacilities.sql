@@ -9,13 +9,16 @@ USE WEBApiDbDemo
 
 SELECT faci_endate FROM Hotel.Facilities;
 
-SELECT * FROM Hotel.Facility_Price_History where faph_faci_id = 43; SELECT * FROM Hotel.Facilities ORDER BY faci_id DESC;
+SELECT * FROM Hotel.Facility_Price_History where faph_faci_id = 43; SELECT * FROM Hotel.Facilities WHERE faci_id = 43; 
 
-SELECT faci_modified_date FROM Hotel.Facilities WHERE faci_room_number = 'COBAC0'
-
+SELECT faph.*
+FROM Hotel.Facility_Price_History faph
+INNER JOIN Hotel.Facilities faci ON faph.faph_faci_id = faci.faci_id
+WHERE faci.faci_hotel_id = 4;
 
 UPDATE Hotel.Facilities
-SET faci_discount = 15 
+SET faci_name = 'Swimswum Pool'
+--SET faci_discount = 20
 WHERE faci_id = 43;
 
 INSERT INTO Hotel.Facilities

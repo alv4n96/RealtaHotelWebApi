@@ -1,24 +1,46 @@
 ﻿--DROP TRIGGER Hotel.tr_hotel_facilities_price_history
 
-CREATE TRIGGER Hotel.tr_facility_photos_fapho_primary
+CREATE OR ALTER TRIGGER Hotel.tr_facility_photos_fapho_primary
 ON Hotel.Facility_Photos
-AFTER INSERT, UPDATE
+AFTER INSERT 
 AS
 BEGIN
   SET NOCOUNT ON;
 
-    IF NOT EXISTS (SELECT 1 FROM inserted) RETURN; -- return if no rows inserted or updated
-    -- update other records with the same fapho_faci_id to have fapho_primary = 0
-    UPDATE p
-    SET fapho_primary = 0
-    FROM Hotel.Facility_Photos p
-    JOIN inserted i ON p.fapho_faci_id = i.fapho_faci_id
-    WHERE p.fapho_id <> i.fapho_id;
+  BEGIN TRY
+    -- Start transaction
+    BEGIN TRANSACTION
+    DECLARE @fapho_faci_id INT
+    DECLARE @fapho_id INT
+    DECLARE @fapho_primary INT
 
-    -- set inserted records with fapho_primary = 1
-    UPDATE p
-    SET fapho_primary = 1
-    FROM Hotel.Facility_Photos p
-    JOIN inserted i ON p.fapho_id = i.fapho_id
-    WHERE i.fapho_primary = 1;
+    SELECT 
+        @fapho_id = fapho_id,
+        @fapho_faci_id = fapho_faci_id,
+        @fapho_primary = fapho_primary
+    FROM inserted
+
+    -- If any row is updated, check if the value of fapho_primary is changed to 1
+    IF NOT EXISTS (
+    SELECT * FROM Hotel.Facility_Photos WHERE fapho_primary = 1 AND fapho_faci_id = @fapho_faci_id) AND (@fapho_primary = 0)
+    BEGIN
+      -- Only allow one record with fapho_primary = 1 for each faci_id
+      UPDATE Hotel.Facility_Photos
+      SET 
+        fapho_primary = 1,
+        fapho_original_filename = 'ini dari insert bukan ya'
+      WHERE fapho_id = @fapho_id
+    END
+
+    -- Commit transaction
+    COMMIT TRANSACTION
+
+  END TRY
+
+  BEGIN CATCH
+    -- Rollback transaction in case of any errors
+    IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+    THROW;
+  END CATCH;
 END;
+

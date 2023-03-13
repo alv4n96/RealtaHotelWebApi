@@ -67,13 +67,24 @@ BEGIN
         RETURN;
     END 
     
-    UPDATE Hotel.Facilities 
-    SET 
-        faci_rate_price = @faci_rate_price
-    WHERE 
-        faci_id = @faci_id
 
-	  INSERT INTO Hotel.Facility_Price_History (faph_startdate, faph_enddate, faph_low_price, faph_high_price, faph_rate_price, faph_discount, faph_tax_rate, faph_modified_date, faph_faci_id, faph_user_id)
-	  VALUES (@faci_startdate, @faci_enddate, @faci_low_price, @faci_high_price, @faci_rate_price, @faci_discount, @faci_tax_rate, GETDATE(), @faci_id, @faci_user_id);
+    IF UPDATE(faci_startdate)
+		OR UPDATE(faci_enddate)
+		OR UPDATE(faci_low_price)
+		OR UPDATE(faci_high_price) 
+		OR UPDATE(faci_rate_price) 
+		OR UPDATE(faci_discount) 
+		OR UPDATE(faci_tax_rate)
+    BEGIN
+        BEGIN TRANSACTION
+			UPDATE Hotel.Facilities 
+			SET 
+				faci_rate_price = @faci_rate_price
+			WHERE 
+				faci_id = @faci_id
 
+			INSERT INTO Hotel.Facility_Price_History (faph_startdate, faph_enddate, faph_low_price, faph_high_price, faph_rate_price, faph_discount, faph_tax_rate, faph_modified_date, faph_faci_id, faph_user_id)
+			VALUES (@faci_startdate, @faci_enddate, @faci_low_price, @faci_high_price, @faci_rate_price, @faci_discount, @faci_tax_rate, GETDATE(), @faci_id, @faci_user_id);
+        COMMIT TRANSACTION
+    END
 END
