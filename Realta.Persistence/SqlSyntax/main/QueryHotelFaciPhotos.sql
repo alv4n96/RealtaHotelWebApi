@@ -43,16 +43,17 @@ VALUES
 ('hotel1_facility4_photo4.jpg', 'hotel1_facility4_photo4_thumb.jpg', 'hotel1_facility4_photo4.jpg', 4096, 'jpg', 0, 'http://example.com/hotel1/facility4/photo4.jpg', '2023-03-10 11:00:00', 11);
 INSERT INTO Hotel.Facility_Photos (fapho_photo_filename, fapho_thumbnail_filename, fapho_original_filename, fapho_file_size, fapho_file_type, fapho_primary, fapho_url, fapho_modified_date, fapho_faci_id) 
 VALUES
-('Testkakak.jpg', 'hotel1_facility4_photo5_thumb.jpg', 'hotel1_facility4_photo5.jpg', 5120, 'jpg', 0, 'http://example.com/hotel1/facility4/photo5.jpg', '2023-03-10 12:00:00', 11);
+('ini nyoba aja .jpg', 'hotel1_facility4_photo5_thumb.jpg', 'hotel1_facility4_photo5.jpg', 5120, 'jpg', 0, 'http://example.com/hotel1/facility4/photo5.jpg', '2023-03-10 12:00:00', 11);
 
+SELECT * FROM Hotel.Facility_Photos WHERE fapho_primary = 1 AND fapho_faci_id = 11
 
 SELECT * FROM Hotel.Facility_Photos WHERE fapho_faci_id = 11 ORDER BY fapho_id DESC;
 
 SELECT * FROM Hotel.Facility_Photos WHERE fapho_primary = 1 AND fapho_faci_id = 5;
 
 UPDATE hotel.Facility_Photos
-SET fapho_primary = 1
-WHERE fapho_id = 43
+SET fapho_primary = 0
+WHERE fapho_id = 48
 SELECT * FROM Hotel.Facility_Photos WHERE fapho_faci_id = 11 ORDER BY fapho_id DESC;
 
 SELECT * FROM Hotel.Facilities WHERE faci_hotel_id = @faci_hotel_id;

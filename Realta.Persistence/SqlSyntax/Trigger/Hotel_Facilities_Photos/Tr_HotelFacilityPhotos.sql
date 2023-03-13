@@ -21,8 +21,7 @@ BEGIN
     FROM inserted
 
     -- If any row is updated, check if the value of fapho_primary is changed to 1
-    IF NOT EXISTS (
-    SELECT * FROM Hotel.Facility_Photos WHERE fapho_primary = 1 AND fapho_faci_id = @fapho_faci_id) AND (@fapho_primary = 0)
+    IF NOT EXISTS (SELECT TOP 1 * FROM Hotel.Facility_Photos WHERE fapho_primary = 1 AND fapho_faci_id = @fapho_faci_id) AND (@fapho_primary = 0)
     BEGIN
       -- Only allow one record with fapho_primary = 1 for each faci_id
       UPDATE Hotel.Facility_Photos

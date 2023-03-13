@@ -2,7 +2,6 @@
 
 -- THIS IS NOT USED!
 
-/*
 CREATE OR ALTER TRIGGER Hotel.tr_hotel_facilities_price_history
 ON Hotel.Facilities
 AFTER INSERT 
@@ -29,4 +28,3 @@ BEGIN
   INSERT INTO Hotel.Facility_Price_History (faph_startdate, faph_enddate, faph_low_price, faph_high_price, faph_rate_price, faph_discount, faph_tax_rate, faph_modified_date, faph_faci_id, faph_user_id)
   VALUES (@faph_startdate, @faph_enddate, @faph_low_price, @faph_high_price, @faph_rate_price, @faph_discount, @faph_tax_rate, @faph_modified_date, @faph_faci_id, @faph_user_id);
 END;
-*/
