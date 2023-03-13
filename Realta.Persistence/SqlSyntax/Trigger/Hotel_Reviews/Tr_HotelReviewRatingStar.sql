@@ -24,11 +24,8 @@ BEGIN
     SET hotel_rating_star = (
         SELECT CAST(FORMAT(AVG(cast(hore_rating AS numeric(2,1))), 'N1') AS numeric (2,1))
         FROM Hotel.Hotel_Reviews
-        WHERE hore_hotel_id = @hotel_id
-    )
+        WHERE hore_hotel_id = @hotel_id )
+    WHERE hotel_id = @hotel_id;
+
 END;
-
-
-
-
 

@@ -26,8 +26,7 @@ BEGIN
       -- Only allow one record with fapho_primary = 1 for each faci_id
       UPDATE Hotel.Facility_Photos
       SET 
-        fapho_primary = 1,
-        fapho_original_filename = 'ini dari insert bukan ya'
+        fapho_primary = 1
       WHERE fapho_id = @fapho_id
     END
 

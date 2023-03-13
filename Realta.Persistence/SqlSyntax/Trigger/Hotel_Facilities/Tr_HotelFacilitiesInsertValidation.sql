@@ -59,24 +59,25 @@ BEGIN
     BEGIN TRY
         INSERT INTO Hotel.Facilities (faci_name, faci_description, faci_max_number, faci_measure_unit, faci_room_number, faci_startdate, 
                     faci_enddate, faci_low_price, faci_high_price, faci_rate_price, faci_discount, faci_tax_rate, faci_modified_date, 
-                    faci_cagro_id, faci_hotel_id, faci_user_id)
+                    faci_cagro_id, faci_hotel_id, faci_user_id, faci_expose_price) 
         SELECT 
-            faci_name, 
-            faci_description, 
-            faci_max_number,
-            faci_measure_unit,
-            faci_room_number,
-            faci_startdate,
-            faci_enddate,
-            faci_low_price, 
-            faci_high_price, 
+            i.faci_name, 
+            i.faci_description, 
+            i.faci_max_number,
+            i.faci_measure_unit,
+            i.faci_room_number,
+            i.faci_startdate,
+            i.faci_enddate,
+            i.faci_low_price, 
+            i.faci_high_price, 
             @faci_rate_price,
-            faci_discount,
-            faci_tax_rate,
+            i.faci_discount,
+            i.faci_tax_rate,
             GETDATE(),
-            faci_cagro_id,
-            faci_hotel_id,
-            faci_user_id
+            i.faci_cagro_id,
+            i.faci_hotel_id,
+            i.faci_user_id,
+            i.faci_expose_price
         FROM inserted i
     END TRY
 
