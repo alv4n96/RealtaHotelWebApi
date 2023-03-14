@@ -1,7 +1,5 @@
 ﻿--DROP TRIGGER Hotel.tr_hotel_facilities_price_history
 
--- THIS IS NOT USED!
-
 CREATE OR ALTER TRIGGER Hotel.tr_hotel_facilities_price_history
 ON Hotel.Facilities
 AFTER INSERT 
