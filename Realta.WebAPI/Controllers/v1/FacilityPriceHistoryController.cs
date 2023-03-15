@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Realta.Contract.Models.v1;
+using Realta.Contract.Models.v1.History;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
 using Realta.Services.Abstraction;
@@ -65,11 +66,12 @@ namespace Realta.WebAPI.Controllers.v1
                     FaphModifiedDate = faph.FaphModifiedDate
                 });
 
-                return Ok(new
+                var result = new HotelFaciHistoryGetAllDto()
                 {
-                    hotel = hotelDto,
-                    history = facilityPriceHistoryDto
-                });
+                    Hotels = hotelDto,
+                    History = facilityPriceHistoryDto
+                };
+                return Ok(result);
             }
         }
 
@@ -92,6 +94,33 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelRatingStar = hotels.HotelRatingStar,
                 HotelPhonenumber = hotels.HotelPhonenumber,
             };
+            var facilities = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
+
+            if (facilities == null)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Facilities doesn't exist or wrong parameter");
+            }
+
+            var facilitiesDto = new FacilitiesDto()
+                {
+                    FaciId = facilities.FaciId,
+                    FaciName = facilities.FaciName,
+                    FaciRoomNumber = facilities.FaciRoomNumber,
+                    FaciMaxNumber = facilities.FaciMaxNumber,
+                    FaciMeasureUnit = facilities.FaciMeasureUnit,
+                    FaciStartdate = facilities.FaciStartdate,
+                    FaciEndDate = facilities.FaciEndDate,
+                    FaciLowPrice = facilities.FaciLowPrice,
+                    FaciHighPrice = facilities.FaciHighPrice,
+                    FaciDiscount = facilities.FaciDiscount,
+                    FaciRatePrice = facilities.FaciRatePrice,
+                    FaciTaxRate = facilities.FaciTaxRate,
+                    FaciExposePrice =facilities.FaciExposePrice,
+                    FaciModifiedDate = facilities.FaciModifiedDate,
+                    FaciDescription = facilities.FaciDescription
+                };
+
 
             var facilityPriceHistory = await _repositoryManager.FacilityPriceHistoryRepository.FindAllFacilityPriceHistoryByFacilityAsync(hotelId, faciId);
 
@@ -118,11 +147,14 @@ namespace Realta.WebAPI.Controllers.v1
                     FaphModifiedDate = faph.FaphModifiedDate
                 });
 
-                return Ok(new
+                var result = new HotelFaciHistoryGetByFaciDto()
                 {
-                    hotel = hotelDto,
-                    history = facilityPriceHistoryDto
-                });
+                    Hotels = hotelDto,
+                    Facility = facilitiesDto,
+                    History = facilityPriceHistoryDto
+                };
+                
+                return Ok(result);
             }
         }
 
