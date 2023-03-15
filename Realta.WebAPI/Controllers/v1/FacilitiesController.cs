@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Realta.Contract.Models;
 using Realta.Contract.Models.v1;
+using Realta.Contract.Models.v1.Facilities;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
-using Realta.Domain.Entities.Enum;
 using Realta.Services.Abstraction;
-using System.Runtime.InteropServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,8 +40,13 @@ namespace Realta.WebAPI.Controllers.v1
             {
                 HotelId = hotels.HotelId,
                 HotelName = hotels.HotelName,
+                HotelDescription = hotels.HotelDescription,
+                HotelAddrDescription = hotels.HotelAddrDescription,
                 HotelRatingStar = hotels.HotelRatingStar,
                 HotelPhonenumber = hotels.HotelPhonenumber,
+                // HotelStatus = hotels.HotelStatus ? "available" : "unavailable",
+                HotelStatus = hotels.HotelStatus,
+                HotelModifiedDate = hotels.HotelModifiedDate,
             };
 
             if (facilities.Count() == 0)
@@ -57,26 +59,29 @@ namespace Realta.WebAPI.Controllers.v1
             }
             else
             {
-                var hotelReviewsDto = facilities.Select(f => new FacilitiesDto
+                var hotelFacilitiesDtos = facilities.Select(f => new FacilitiesDto
                 {
                     FaciId = f.FaciId,
                     FaciName = f.FaciName,
-                    FaciRoomNumber = f.FaciRoomNumber,
-                    FaciMaxNumber = f.FaciMaxNumber,
-                    FaciMeasureUnit = f.FaciMeasureUnit,
+                    FaciExposePrice = f.FaciExposePrice,
+                    // FaciRoomNumber = f.FaciRoomNumber,
+                    // FaciMaxNumber = f.FaciMaxNumber,
+                    // FaciMeasureUnit = f.FaciMeasureUnit,
                     FaciStartdate = f.FaciStartdate,
-                    FaciEndate = f.FaciEndate,
+                    FaciEndDate = f.FaciEndDate,
                     FaciLowPrice = f.FaciLowPrice,
                     FaciHighPrice = f.FaciHighPrice,
-                    FaciDiscount = f.FaciDiscount,
+                    // FaciDiscount = f.FaciDiscount,
                     FaciRatePrice = f.FaciRatePrice,
-                    FaciTaxRate = f.FaciTaxRate
+                    // FaciTaxRate = f.FaciTaxRate
                 });
-                return Ok(new
+
+                var result = new HotelFaciAllDto()
                 {
-                    hotel = hotelDto,
-                    facilities = hotelReviewsDto
-                });
+                    Hotels = hotelDto,
+                    Facilities = hotelFacilitiesDtos
+                };
+                return Ok(result);
             }
         }
 
@@ -111,18 +116,24 @@ namespace Realta.WebAPI.Controllers.v1
                     FaciMaxNumber = facilities.FaciMaxNumber,
                     FaciMeasureUnit = facilities.FaciMeasureUnit,
                     FaciStartdate = facilities.FaciStartdate,
-                    FaciEndate = facilities.FaciEndate,
+                    FaciEndDate = facilities.FaciEndDate,
                     FaciLowPrice = facilities.FaciLowPrice,
                     FaciHighPrice = facilities.FaciHighPrice,
                     FaciDiscount = facilities.FaciDiscount,
                     FaciRatePrice = facilities.FaciRatePrice,
-                    FaciTaxRate = facilities.FaciTaxRate
+                    FaciTaxRate = facilities.FaciTaxRate,
+                    FaciExposePrice =facilities.FaciExposePrice,
+                    FaciModifiedDate = facilities.FaciModifiedDate,
+                    FaciDescription = facilities.FaciDescription
                 };
-                return Ok(new
+
+                var result = new HotelFaciByIdDto()
                 {
-                    hotel = hotelDto,
-                    facilities = facilitiesDto
-                });
+                    Hotels = hotelDto,
+                    Facilities = facilitiesDto
+                };
+
+                return Ok(result);
             }
             else
             {
@@ -165,7 +176,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciMeasureUnit = string.IsNullOrEmpty(dto.FaciMeasureUnit) ? string.Empty : dto.FaciMeasureUnit,
                 FaciRoomNumber = dto.FaciRoomNumber,
                 FaciStartdate = dto.FaciStartdate,
-                FaciEndate = dto.FaciEndate,
+                FaciEndDate = dto.FaciEndDate,
                 FaciLowPrice = dto.FaciLowPrice,
                 FaciHighPrice = dto.FaciHighPrice,
                 FaciDiscount = (decimal)(dto.FaciDiscount == null ? 0 : dto.FaciDiscount),
@@ -189,7 +200,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciMaxNumber = result.FaciMaxNumber,
                 FaciMeasureUnit = result.FaciMeasureUnit,
                 FaciStartdate = result.FaciStartdate,
-                FaciEndate = result.FaciEndate,
+                FaciEndDate = result.FaciEndDate,
                 FaciLowPrice = result.FaciLowPrice,
                 FaciHighPrice = result.FaciHighPrice,
                 FaciDiscount = result.FaciDiscount,
@@ -240,7 +251,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciMeasureUnit = string.IsNullOrEmpty(dto.FaciMeasureUnit) ? string.Empty : dto.FaciMeasureUnit,
                 FaciRoomNumber = dto.FaciRoomNumber,
                 FaciStartdate = dto.FaciStartdate,
-                FaciEndate = dto.FaciEndate,
+                FaciEndDate = dto.FaciEndDate,
                 FaciLowPrice = dto.FaciLowPrice,
                 FaciHighPrice = dto.FaciHighPrice,
                 FaciDiscount = (decimal)(dto.FaciDiscount == null ? 0 : dto.FaciDiscount),
@@ -263,7 +274,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciMaxNumber = result.FaciMaxNumber,
                 FaciMeasureUnit = result.FaciMeasureUnit,
                 FaciStartdate = result.FaciStartdate,
-                FaciEndate = result.FaciEndate,
+                FaciEndDate = result.FaciEndDate,
                 FaciLowPrice = result.FaciLowPrice,
                 FaciHighPrice = result.FaciHighPrice,
                 FaciDiscount = result.FaciDiscount,

@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Realta.Contract.Models;
-using Realta.Contract.Models;
 using Realta.Contract.Models.v1;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
-using Realta.Domain.Entities;
 using Realta.Services.Abstraction;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

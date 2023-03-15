@@ -3,6 +3,7 @@ USE WEBApiDbDemo
 --Dummy Data For SCHEMA Hotel
 
 -- DBCC CHECKIDENT ('Hotel.Hotels', RESEED, 0);
+-- DELETE FROM Hotel.Hotels
 -- * DATA HOTEL * --
 INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_status, hotel_phonenumber, hotel_addr_id, hotel_addr_description, hotel_modified_date)
 VALUES ('Grand Hyatt Jakarta', 'Luxury hotel in the heart of Jakarta', 1, '+62 21 29921234', 4, 'Jl. M. H. Thamrin No.30, Jakarta Pusat', GETDATE());

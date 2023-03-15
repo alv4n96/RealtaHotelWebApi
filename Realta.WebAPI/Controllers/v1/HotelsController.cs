@@ -32,6 +32,11 @@ namespace Realta.WebAPI.Controllers.v1
         public async Task<IActionResult> GetAllHotelAsync()
         {
             var hotels = await _repositoryManager.HotelsRepository.FindAllHotelsAsync();
+            if (hotels.ToList().Count() == 0)
+            {
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+            }
 
             var hotelDto = hotels.Select(h => new HotelsDto
             {
@@ -39,9 +44,11 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelName = h.HotelName,
                 HotelRatingStar = h.HotelRatingStar,
                 HotelPhonenumber = h.HotelPhonenumber,
-                HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                // HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                HotelStatus = h.HotelStatus,
                 HotelModifiedDate = h.HotelModifiedDate,
             });
+
 
             return Ok(hotelDto);
         }
@@ -61,14 +68,15 @@ namespace Realta.WebAPI.Controllers.v1
             {
                 HotelId = h.HotelId,
                 HotelName = h.HotelName,
+                HotelAddrDescription = h.HotelAddrDescription,
                 HotelRatingStar = h.HotelRatingStar,
                 HotelPhonenumber = h.HotelPhonenumber,
-                HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                // HotelStatus = h.HotelStatus ? "available" : "unavailable",
+                HotelStatus = h.HotelStatus,
                 HotelModifiedDate = h.HotelModifiedDate,
             });
 
             return Ok(hotelDto);
-
         }
 
         //GET api/<HotelsController>/5
@@ -85,11 +93,15 @@ namespace Realta.WebAPI.Controllers.v1
 
             var hotelDto = new HotelsDto
             {
+                HotelId = hotels.HotelId,
                 HotelName = hotels.HotelName,
+                HotelDescription = hotels.HotelDescription,
+                HotelAddrDescription = hotels.HotelAddrDescription,
                 HotelRatingStar = hotels.HotelRatingStar,
                 HotelPhonenumber = hotels.HotelPhonenumber,
-                HotelStatus = hotels.HotelStatus ? "available" : "unavailable",
-                HotelModifiedDate = hotels.HotelModifiedDate
+                // HotelStatus = hotels.HotelStatus ? "available" : "unavailable",
+                HotelStatus = hotels.HotelStatus,
+                HotelModifiedDate = hotels.HotelModifiedDate,
             };
 
             return Ok(hotelDto);
@@ -110,10 +122,11 @@ namespace Realta.WebAPI.Controllers.v1
             {
                 HotelName = dto.HotelName,
                 HotelDescription = dto.HotelDescription,
-                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                // HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelStatus = dto.HotelStatus,
                 HotelRatingStar = dto.HotelRatingStar,
                 HotelPhonenumber = dto.HotelPhonenumber,
-                HotelAddrId = (int)dto.HotelAddrId
+                HotelAddrId = dto.HotelAddrId
             };
 
             //post data to db
@@ -127,7 +140,8 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelId = hotel.HotelId,
                 HotelName = hotel.HotelName,
                 HotelDescription = hotel.HotelDescription,
-                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                // HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelStatus = hotel.HotelStatus,
                 HotelReasonStatus = hotel.HotelReasonStatus,
                 HotelRatingStar = hotel.HotelRatingStar,
                 HotelPhonenumber = hotel.HotelPhonenumber,
@@ -154,10 +168,11 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelId = id,
                 HotelName = dto.HotelName,
                 HotelDescription = dto.HotelDescription,
-                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                // HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelStatus = dto.HotelStatus,
                 HotelRatingStar = dto.HotelRatingStar,
                 HotelPhonenumber = dto.HotelPhonenumber,
-                HotelAddrId = (int)dto.HotelAddrId
+                HotelAddrId = dto.HotelAddrId
             };
 
             _repositoryManager.HotelsRepository.Edit(hotel);
@@ -172,7 +187,8 @@ namespace Realta.WebAPI.Controllers.v1
             {
                 HotelName = hotel.HotelName,
                 HotelDescription = hotel.HotelDescription,
-                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                // HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                
                 HotelReasonStatus = hotel.HotelReasonStatus,
                 HotelRatingStar = hotel.HotelRatingStar,
                 HotelPhonenumber = hotel.HotelPhonenumber,
@@ -209,7 +225,8 @@ namespace Realta.WebAPI.Controllers.v1
             {
                 HotelId = hotel.HotelId,
                 HotelName = dataResult.HotelName,
-                HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                // HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelStatus = hotel.HotelStatus,
                 HotelReasonStatus = hotel.HotelReasonStatus,
                 HotelRatingStar = dataResult.HotelRatingStar,
                 HotelPhonenumber = dataResult.HotelPhonenumber,

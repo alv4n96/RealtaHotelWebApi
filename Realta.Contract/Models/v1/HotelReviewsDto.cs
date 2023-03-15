@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Realta.Contract.Models.v1
 {
@@ -13,8 +14,10 @@ namespace Realta.Contract.Models.v1
         [Range(1, 5, ErrorMessage = "Value for Rating must be between {1} and {2}.")]
         public byte HoreRating { get; set; } = 5;
         [Required(ErrorMessage = "user id is required")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int HoreUserId { get; set; }
         [Required(ErrorMessage = "hotel id is required")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int HoreHotelId { get; set; }
         [AllowNull]
         public DateTime HoreCreatedOn { get; set; }

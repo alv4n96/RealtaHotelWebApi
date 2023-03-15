@@ -11,17 +11,18 @@ namespace Realta.Domain.Entities
         public int HotelId { get; set; }
         public string? HotelName { get; set; }
         [AllowNull]
-        public string? HotelDescription { get; set; } = string.Empty;
+        public string? HotelDescription { get; set; }
         public bool HotelStatus { get; set; }
         [AllowNull]
-        public string? HotelReasonStatus { get; set; } = string.Empty;
+        public string? HotelReasonStatus { get; set; } 
         [AllowNull]
         public decimal HotelRatingStar { get; set; }
         [Phone]
         public string? HotelPhonenumber { get; set; }
         [AllowNull]
-        public DateTime HotelModifiedDate { get; set; } = DateTime.Now;
-        public int? HotelAddrId { get; set; } 
+        public DateTime HotelModifiedDate { get; set; }
+        public int HotelAddrId { get; set; } 
+        public string? HotelAddrDescription { get; set; }
 
     }
 }

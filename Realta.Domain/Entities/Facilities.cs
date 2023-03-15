@@ -21,10 +21,11 @@ namespace Realta.Domain.Entities
         public string? FaciMeasureUnit { get; set; }
         public string? FaciRoomNumber { get; set; }
         public DateTime FaciStartdate { get; set; }
-        public DateTime FaciEndate { get; set; }
+        public DateTime FaciEndDate { get; set; }
         public Decimal FaciLowPrice { get; set; }
         public Decimal FaciHighPrice { get; set; }
         public Decimal FaciRatePrice { get; set; }
+        public Int16 FaciExposePrice { get; set; }
         [AllowNull]
         public Decimal FaciDiscount { get; set; }
         [AllowNull]

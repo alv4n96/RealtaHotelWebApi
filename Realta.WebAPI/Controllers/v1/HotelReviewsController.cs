@@ -2,6 +2,7 @@
 using Realta.Contract.Models;
 using Realta.Contract.Models.v1;
 using Realta.Contract.Models.v1.Hotels;
+using Realta.Contract.Models.v1.Reviews;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
 using Realta.Services.Abstraction;
@@ -63,16 +64,18 @@ namespace Realta.WebAPI.Controllers.v1
                 {
                     HoreId = hr.HoreId,
                     HoreUserReview = hr.HoreUserReview,
-                    HoreUserId = hr.HoreUserId,
+                    // HoreUserId = hr.HoreUserId,
                     HoreRating = hr.HoreRating,
                     HoreCreatedOn = hr.HoreCreatedOn,
-                    HoreHotelId = hr.HoreHotelId
+                    // HoreHotelId = hr.HoreHotelId
                 });
-                return Ok(new
+
+                var result = new HotelReviewsAllDto()
                 {
-                    hotel = hotelDto,
-                    reviews = hotelReviewsDto
-                });
+                    Hotels = hotelDto,
+                    Reviews = hotelReviewsDto
+                };
+                return Ok(result);
             }
 
 
@@ -110,11 +113,13 @@ namespace Realta.WebAPI.Controllers.v1
                     HoreCreatedOn = hotelReviews.HoreCreatedOn,
                     HoreHotelId = hotelReviews.HoreHotelId
                 };
-                return Ok(new
+
+                var result = new HotelReviewsByIdDto()
                 {
-                    hotel = hotelDto,
-                    reviews = hotelReviewsDto
-                });
+                    Hotels = hotelDto,
+                    Reviews = hotelReviewsDto
+                };
+                return Ok(result);
             }
             else
             {
