@@ -6,5 +6,5 @@ namespace Realta.Contract.Models.v1.Facilities;
 public class HotelFaciAllDto
 {
         public HotelsDto? Hotels { get; set; }
-        public IEnumerable<FacilitiesDto> Facilities { get; set; }
+        public IEnumerable<FacilitiesDto>? Facilities { get; set; } = new List<FacilitiesDto>();
 }

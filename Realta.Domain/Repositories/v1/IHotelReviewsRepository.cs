@@ -1,4 +1,6 @@
 ﻿using Realta.Domain.Entities;
+using Realta.Domain.RequestFeatures.HotelParameters;
+using Realta.Domain.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace Realta.Domain.Repositories.v1
         IEnumerable<HotelReviews> FindAllHotelReviews();
         Task<IEnumerable<HotelReviews>> FindAllHotelReviewsAsync(int hotelId);
         Task<HotelReviews> FindHotelReviewsByIdAsync(int hotelId, int hotelReviewsId);
+        Task<PagedList<HotelReviews>> GetReviewsPageList(ReviewsParameters reviewsParam, int hotelId);
         void Insert(HotelReviews hotelReviews);
         void Edit(HotelReviews hotelReviews);
         void Remove(HotelReviews hotelReviews);

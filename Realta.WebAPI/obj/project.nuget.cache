@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ebQV0jY+YjsL3QsUMF4444arFTW+47spwLr3TDdPCcfda8QkuBMSspKwzpLUlDLhQFumfpaAPvBcLmaVzJsRAw==",
+  "dgSpecHash": "tTQZPy5TYIx/kFv7t8DZmRGBwn8olp/y9OVWMlFvKkXe/E6xFCaCQxsPNEnM7PFrh1qPoui5s8WTneBRpR3OmA==",
   "success": true,
   "projectFilePath": "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.WebAPI\\Realta.WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\alvan\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\5.0.17\\microsoft.aspnetcore.jsonpatch.5.0.17.nupkg.sha512",
+    "C:\\Users\\alvan\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\5.0.17\\microsoft.aspnetcore.mvc.newtonsoftjson.5.0.17.nupkg.sha512",
+    "C:\\Users\\alvan\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.0\\microsoft.extensions.dependencyinjection.5.0.0.nupkg.sha512",
@@ -16,6 +19,8 @@
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\alvan\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\alvan\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\nlog\\5.0.4\\nlog.5.0.4.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\nlog.extensions.logging\\5.0.4\\nlog.extensions.logging.5.0.4.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",

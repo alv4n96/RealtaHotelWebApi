@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using Realta.Domain.Entities;
 using Realta.Domain.Repositories.v1;
+using Realta.Domain.RequestFeatures;
+using Realta.Domain.RequestFeatures.HotelParameters;
 using Realta.Persistence.Base;
 using Realta.Persistence.RepositoryContext;
 using System;
@@ -197,6 +199,9 @@ namespace Realta.Persistence.Repositories.v1
             throw new NotImplementedException();
         }
 
-
+        public Task<PagedList<HotelReviews>> GetReviewsPageList(ReviewsParameters reviewsParam, int hotelId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

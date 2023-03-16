@@ -98,3 +98,7 @@ D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\obj\Debug\net6.0\refint\Realta.We
 D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\obj\Debug\net6.0\Realta.WebAPI.pdb
 D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\obj\Debug\net6.0\Realta.WebAPI.genruntimeconfig.cache
 D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\obj\Debug\net6.0\ref\Realta.WebAPI.dll
+D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

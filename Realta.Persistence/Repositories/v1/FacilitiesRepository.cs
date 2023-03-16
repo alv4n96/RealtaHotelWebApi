@@ -1,14 +1,12 @@
 ﻿using Microsoft.VisualBasic;
+using Realta.Domain.RequestFeatures;
 using Realta.Domain.Entities;
 using Realta.Domain.Repositories.v1;
 using Realta.Persistence.Base;
+using Realta.Persistence.Repositories.RepositoriesExtensions;
 using Realta.Persistence.RepositoryContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Realta.Domain.RequestFeatures.HotelParameters;
 
 namespace Realta.Persistence.Repositories.v1
 {
@@ -378,6 +376,54 @@ namespace Realta.Persistence.Repositories.v1
         public IEnumerable<Facilities> FindAllFacilities()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<PagedList<Facilities>> GetFacilitiesPageList(FacilitiesParameters facilitiesParam, int hotelId)
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = @"SELECT faci_id AS FaciId 
+,faci_name AS FaciName 
+,faci_description AS FaciDescription 
+,faci_max_number AS FaciMaxNumber 
+,faci_measure_unit AS FaciMeasureUnit  
+,faci_room_number AS FaciRoomNumber 
+,faci_startdate AS FaciStartdate 
+,faci_enddate AS FaciEnddate 
+,faci_low_price AS FaciLowPrice 
+,faci_high_price AS FaciHighPrice 
+,faci_rate_price AS FaciRatePrice 
+,faci_expose_price AS FaciExposePrice 
+,faci_discount AS FaciDiscount 
+,faci_tax_rate AS FaciTaxRate 
+,faci_modified_date AS FaciModifiedDate 
+,faci_cagro_id AS FaciCagroId 
+,faci_hotel_id AS FaciHotelId 
+,faci_user_id AS FaciUserId 
+FROM Hotel.Facilities 
+WHERE faci_hotel_id = @faci_hotel_id
+ORDER BY faci_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@faci_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotelId
+                    },
+                }
+            };
+
+            var facilities = await GetAllAsync<Facilities>(model);
+            //var totalRow = FindAllHotels().Count();
+
+
+
+            var hotelSearch = facilities.AsQueryable()
+                .SearchFacilities(facilitiesParam.SearchTerm);
+
+            return PagedList<Facilities>.ToPagedList(hotelSearch.ToList(), facilitiesParam.PageNumber, facilitiesParam.PageSize);
+
         }
     }
 }

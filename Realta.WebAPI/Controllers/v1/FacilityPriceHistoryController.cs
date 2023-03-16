@@ -26,7 +26,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpGet("{hotelId}/history")]
         public async Task<IActionResult> GetFacilityPriceHistoryByHotel(int hotelId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -80,7 +80,7 @@ namespace Realta.WebAPI.Controllers.v1
         public async Task<IActionResult> GetFacilityPriceHistoryByFacilityIdAsync(int hotelId, int faciId)
         {
 
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -162,7 +162,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpGet("{hotelId}/facility/{faciId}/price/{faphId}/facility")]
         public async Task<IActionResult> GetFacilityPriceHistoryByFacilityPriceHistoryIdAsync(int hotelId, int faciId, int faphId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");

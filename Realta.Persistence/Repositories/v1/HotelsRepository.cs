@@ -1,8 +1,11 @@
-﻿using Realta.Domain.Entities;
+﻿using Realta.Domain.RequestFeatures;
+using Realta.Domain.Entities;
 using Realta.Domain.Repositories.v1;
 using Realta.Persistence.Base;
+using Realta.Persistence.Repositories.RepositoriesExtensions;
 using Realta.Persistence.RepositoryContext;
 using System.Data;
+using Realta.Domain.RequestFeatures.HotelParameters;
 
 namespace Realta.Persistence.Repositories.v1
 {
@@ -14,17 +17,18 @@ namespace Realta.Persistence.Repositories.v1
 
         public IEnumerable<Hotels> FindAllHotels()
         {
-            IEnumerator<Hotels> dataSet = FindAll<Hotels>("SELECT " +
-                                                          "hotel_id AS HotelId " +
-                                                          ",hotel_name AS HotelName " +
-                                                          ",hotel_description AS HotelDescription" +
-                                                          ",hotel_status AS HotelStatus " +
-                                                          ",hotel_reason_status AS HotelReasonStatus " +
-                                                          ",hotel_rating_star AS HotelRatingStar " +
-                                                          ",hotel_phonenumber AS HotelPhonenumber " +
-                                                          ",hotel_modified_date AS HotelModifiedDate " +
-                                                          ",hotel_addr_id AS HotelAddrId " +
-                                                          "FROM Hotel.Hotels;");
+            IEnumerator<Hotels> dataSet = FindAll<Hotels>("	SELECT " +
+                "hotel_id AS HotelId " +
+                ",hotel_name AS HotelName " +
+                ",hotel_description AS HotelDescription " +
+                ",hotel_status AS HotelStatus " +
+                ",hotel_reason_status AS HotelReasonStatus " +
+                ",hotel_rating_star AS HotelRatingStar " +
+                ",hotel_phonenumber AS HotelPhonenumber " +
+                ",hotel_modified_date AS HotelModifiedDate " +
+                ",hotel_addr_id AS HotelAddrId " +
+                ",hotel_addr_description AS HotelAddrDescription " +
+                "FROM Hotel.Hotels;");
 
             while (dataSet.MoveNext())
             {
@@ -79,7 +83,7 @@ namespace Realta.Persistence.Repositories.v1
             }
         }
 
-        public Hotels FindHotelsById(int hotelId)
+        public async Task<Hotels> FindHotelsByIdAsync(int hotelId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
@@ -108,15 +112,26 @@ namespace Realta.Persistence.Repositories.v1
             };
 
 
-            var dataSet = FindByCondition<Hotels>(model);
-            Hotels? hotel = dataSet.Current;
+            //var dataSet = FindByCondition<Hotels>(model);
+            //Hotels? hotel = dataSet.Current;
 
-            while (dataSet.MoveNext())
+            //while (dataSet.MoveNext())
+            //{
+            //    hotel = dataSet.Current;
+            //}
+
+            //return hotel;
+
+
+            IAsyncEnumerator<Hotels> dataSet = FindAllAsync<Hotels>(model);
+            Hotels? item = dataSet.Current;
+
+            while (await dataSet.MoveNextAsync())
             {
-                hotel = dataSet.Current;
+                item = dataSet.Current;
             }
 
-            return hotel;
+            return item;
         }
 
         public void Insert(Hotels hotels)
@@ -294,6 +309,86 @@ namespace Realta.Persistence.Repositories.v1
 
             _adoContext.ExecuteNonQuery(model);
             _adoContext.Dispose();
+        }
+
+        public async Task<IEnumerable<Hotels>> GetHotelPaging(HotelsParameters hotelParam)
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT " +
+                "hotel_id AS HotelId " +
+                ",hotel_name AS HotelName " +
+                ",hotel_description AS HotelDescription " +
+                ",hotel_status AS HotelStatus " +
+                ",hotel_reason_status AS HotelReasonStatus " +
+                ",hotel_rating_star AS HotelRatingStar " +
+                ",hotel_phonenumber AS HotelPhonenumber " +
+                ",hotel_modified_date AS HotelModifiedDate " +
+                ",hotel_addr_id AS HotelAddrId " +
+                "FROM Hotel.Hotels " +
+                "ORDER BY hotel_id " +
+                "OFFSET @pageNo ROWS FETCH NEXT @pageSize ROWS ONLY;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                            ParameterName = "@pageNo",
+                            DataType = DbType.Int32,
+                            Value = hotelParam.PageNumber
+                        },
+                     new SqlCommandParameterModel() {
+                            ParameterName = "@pageSize",
+                            DataType = DbType.Int32,
+                            Value = hotelParam.PageSize
+                        }
+                }
+
+            };
+
+            IAsyncEnumerator<Hotels> dataSet = FindAllAsync<Hotels>(model);
+
+            var item = new List<Hotels>();
+
+            while (await dataSet.MoveNextAsync())
+            {
+                item.Add(dataSet.Current);
+            }
+
+            return item;
+        }
+
+        public async Task<PagedList<Hotels>> GetHotelPageList(HotelsParameters hotelParam)
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT " +
+                "hotel_id AS HotelId " +
+                ",hotel_name AS HotelName " +
+                ",hotel_description AS HotelDescription " +
+                ",hotel_status AS HotelStatus " +
+                ",hotel_reason_status AS HotelReasonStatus " +
+                ",hotel_rating_star AS HotelRatingStar " +
+                ",hotel_phonenumber AS HotelPhonenumber " +
+                ",hotel_modified_date AS HotelModifiedDate " +
+                ",hotel_addr_id AS HotelAddrId " +
+                "FROM Hotel.Hotels " +                
+                "order by hotel_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                }
+            };
+
+            var hotels = await GetAllAsync<Hotels>(model);
+            //var totalRow = FindAllHotels().Count();
+
+
+
+            var hotelSearch = hotels.AsQueryable()
+                                .SearchHotels(hotelParam.SearchTerm);
+
+            return PagedList<Hotels>.ToPagedList(hotelSearch.ToList(),hotelParam.PageNumber,hotelParam.PageSize);
+
+            //return new PagedList<Hotels>(products.ToList(), totalRow, productParameters.PageNumber, productParameters.PageSize);
+            //return new PagedList<Hotels>(productSearch.ToList(), totalRow, hotelParam.PageNumber, hotelParam.PageSize);
         }
     }
 }

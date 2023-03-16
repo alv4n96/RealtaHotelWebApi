@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Realta.Contract.Models.v1;
 using Realta.Contract.Models.v1.Facilities;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
+using Realta.Domain.RequestFeatures.HotelParameters;
 using Realta.Services.Abstraction;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,7 +30,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpGet("{hotelId}/facilities")]
         public async Task<IActionResult> GetAllFacilitiesAsync(int hotelId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -51,15 +53,12 @@ namespace Realta.WebAPI.Controllers.v1
 
             if (facilities.Count() == 0)
             {
-                return Ok(new
-                {
-                    hotel = hotelDto,
-                    facilities = "there aren\'t any facility for this hotel yet"
-                });
+                _logger.LogError("Facilities object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
             }
             else
             {
-                var hotelFacilitiesDtos = facilities.Select(f => new FacilitiesDto
+                var hotelFacilitiesDto = facilities.Select(f => new FacilitiesDto
                 {
                     FaciId = f.FaciId,
                     FaciName = f.FaciName,
@@ -76,12 +75,12 @@ namespace Realta.WebAPI.Controllers.v1
                     // FaciTaxRate = f.FaciTaxRate
                 });
 
-                var result = new HotelFaciAllDto()
-                {
-                    Hotels = hotelDto,
-                    Facilities = hotelFacilitiesDtos
-                };
-                return Ok(result);
+                //var result = new HotelFaciAllDto()
+                //{
+                //    Hotels = hotelDto,
+                //    Facilities = hotelFacilitiesDto
+                //};
+                return Ok(hotelFacilitiesDto);
             }
         }
 
@@ -89,7 +88,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpGet("{hotelId}/facilities/{faciId}", Name = "GetHotelFaciById")]
         public async Task<IActionResult> GetFacilitiesByIdAsync(int hotelId, int faciId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -144,12 +143,24 @@ namespace Realta.WebAPI.Controllers.v1
                 });
             }
         }
+        [HttpGet("{hotelId}/facilities/pageList/")]
+        
+        public async Task<IActionResult> GetFacilitiesPageList([FromQuery] FacilitiesParameters facilitiesParameter, int hotelId)
+        {
+            
+            var facilities = await _repositoryManager.FacilitiesRepository.GetFacilitiesPageList(facilitiesParameter, hotelId);
+
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(facilities.MetaData));
+
+            return Ok(facilities);
+        }
 
         // POST api/<FacilitiesController>
         [HttpPost("{hotelId}/facilities/")]
         public async Task<IActionResult> Post(int hotelId, [FromBody] FacilitiesDto dto)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -223,7 +234,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpPut("{hotelId}/facilities/{faciId}")]
         public async Task<IActionResult> Put(int hotelId, int faciId, [FromBody] FacilitiesDto dto)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -292,7 +303,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpDelete("{hotelId}/facilities/{faciId}")]
         public async Task<IActionResult> Delete(int hotelId, int faciId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");

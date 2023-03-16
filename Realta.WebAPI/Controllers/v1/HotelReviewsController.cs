@@ -32,7 +32,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpGet("{hotelId}/reviews")]
         public async Task<IActionResult> GetAsync(int hotelId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -85,7 +85,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpGet("{hotelId}/reviews/{hotelReviewsId}", Name = "GetHotelReviewsById")]
         public async Task<IActionResult> GetHotelReviewsAsync(int hotelId, int hotelReviewsId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -135,7 +135,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpPost("{hotelId}/reviews/")]
         public async Task<IActionResult> PostAsync(int hotelId, [FromBody] HotelReviewsDto dto)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -180,7 +180,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpPut("{hotelId}/reviews/{hotelReviewsId}")]
         public async Task<IActionResult> Put(int hotelId, int hotelReviewsId, [FromBody] HotelReviewsDto dto)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -223,7 +223,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpDelete("{hotelId}/reviews/{hotelReviewsId}")]
         public async Task<IActionResult> DeleteAsync(int hotelId, int hotelReviewsId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(hotelId);
+            var hotels = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");

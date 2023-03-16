@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
+using Newtonsoft.Json;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
-using Realta.Persistence.Interface;
 using Realta.Services.Abstraction;
-using System.Runtime.InteropServices;
+using Realta.Domain.RequestFeatures.HotelParameters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -81,9 +80,9 @@ namespace Realta.WebAPI.Controllers.v1
 
         //GET api/<HotelsController>/5
         [HttpGet("{id}", Name = "GetHotelsById")]
-        public IActionResult GetHotelById(int id)
+        public async Task<IActionResult> GetHotelById(int id)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsById(id);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(id);
 
             if (hotels == null)
             {
@@ -132,7 +131,7 @@ namespace Realta.WebAPI.Controllers.v1
             //post data to db
             _repositoryManager.HotelsRepository.Insert(hotel);
 
-            var result = _repositoryManager.HotelsRepository.FindHotelsById(hotel.HotelId);
+            var result = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotel.HotelId);
 
 
             var resDto = new HotelsDto
@@ -198,11 +197,35 @@ namespace Realta.WebAPI.Controllers.v1
 
             return Ok(result);
         }
+        
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetHotelPaging([FromQuery] HotelsParameters hotelParam)
+        {
+            var hotels = await _repositoryManager.HotelsRepository.GetHotelPaging(hotelParam);
+            return Ok(hotels);
+        }
+
+        [HttpGet("pageList")]
+        public async Task<IActionResult> GetProductPageList([FromQuery] HotelsParameters hotelParam)
+        {
+            if (!hotelParam.ValidateStatus)
+            {
+                return BadRequest("Available must be 1 And Unavailable must be 0");
+
+            }
+
+            var hotels = await _repositoryManager.HotelsRepository.GetHotelPageList(hotelParam);
+
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(hotels.MetaData));
+
+            return Ok(hotels);
+        }
 
 
         // PUT api/<HotelsController>/switch/5
         [HttpPut("switch/{id}")]
-        public IActionResult Put(int id, [FromBody] HotelSwitchDto dto)
+        public async Task<IActionResult> Put(int id, [FromBody] HotelSwitchDto dto)
         {
             if (dto == null)
             {
@@ -219,7 +242,7 @@ namespace Realta.WebAPI.Controllers.v1
 
             _repositoryManager.HotelsRepository.EditStatus(hotel);
 
-            var dataResult = _repositoryManager.HotelsRepository.FindHotelsById(id);
+            var dataResult = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(id);
 
             var result = new HotelsDto
             {
@@ -238,7 +261,7 @@ namespace Realta.WebAPI.Controllers.v1
 
         // DELETE api/<HotelsController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             //1. Id cannot be null
             if (id == null)
@@ -248,7 +271,7 @@ namespace Realta.WebAPI.Controllers.v1
             }
 
             //2. Find id first
-            var hotel = _repositoryManager.HotelsRepository.FindHotelsById(id);
+            var hotel = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(id);
             if (hotel == null)
             {
                 _logger.LogError($"Hotel with id {id} Record doesn't exist or wrong parameter");
