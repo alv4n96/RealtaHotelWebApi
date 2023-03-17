@@ -6,14 +6,32 @@ USE WEBApiDbDemo
 
 SELECT * FROM Hotel.Hotels;
 
-UPDATE Hotel.Hotels
-SET hotel_name = 'Hotel Nyoba Palembang'
-WHERE hotel_id = 1;
+SELECT * FROM Master.address;
+
+SELECT 
+    COLUMN_NAME,
+    IS_NULLABLE,
+    DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'address';
+
+INSERT INTO master.address (addr_line1)
+VALUES ('ABU ALI 29');
+
+SELECT * FROM master.address
+ORDER BY addr_id DESC;
+
+SELECT * FROM master.address WHERE LOWER(addr_line1) LIKE '%abu ali%';
+
+
 
 -- 2023-03-13 03:00:06.273
 -- 2023-03-13 03:00:06.273
 -- 2023-03-13 03:01:54.983
 -- 2023-03-13 03:01:54.983ZZ
+
+USE
+
 
 UPDATE Hotel.Hotels
 SET hotel_rating_star = 5
@@ -25,7 +43,10 @@ SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
 
 
 
-DBCC CHECKIDENT ('Hotel.Hotels', RESEED,10 );
+DBCC CHECKIDENT ('Hotel.Hotels', RESEED, 15 );
+
+DELETE FROM Hotel.Hotels
+WHERE hotel_id = 17;
 
 SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
 
