@@ -4,6 +4,7 @@ using Realta.Domain.Repositories.v1;
 using Realta.Domain.RequestFeatures;
 using Realta.Domain.RequestFeatures.HotelParameters;
 using Realta.Persistence.Base;
+using Realta.Persistence.Repositories.RepositoriesExtensions;
 using Realta.Persistence.RepositoryContext;
 using System;
 using System.Collections.Generic;
@@ -199,9 +200,41 @@ namespace Realta.Persistence.Repositories.v1
             throw new NotImplementedException();
         }
 
-        public Task<PagedList<HotelReviews>> GetReviewsPageList(ReviewsParameters reviewsParam, int hotelId)
+        public async Task<PagedList<HotelReviews>> GetReviewsPageList(ReviewsParameters reviewsParam, int hotelId)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = @"
+SELECT 
+hore_id AS HoreId 
+,hore_user_review AS HoreUserReview 
+,hore_rating AS HoreRating 
+,hore_created_on AS HoreCreatedOn 
+,hore_user_id AS HoreUserId 
+,hore_hotel_id AS HoreHotelId 
+FROM Hotel.Hotel_Reviews 
+WHERE hore_hotel_id = @hore_hotel_id
+ORDER BY hore_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@hore_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotelId
+                    },
+                }
+            };
+
+            var reviews = await GetAllAsync<HotelReviews>(model);
+            //var totalRow = FindAllHotels().Count();
+
+
+
+            var reviewsSearch = reviews.AsQueryable()
+                .SearchReviews(reviewsParam.SearchTerm);
+
+            return PagedList<HotelReviews>.ToPagedList(reviewsSearch.ToList(), reviewsParam.PageNumber, reviewsParam.PageSize);
         }
     }
 }

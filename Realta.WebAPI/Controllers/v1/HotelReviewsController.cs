@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Realta.Contract.Models;
 using Realta.Contract.Models.v1;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Contract.Models.v1.Reviews;
 using Realta.Domain.Base;
 using Realta.Domain.Entities;
+using Realta.Domain.RequestFeatures.HotelParameters;
 using Realta.Services.Abstraction;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -70,12 +72,12 @@ namespace Realta.WebAPI.Controllers.v1
                     // HoreHotelId = hr.HoreHotelId
                 });
 
-                var result = new HotelReviewsAllDto()
-                {
-                    Hotels = hotelDto,
-                    Reviews = hotelReviewsDto
-                };
-                return Ok(result);
+                //var result = new HotelReviewsAllDto()
+                //{
+                //    Hotels = hotelDto,
+                //    Reviews = hotelReviewsDto
+                //};
+                return Ok(hotelReviewsDto);
             }
 
 
@@ -218,6 +220,20 @@ namespace Realta.WebAPI.Controllers.v1
 
             return Ok(resDto);
         }
+
+        [HttpGet("{hotelId}/reviews/pageList/")]
+
+        public async Task<IActionResult> GetFacilitiesPageList([FromQuery] ReviewsParameters reviewsParameters, int hotelId)
+        {
+
+            var reviews = await _repositoryManager.HotelReviewsRepository.GetReviewsPageList(reviewsParameters, hotelId);
+
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(reviews.MetaData));
+
+            return Ok(reviews);
+        }
+
 
         // DELETE api/<HotelReviewsController>/5
         [HttpDelete("{hotelId}/reviews/{hotelReviewsId}")]

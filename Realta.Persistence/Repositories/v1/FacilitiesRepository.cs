@@ -29,7 +29,7 @@ namespace Realta.Persistence.Repositories.v1
                               ",faci_measure_unit AS FaciMeasureUnit  " +
                               ",faci_room_number AS FaciRoomNumber " +
                               ",faci_startdate AS FaciStartdate " +
-                              ",faci_enddate AS FaciEnddate " +
+                              ",faci_enddate AS FaciEndDate " +
                               ",faci_low_price AS FaciLowPrice " +
                               ",faci_high_price AS FaciHighPrice " +
                               ",faci_rate_price AS FaciRatePrice " +
@@ -389,7 +389,7 @@ namespace Realta.Persistence.Repositories.v1
 ,faci_measure_unit AS FaciMeasureUnit  
 ,faci_room_number AS FaciRoomNumber 
 ,faci_startdate AS FaciStartdate 
-,faci_enddate AS FaciEnddate 
+,faci_enddate AS FaciEndDate 
 ,faci_low_price AS FaciLowPrice 
 ,faci_high_price AS FaciHighPrice 
 ,faci_rate_price AS FaciRatePrice 

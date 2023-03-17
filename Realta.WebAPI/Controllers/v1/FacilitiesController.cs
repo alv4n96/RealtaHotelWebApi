@@ -63,16 +63,17 @@ namespace Realta.WebAPI.Controllers.v1
                     FaciId = f.FaciId,
                     FaciName = f.FaciName,
                     FaciExposePrice = f.FaciExposePrice,
-                    // FaciRoomNumber = f.FaciRoomNumber,
-                    // FaciMaxNumber = f.FaciMaxNumber,
-                    // FaciMeasureUnit = f.FaciMeasureUnit,
+                    FaciRoomNumber = f.FaciRoomNumber,
+                    FaciMaxNumber = f.FaciMaxNumber,
+                    FaciMeasureUnit = f.FaciMeasureUnit,
                     FaciStartdate = f.FaciStartdate,
                     FaciEndDate = f.FaciEndDate,
                     FaciLowPrice = f.FaciLowPrice,
                     FaciHighPrice = f.FaciHighPrice,
-                    // FaciDiscount = f.FaciDiscount,
+                    FaciDiscount = f.FaciDiscount,
                     FaciRatePrice = f.FaciRatePrice,
-                    // FaciTaxRate = f.FaciTaxRate
+                    FaciTaxRate = f.FaciTaxRate,
+                    FaciModifiedDate = f.FaciModifiedDate
                 });
 
                 //var result = new HotelFaciAllDto()
@@ -121,7 +122,7 @@ namespace Realta.WebAPI.Controllers.v1
                     FaciDiscount = facilities.FaciDiscount,
                     FaciRatePrice = facilities.FaciRatePrice,
                     FaciTaxRate = facilities.FaciTaxRate,
-                    FaciExposePrice =facilities.FaciExposePrice,
+                    FaciExposePrice = facilities.FaciExposePrice,
                     FaciModifiedDate = facilities.FaciModifiedDate,
                     FaciDescription = facilities.FaciDescription
                 };
@@ -144,10 +145,10 @@ namespace Realta.WebAPI.Controllers.v1
             }
         }
         [HttpGet("{hotelId}/facilities/pageList/")]
-        
+
         public async Task<IActionResult> GetFacilitiesPageList([FromQuery] FacilitiesParameters facilitiesParameter, int hotelId)
         {
-            
+
             var facilities = await _repositoryManager.FacilitiesRepository.GetFacilitiesPageList(facilitiesParameter, hotelId);
 
 

@@ -19,6 +19,25 @@ INSERT INTO Hotel.Hotel_Reviews (hore_user_review, hore_rating, hore_created_on,
 VALUES ('Great hotel, loved the amenities and friendly staff!', 5, GETDATE(), 5, 1);
 
 
+SELECT 
+hore_id AS HoreId 
+,hore_user_review AS HoreUserReview 
+,hore_rating AS HoreRating 
+,hore_created_on AS HoreCreatedOn 
+,hore_user_id AS HoreUserId 
+,hore_hotel_id AS HoreHotelId 
+FROM Hotel.Hotel_Reviews 
+WHERE hore_hotel_id = @hore_hotel_id;
+
+SELECT 
+hore_id AS HoreId 
+,hore_user_review AS HoreUserReview 
+,hore_rating AS HoreRating 
+,hore_created_on AS HoreCreatedOn 
+,hore_user_id AS HoreUserId 
+,hore_hotel_id AS HoreHotelId 
+FROM Hotel.Hotel_Reviews 
+WHERE hore_hotel_id = 2;
 
 SELECT * FROM Hotel.Hotel_Reviews WHERE hore_hotel_id = 2 AND hore_id = 1;
 
