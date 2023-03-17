@@ -401,8 +401,7 @@ namespace Realta.Persistence.Repositories.v1
 ,faci_hotel_id AS FaciHotelId 
 ,faci_user_id AS FaciUserId 
 FROM Hotel.Facilities 
-WHERE faci_hotel_id = @faci_hotel_id
-ORDER BY faci_id;",
+WHERE faci_hotel_id = @faci_hotel_id;",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel()

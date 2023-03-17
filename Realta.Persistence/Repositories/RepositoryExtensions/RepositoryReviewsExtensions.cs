@@ -14,10 +14,8 @@ namespace Realta.Persistence.Repositories.RepositoriesExtensions
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
                 return reviews;
-
-            var lowerCaseSearchTerm = searchTerm.Trim().ToLower();
-
-            return reviews.Where(r => r.HoreUserReview.ToLower().Contains(lowerCaseSearchTerm));
+            
+            return reviews.Where(r => r.HoreRating.ToString().Contains(searchTerm));
         }
 
         //public static IQueryable<Hotels> Sort(this IQueryable<Hotels> products, string orderByQueryString)

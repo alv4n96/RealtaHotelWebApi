@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Realta.Contract.Models.v1;
 using Realta.Contract.Models.v1.History;
 using Realta.Contract.Models.v1.Hotels;
 using Realta.Domain.Base;
+using Realta.Domain.RequestFeatures.HotelParameters;
 using Realta.Services.Abstraction;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -126,11 +128,8 @@ namespace Realta.WebAPI.Controllers.v1
 
             if (facilityPriceHistory.Count() == 0)
             {
-                return Ok(new
-                {
-                    hotel = hotelDto,
-                    history = "there aren\'t any history for this facility yet"
-                });
+                _logger.LogError("Facilities object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
             }
             else
             {
@@ -147,16 +146,22 @@ namespace Realta.WebAPI.Controllers.v1
                     FaphModifiedDate = faph.FaphModifiedDate
                 });
 
-                var result = new HotelFaciHistoryGetByFaciDto()
-                {
-                    Hotels = hotelDto,
-                    Facility = facilitiesDto,
-                    History = facilityPriceHistoryDto
-                };
                 
-                return Ok(result);
+                return Ok(facilityPriceHistoryDto);
             }
         }
+
+
+        [HttpGet("{hotelId}/facility/{faciId}/history/pagelist/")]
+        public async Task<IActionResult> GetFacilitiesPageList([FromQuery] HistoryParameters historyParameters, int hotelId, int faciId)
+        {
+            var history = await _repositoryManager.FacilityPriceHistoryRepository.GetFacilityPriceHistoryPageList(historyParameters,hotelId,faciId);
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(history.MetaData));
+
+            return Ok(history);
+        }
+
 
         // GET api/<FacilityPriceHistoryController>/5
         [HttpGet("{hotelId}/facility/{faciId}/price/{faphId}/facility")]

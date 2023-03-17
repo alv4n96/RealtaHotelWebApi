@@ -4,6 +4,7 @@ using Realta.Domain.Repositories.v1;
 using Realta.Domain.RequestFeatures;
 using Realta.Domain.RequestFeatures.HotelParameters;
 using Realta.Persistence.Base;
+using Realta.Persistence.Repositories.RepositoriesExtensions;
 using Realta.Persistence.RepositoryContext;
 using System;
 using System.Collections.Generic;
@@ -149,9 +150,50 @@ namespace Realta.Persistence.Repositories.v1
             return item;
         }
 
-        public Task<PagedList<FacilityPriceHistory>> GetFacilityPriceHistoryPageList(HistoryParameters historyParam, int hotelId, int faciId)
+        public async Task<PagedList<FacilityPriceHistory>> GetFacilityPriceHistoryPageList(HistoryParameters historyParam, int hotelId, int faciId)
         {
-            throw new NotImplementedException();
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT " +
+                "faph.faph_id AS FaphId" +
+                ",faph.faph_startdate AS FaphStartdate" +
+                ",faph.faph_enddate AS FaphEnddate" +
+                ",faph.faph_low_price AS FaphLowPrice" +
+                ",faph.faph_high_price AS FaphHighPrice" +
+                ",faph.faph_rate_price AS FaphRatePrice" +
+                ",faph.faph_discount AS FaphDiscount" +
+                ",faph.faph_tax_rate AS FaphTaxRate" +
+                ",faph.faph_modified_date AS FaphModifiedDate" +
+                ",faph.faph_faci_id AS FaphFaciId" +
+                ",faph.faph_user_id AS FaphUserId " +
+                "FROM Hotel.Facility_Price_History faph " +
+                "INNER JOIN Hotel.Facilities faci ON faph.faph_faci_id = faci.faci_id " +
+                "WHERE faci.faci_hotel_id = @faci_hotel_id AND faph.faph_faci_id = @faph_faci_id;",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] {
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faci_hotel_id",
+                        DataType = DbType.Int32,
+                        Value = hotelId
+                    },
+                    new SqlCommandParameterModel() {
+                        ParameterName = "@faph_faci_id",
+                        DataType = DbType.Int32,
+                        Value = faciId
+                    },
+                }
+            };
+
+
+            var history = await GetAllAsync<FacilityPriceHistory>(model);
+            //var totalRow = FindAllHotels().Count();
+
+            var historySearch = history.AsQueryable()
+                                    .SearchHistory(historyParam.SearchTerm);
+
+            return PagedList<FacilityPriceHistory>.ToPagedList(historySearch.ToList(), historyParam.PageNumber, historyParam.PageSize);
+
+
         }
     }
 }

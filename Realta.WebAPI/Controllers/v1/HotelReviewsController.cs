@@ -228,7 +228,6 @@ namespace Realta.WebAPI.Controllers.v1
 
             var reviews = await _repositoryManager.HotelReviewsRepository.GetReviewsPageList(reviewsParameters, hotelId);
 
-
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(reviews.MetaData));
 
             return Ok(reviews);

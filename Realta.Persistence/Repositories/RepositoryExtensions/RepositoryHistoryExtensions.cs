@@ -12,17 +12,23 @@ namespace Realta.Persistence.Repositories.RepositoriesExtensions
     {
         public static IQueryable<FacilityPriceHistory> SearchHistory(this IQueryable<FacilityPriceHistory> history, string searchTerm)
         {
+
             if (string.IsNullOrWhiteSpace(searchTerm))
                 return history;
 
             var lowerCaseSearchTerm = searchTerm.Trim().ToLower();
 
-            decimal price;
-            if (decimal.TryParse(lowerCaseSearchTerm, out price))
+            DateTime searchDate;
+            if (DateTime.TryParse(searchTerm, out searchDate))
             {
-                return history.Where(h => h.FaphLowPrice == price);
-            } 
-                return history;
+                // Jika search term dapat di-parse menjadi DateTime, cari sesuai tanggal
+                return history.Where(r => r.FaphModifiedDate.Date == searchDate.Date);
+            }
+            else
+            {
+                // Jika search term tidak dapat di-parse menjadi DateTime, cari sesuai string biasa
+                return history.Where(r => r.FaphModifiedDate.ToString().ToLower().Contains("asd"));
+            }
         }
 
         //public static IQueryable<Hotels> Sort(this IQueryable<Hotels> products, string orderByQueryString)
