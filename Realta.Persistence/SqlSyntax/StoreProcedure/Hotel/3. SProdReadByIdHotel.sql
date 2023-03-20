@@ -28,5 +28,3 @@ BEGIN
     -- END
 END;
 GO
-
-EXEC Hotel.spSelectHotelById @hotelId = 9;
