@@ -51,6 +51,7 @@ BEGIN
         
         COMMIT TRANSACTION;
         
+        SELECT CAST(scope_identity() as int);
     END TRY
     BEGIN CATCH
         -- Rollback transaction if any error occurs
@@ -69,7 +70,7 @@ END
 
 
 EXEC [Hotel].[spInsertHotel]
-    @hotel_name = 'hotel 2Pan',
+    @hotel_name = 'hotel xaaxax',
     @hotel_phonenumber = '0857 0718 0167',
     @hotel_status = 0, -- atau 0, tergantung status hotel
     @add_id = 'abu ali 29',
