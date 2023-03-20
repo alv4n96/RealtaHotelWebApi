@@ -8,7 +8,7 @@ namespace Realta.Contract.Models.v1.Hotels
         [Required(ErrorMessage = "hotel id is required")]
         public int HotelId { get; set; }
         [Required(ErrorMessage = "Hotel status is required")]
-        public string? HotelStatus { get; set; }
+        public bool HotelStatus { get; set; }
         [AllowNull]
         public string? HotelReasonStatus { get; set; }
     }
