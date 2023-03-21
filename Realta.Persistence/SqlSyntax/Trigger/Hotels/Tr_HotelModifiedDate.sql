@@ -11,5 +11,5 @@ BEGIN
         FROM inserted
         WHERE Hotels.hotel_id = inserted.hotel_id
     END
-END
+END;
 
