@@ -14,6 +14,8 @@ namespace Realta.Domain.RequestFeatures.HotelParameters
 
         public bool ValidateStatus => Available > Unavailable;
         public string? SearchTerm { get; set; }
+
+        public string OrderBy { get; set; } = "HotelName";
     }
 
 }
