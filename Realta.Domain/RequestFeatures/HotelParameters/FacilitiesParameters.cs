@@ -10,5 +10,7 @@ namespace Realta.Domain.RequestFeatures.HotelParameters
     public class FacilitiesParameters : RequestParameters
     {
         public string? SearchTerm { get; set; }
+        public string OrderBy { get; set; } = "FaciName";
+
     }
 }
