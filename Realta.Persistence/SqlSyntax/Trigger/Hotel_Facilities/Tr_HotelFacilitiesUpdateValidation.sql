@@ -15,13 +15,20 @@ BEGIN
     DECLARE @faci_low_price MONEY;
     DECLARE @faci_high_price MONEY;
     DECLARE @faci_rate_price MONEY;
-
+    DECLARE @faci_measure_unit VARCHAR(15)
+    
     SELECT 
         @faci_id = faci_id,
         @faci_user_id = faci_user_id,
         @faci_hotel_id = faci_hotel_id,
         @faci_startdate = faci_startdate,
         @faci_enddate = faci_enddate,
+        @faci_measure_unit = (
+        CASE
+            WHEN faci_cagro_id = 1 THEN 'beds'
+            ELSE 'people'
+        END
+        ),
         @faci_discount = faci_discount,
         @faci_tax_rate = faci_tax_rate,
         @faci_low_price = faci_low_price,
@@ -50,6 +57,14 @@ BEGIN
         ROLLBACK TRANSACTION
         RETURN;
     END
+
+    
+    IF (@faci_enddate < @faci_startdate) 
+    BEGIN 
+        RAISERROR ('End date cannot be earlier than start date', 16, 1) 
+        ROLLBACK TRANSACTION
+        RETURN;
+    END 
     
     IF EXISTS (SELECT faci_low_price, faci_high_price 
                FROM inserted 
@@ -79,7 +94,8 @@ BEGIN
         BEGIN TRANSACTION
 			UPDATE Hotel.Facilities 
 			SET 
-				faci_rate_price = @faci_rate_price
+				faci_rate_price = @faci_rate_price,
+                faci_measure_unit = @faci_measure_unit
 			WHERE 
 				faci_id = @faci_id
 
@@ -87,4 +103,5 @@ BEGIN
 			VALUES (@faci_startdate, @faci_enddate, @faci_low_price, @faci_high_price, @faci_rate_price, @faci_discount, @faci_tax_rate, GETDATE(), @faci_id, @faci_user_id);
         COMMIT TRANSACTION
     END
-END
+END;
+GO
