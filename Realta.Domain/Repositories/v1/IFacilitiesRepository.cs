@@ -15,6 +15,7 @@ namespace Realta.Domain.Repositories.v1
         Task<IEnumerable<Facilities>> FindAllFacilitiesAsync(int hotelId);
         Task<Facilities> FindFacilitiesByIdAsync(int hotelId, int facilitiesId);
         Task<PagedList<Facilities>> GetFacilitiesPageList(FacilitiesParameters facilitiesParam, int hotelId);
+        public int GetIdSequence();
         void Insert(Facilities hotelReviews);
         void Edit(Facilities hotelReviews);
         void Remove(Facilities hotelReviews);
