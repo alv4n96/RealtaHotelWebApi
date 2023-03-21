@@ -17,6 +17,6 @@ namespace Realta.Domain.Repositories.v1
         Task<PagedList<HotelReviews>> GetReviewsPageList(ReviewsParameters reviewsParam, int hotelId);
         void Insert(HotelReviews hotelReviews);
         void Edit(HotelReviews hotelReviews);
-        void Remove(HotelReviews hotelReviews);
+        void Remove(int horeId);
     }
 }
