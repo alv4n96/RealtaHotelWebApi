@@ -8,12 +8,23 @@ BEGIN
     DECLARE @faci_rate_price MONEY
     DECLARE @faci_low_price MONEY
     DECLARE @faci_high_price MONEY
+    DECLARE @faci_startdate DATETIME
+    DECLARE @faci_enddate DATETIME
+    DECLARE @faci_measure_unit VARCHAR(15)
 
     SELECT 
         @faci_user_id = faci_user_id,
         @faci_hotel_id = faci_hotel_id,
         @faci_low_price = faci_low_price,
         @faci_high_price = faci_high_price,
+        @faci_startdate = faci_startdate,
+        @faci_enddate = faci_enddate,
+        @faci_measure_unit = (
+        CASE
+            WHEN faci_cagro_id = 1 THEN 'beds'
+            ELSE 'people'
+        END
+        ),
         @faci_rate_price = 
         (
 		CASE
@@ -47,6 +58,13 @@ BEGIN
         ROLLBACK TRANSACTION
         RETURN;
     END 
+    
+    IF (@faci_enddate < @faci_startdate) 
+    BEGIN 
+        RAISERROR ('End date cannot be earlier than start date', 16, 1) 
+        ROLLBACK TRANSACTION
+        RETURN;
+    END 
 
     IF (@faci_rate_price > @faci_high_price OR @faci_rate_price < @faci_low_price) 
     BEGIN 
@@ -64,7 +82,7 @@ BEGIN
             i.faci_name, 
             i.faci_description, 
             i.faci_max_number,
-            i.faci_measure_unit,
+            @faci_measure_unit,
             i.faci_room_number,
             i.faci_startdate,
             i.faci_enddate,
@@ -96,4 +114,5 @@ BEGIN CATCH
 			
 		RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 END CATCH
-END
+END;
+GO
