@@ -16,7 +16,7 @@ namespace Realta.Domain.Entities
         [AllowNull]
         public string? FaciDescription { get; set; }
         [AllowNull]
-        public int? FaciMaxNumber { get; set; }
+        public int FaciMaxNumber { get; set; }
         [AllowNull]
         public string? FaciMeasureUnit { get; set; }
         public string? FaciRoomNumber { get; set; }
