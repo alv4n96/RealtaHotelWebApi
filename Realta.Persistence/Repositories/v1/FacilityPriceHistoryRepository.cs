@@ -79,7 +79,8 @@ namespace Realta.Persistence.Repositories.v1
                 ",faph.faph_user_id AS FaphUserId " +
                 "FROM Hotel.Facility_Price_History faph " +
                 "INNER JOIN Hotel.Facilities faci ON faph.faph_faci_id = faci.faci_id " +
-                "WHERE faci.faci_hotel_id = @faci_hotel_id AND faph.faph_faci_id = @faph_faci_id;",
+                "WHERE faci.faci_hotel_id = @faci_hotel_id AND faph.faph_faci_id = @faph_faci_id " +
+                "ORDER BY faph.faph_id DESC;",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel() {
@@ -168,7 +169,8 @@ namespace Realta.Persistence.Repositories.v1
                 ",faph.faph_user_id AS FaphUserId " +
                 "FROM Hotel.Facility_Price_History faph " +
                 "INNER JOIN Hotel.Facilities faci ON faph.faph_faci_id = faci.faci_id " +
-                "WHERE faci.faci_hotel_id = @faci_hotel_id AND faph.faph_faci_id = @faph_faci_id;",
+                "WHERE faci.faci_hotel_id = @faci_hotel_id AND faph.faph_faci_id = @faph_faci_id " +
+                "ORDER BY faph.faph_id DESC;",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel() {
