@@ -1,4 +1,5 @@
 ﻿using Realta.Domain.Base;
+using Realta.Domain.Repositories;
 using Realta.Domain.Repositories.v1;
 using Realta.Persistence.Repositories;
 using Realta.Persistence.Repositories.v1;
@@ -20,6 +21,8 @@ namespace Realta.Persistence.Base
         private IFacilityPhotosRepository? _facilityPhotosRepository;
         private IFacilityPriceHistoryRepository? _facilityPriceHistoryRepository;
 
+        private ICategoryGroupRepository? _categoryGroupRepository;
+
         public RepositoryManager(AdoDbContext adoContext) => _adoContext = adoContext;
 
         public IHotelsRepository HotelsRepository => _hotelsRepository ??= new HotelsRepository(_adoContext);
@@ -31,5 +34,7 @@ namespace Realta.Persistence.Base
         public IFacilityPhotosRepository FacilityPhotosRepository => _facilityPhotosRepository ??= new FacilityPhotosRepository(_adoContext);
 
         public IFacilityPriceHistoryRepository FacilityPriceHistoryRepository => _facilityPriceHistoryRepository ??= new FacilityPriceHistoryRepository(_adoContext);
+
+        public ICategoryGroupRepository CategoryGroupRepository => _categoryGroupRepository ??= new CategoryGroupRepository(_adoContext);
     }
 }
