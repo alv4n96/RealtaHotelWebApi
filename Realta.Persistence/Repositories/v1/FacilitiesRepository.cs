@@ -121,15 +121,8 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "INSERT INTO Hotel.Facilities " +
-                              "(faci_name, faci_description, faci_max_number, faci_measure_unit, faci_room_number, faci_startdate, faci_endate, faci_low_price, faci_high_price, faci_discount, faci_tax_rate, faci_cagro_id, faci_hotel_id, faci_user_id)" +
-                              "VALUES(@faci_name, @faci_description, @faci_max_number, " +
-                              "@faci_measure_unit, @faci_room_number, @faci_startdate, " +
-                              "@faci_endate, @faci_low_price, @faci_high_price, " +
-                              "@faci_discount, @faci_tax_rate, @faci_cagro_id, " +
-                              "@faci_hotel_id, @faci_user_id);" +
-                              "SELECT CAST(scope_identity() as int);",
-                CommandType = CommandType.Text,
+                CommandText = "[Hotel].[SpInsertFacility]",
+                CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
                 {
                     new SqlCommandParameterModel()
@@ -150,15 +143,7 @@ namespace Realta.Persistence.Repositories.v1
                     {
                         ParameterName = "@faci_max_number",
                         DataType = DbType.Int32,
-                        Value = facilities.FaciMaxNumber == 0 ? DBNull.Value : facilities.FaciMaxNumber
-                    },
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@faci_measure_unit",
-                        DataType = DbType.String,
-                        Value = string.IsNullOrEmpty(facilities.FaciMeasureUnit)
-                            ? DBNull.Value
-                            : facilities.FaciMeasureUnit
+                        Value = facilities.FaciMaxNumber != 0 ? facilities.FaciMaxNumber : DBNull.Value
                     },
                     new SqlCommandParameterModel()
                     {
@@ -174,7 +159,7 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@faci_endate",
+                        ParameterName = "@faci_enddate",
                         DataType = DbType.DateTime,
                         Value = facilities.FaciEndDate
                     },
@@ -192,15 +177,21 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
+                        ParameterName = "@faci_expose_price",
+                        DataType = DbType.Int16,
+                        Value = facilities.FaciExposePrice
+                    },
+                    new SqlCommandParameterModel()
+                    {
                         ParameterName = "@faci_discount",
                         DataType = DbType.Decimal,
-                        Value = facilities.FaciDiscount == 0 ? DBNull.Value : facilities.FaciDiscount
+                        Value = facilities.FaciDiscount == 0 ? null : facilities.FaciDiscount
                     },
                     new SqlCommandParameterModel()
                     {
                         ParameterName = "@faci_tax_rate",
                         DataType = DbType.Decimal,
-                        Value = facilities.FaciTaxRate == 0 ? DBNull.Value : facilities.FaciTaxRate
+                        Value = facilities.FaciTaxRate == 0 ? null : facilities.FaciTaxRate
                     },
                     new SqlCommandParameterModel()
                     {
@@ -223,8 +214,24 @@ namespace Realta.Persistence.Repositories.v1
                 }
             };
 
-            facilities.FaciId = _adoContext.ExecuteScalar<int>(model);
+            //facilities.FaciId = _adoContext.ExecuteScalar<int>(model);
+            //_adoContext.Dispose();
+
+            Create(model);
+        }
+
+        public int GetIdSequence()
+        {
+            SqlCommandModel model = new SqlCommandModel()
+            {
+                CommandText = "SELECT IDENT_CURRENT('Hotel.Facilities');",
+                CommandType = CommandType.Text,
+                CommandParameters = new SqlCommandParameterModel[] { }
+            };
+
+            decimal id = _adoContext.ExecuteScalar<decimal>(model);
             _adoContext.Dispose();
+            return (int)id;
         }
 
         public void Edit(Facilities facilities)
@@ -236,17 +243,15 @@ namespace Realta.Persistence.Repositories.v1
                               "faci_name = @faci_name, " +
                               "faci_description = @faci_description, " +
                               "faci_max_number = @faci_max_number, " +
-                              "faci_measure_unit = @faci_measure_unit, " +
                               "faci_room_number = @faci_room_number, " +
                               "faci_startdate = @faci_startdate, " +
-                              "faci_endate = @faci_endate, " +
+                              "faci_enddate = @faci_enddate, " +
                               "faci_low_price = @faci_low_price, " +
                               "faci_high_price = @faci_high_price, " +
+                              "faci_expose_price = @faci_expose_price, " +
                               "faci_discount = @faci_discount, " +
                               "faci_tax_rate = @faci_tax_rate, " +
-                              "faci_cagro_id = @faci_cagro_id, " +
-                              "faci_hotel_id = @faci_hotel_id, " +
-                              "faci_user_id = @faci_user_id " +
+                              "faci_cagro_id = @faci_cagro_id " +
                               "WHERE faci_id = @faci_id;",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[]
@@ -279,14 +284,6 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@faci_measure_unit",
-                        DataType = DbType.String,
-                        Value = string.IsNullOrEmpty(facilities.FaciMeasureUnit)
-                            ? DBNull.Value
-                            : facilities.FaciMeasureUnit
-                    },
-                    new SqlCommandParameterModel()
-                    {
                         ParameterName = "@faci_room_number",
                         DataType = DbType.String,
                         Value = facilities.FaciRoomNumber
@@ -299,7 +296,7 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@faci_endate",
+                        ParameterName = "@faci_enddate",
                         DataType = DbType.DateTime,
                         Value = facilities.FaciEndDate
                     },
@@ -314,6 +311,12 @@ namespace Realta.Persistence.Repositories.v1
                         ParameterName = "@faci_high_price",
                         DataType = DbType.Decimal,
                         Value = facilities.FaciHighPrice
+                    },
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@faci_expose_price",
+                        DataType = DbType.Int16,
+                        Value = facilities.FaciExposePrice
                     },
                     new SqlCommandParameterModel()
                     {
@@ -332,18 +335,6 @@ namespace Realta.Persistence.Repositories.v1
                         ParameterName = "@faci_cagro_id",
                         DataType = DbType.Int32,
                         Value = facilities.FaciCagroId
-                    },
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@faci_hotel_id",
-                        DataType = DbType.Int32,
-                        Value = facilities.FaciHotelId
-                    },
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@faci_user_id",
-                        DataType = DbType.Int32,
-                        Value = facilities.FaciUserId
                     },
                 }
             };
@@ -419,7 +410,8 @@ WHERE faci_hotel_id = @faci_hotel_id;",
 
 
             var hotelSearch = facilities.AsQueryable()
-                .SearchFacilities(facilitiesParam.SearchTerm);
+                .SearchFacilities(facilitiesParam.SearchTerm)
+                .Sort(facilitiesParam.OrderBy);
 
             return PagedList<Facilities>.ToPagedList(hotelSearch.ToList(), facilitiesParam.PageNumber, facilitiesParam.PageSize);
 
