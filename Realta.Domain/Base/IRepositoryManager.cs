@@ -1,4 +1,5 @@
-﻿using Realta.Domain.Repositories.v1;
+﻿using Realta.Domain.Repositories;
+using Realta.Domain.Repositories.v1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace Realta.Domain.Base
         IFacilityPhotosRepository FacilityPhotosRepository { get; }
         IFacilityPriceHistoryRepository FacilityPriceHistoryRepository { get; }
 
+        ICategoryGroupRepository CategoryGroupRepository { get; }
     }
 }
