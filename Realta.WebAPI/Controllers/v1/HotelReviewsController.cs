@@ -137,7 +137,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpPost("{hotelId}/reviews/")]
         public async Task<IActionResult> PostAsync(int hotelId, [FromBody] HotelReviewsDto dto)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -161,21 +161,9 @@ namespace Realta.WebAPI.Controllers.v1
             //post data to db
             _repositoryManager.HotelReviewsRepository.Insert(hotelReviews);
 
-            var result = await _repositoryManager.HotelReviewsRepository.FindHotelReviewsByIdAsync(hotelId, hotelReviews.HoreId);
-
-
-            var resDto = new HotelReviewsDto()
-            {
-                HoreId = result.HoreId,
-                HoreUserReview = result.HoreUserReview,
-                HoreUserId = result.HoreUserId,
-                HoreRating = result.HoreRating,
-                HoreCreatedOn = result.HoreCreatedOn,
-                HoreHotelId = result.HoreHotelId
-            };
 
             //forward 
-            return Ok(resDto);
+            return Ok("Data Created!");
         }
 
         // PUT api/<HotelReviewsController>/5
@@ -238,7 +226,7 @@ namespace Realta.WebAPI.Controllers.v1
         [HttpDelete("{hotelId}/reviews/{hotelReviewsId}")]
         public async Task<IActionResult> DeleteAsync(int hotelId, int hotelReviewsId)
         {
-            var hotels = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
+            var hotels = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotelId);
             if (hotels == null)
             {
                 _logger.LogError("Hotel object sent from client is null");
@@ -253,7 +241,7 @@ namespace Realta.WebAPI.Controllers.v1
                 return NotFound();
             }
 
-            _repositoryManager.HotelReviewsRepository.Remove(hotelReviews);
+            _repositoryManager.HotelReviewsRepository.Remove(hotelReviewsId);
             return Ok("Data Has Been Remove.");
         }
     }
