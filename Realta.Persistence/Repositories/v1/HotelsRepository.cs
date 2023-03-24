@@ -87,17 +87,6 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                //CommandText = "SELECT " +
-                //"hotel_id AS HotelId " +
-                //",hotel_name AS HotelName " +
-                //",hotel_description AS HotelDescription" +
-                //",hotel_status AS HotelStatus " +
-                //",hotel_reason_status AS HotelReasonStatus " +
-                //",hotel_rating_star AS HotelRatingStar " +
-                //",hotel_phonenumber AS HotelPhonenumber " +
-                //",hotel_modified_date AS HotelModifiedDate " +
-                //",hotel_addr_id AS HotelAddrId " +
-                //"FROM Hotel.Hotels WHERE hotel_id = @hotelId;",
                 CommandText = "[Hotel].[spSelectHotelById]",
                 CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
@@ -110,17 +99,6 @@ namespace Realta.Persistence.Repositories.v1
                     }
                 }
             };
-
-
-            //var dataSet = FindByCondition<Hotels>(model);
-            //Hotels? hotel = dataSet.Current;
-
-            //while (dataSet.MoveNext())
-            //{
-            //    hotel = dataSet.Current;
-            //}
-
-            //return hotel;
 
 
             IAsyncEnumerator<Hotels> dataSet = FindAllAsync<Hotels>(model);
@@ -138,11 +116,8 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText =
-                    "INSERT INTO Hotel.Hotels (hotel_name, hotel_description, hotel_status, hotel_rating_star, hotel_phonenumber, hotel_modified_date, hotel_addr_id) " +
-                    "VALUES(@hotel_name, @hotel_description, @hotel_status, @hotel_rating_star, @hotel_phonenumber, GETDATE(), @hotel_addr_id);" +
-                    "SELECT CAST(scope_identity() as int);",
-                CommandType = CommandType.Text,
+                CommandText = "[Hotel].[spInsertHotel]",
+                CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
                 {
                     new SqlCommandParameterModel()
@@ -153,9 +128,9 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@hotel_description",
+                        ParameterName = "@hotel_phonenumber",
                         DataType = DbType.String,
-                        Value = hotels.HotelDescription
+                        Value = hotels.HotelPhonenumber
                     },
                     new SqlCommandParameterModel()
                     {
@@ -165,21 +140,15 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@hotel_rating_star",
-                        DataType = DbType.Int16,
-                        Value = hotels.HotelRatingStar
-                    },
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@hotel_phonenumber",
+                        ParameterName = "@add_id",
                         DataType = DbType.String,
-                        Value = hotels.HotelPhonenumber
+                        Value = hotels.HotelAddrDescription
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@hotel_addr_id",
-                        DataType = DbType.Int32,
-                        Value = hotels.HotelAddrId
+                        ParameterName = "@hotel_description",
+                        DataType = DbType.String,
+                        Value = hotels.HotelDescription
                     },
                 }
             };
@@ -192,16 +161,8 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "UPDATE Hotel.Hotels " +
-                              "SET hotel_name = @hotel_name, " +
-                              "hotel_description = @hotel_description, " +
-                              "hotel_status = @hotel_status, " +
-                              "hotel_rating_star = @hotel_rating_star, " +
-                              "hotel_phonenumber = @hotel_phonenumber, " +
-                              "hotel_modified_date = GETDATE(), " +
-                              "hotel_addr_id = @hotel_addr_id " +
-                              "WHERE hotel_id = @hotel_id;",
-                CommandType = CommandType.Text,
+                CommandText = "[Hotel].[spUpdateHotel]",
+                CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
                 {
                     new SqlCommandParameterModel()
@@ -218,33 +179,21 @@ namespace Realta.Persistence.Repositories.v1
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@hotel_description",
-                        DataType = DbType.String,
-                        Value = hotels.HotelDescription
-                    },
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@hotel_status",
-                        DataType = DbType.Boolean,
-                        Value = hotels.HotelStatus
-                    },
-                    new SqlCommandParameterModel()
-                    {
-                        ParameterName = "@hotel_rating_star",
-                        DataType = DbType.Int16,
-                        Value = hotels.HotelRatingStar
-                    },
-                    new SqlCommandParameterModel()
-                    {
                         ParameterName = "@hotel_phonenumber",
                         DataType = DbType.String,
                         Value = hotels.HotelPhonenumber
                     },
                     new SqlCommandParameterModel()
                     {
-                        ParameterName = "@hotel_addr_id",
-                        DataType = DbType.Int32,
-                        Value = hotels.HotelAddrId
+                        ParameterName = "@add_id",
+                        DataType = DbType.String,
+                        Value = hotels.HotelAddrDescription
+                    },
+                    new SqlCommandParameterModel()
+                    {
+                        ParameterName = "@hotel_description",
+                        DataType = DbType.String,
+                        Value = hotels.HotelDescription
                     },
                 }
             };
@@ -257,11 +206,8 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "UPDATE Hotel.Hotels " +
-                              "SET hotel_status = @hotel_status, " +
-                              "hotel_reason_status = @hotel_reason_status " +
-                              "WHERE hotel_id = @hotel_id;",
-                CommandType = CommandType.Text,
+                CommandText = "[Hotel].[spUpdateStatusHotel]",
+                CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
                 {
                     new SqlCommandParameterModel()
@@ -293,9 +239,8 @@ namespace Realta.Persistence.Repositories.v1
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "DELETE FROM [Hotel].[Hotels] " +
-                              "WHERE [hotel_id] = @hotel_id",
-                CommandType = CommandType.Text,
+                CommandText = "[Hotel].[spDeleteHotel]",
+                CommandType = CommandType.StoredProcedure,
                 CommandParameters = new SqlCommandParameterModel[]
                 {
                     new SqlCommandParameterModel()
@@ -383,7 +328,8 @@ namespace Realta.Persistence.Repositories.v1
 
 
             var hotelSearch = hotels.AsQueryable()
-                                .SearchHotels(hotelParam.SearchTerm);
+                                .SearchHotels(hotelParam.SearchTerm)
+                                .Sort(hotelParam.OrderBy);
 
             return PagedList<Hotels>.ToPagedList(hotelSearch.ToList(),hotelParam.PageNumber,hotelParam.PageSize);
 

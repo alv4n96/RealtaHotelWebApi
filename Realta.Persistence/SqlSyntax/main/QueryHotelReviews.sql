@@ -16,8 +16,15 @@ SELECT * FROM Hotel.Hotels WHERE hotel_id=1;
 SELECT * FROM Hotel.Hotel_Reviews
 
 INSERT INTO Hotel.Hotel_Reviews (hore_user_review, hore_rating, hore_created_on, hore_user_id, hore_hotel_id)
-VALUES ('Great hotel, loved the amenities and friendly staff!', 5, GETDATE(), 5, 1);
+VALUES ('Great hotel, loved the amenities and friendly staff!', 5, GETDATE(), 5, 16);
 
+INSERT INTO Hotel.Hotel_Reviews (hore_user_review, hore_rating, hore_created_on, hore_user_id, hore_hotel_id)
+VALUES (@hore_user_review, @hore_rating, GETDATE(), @hore_user_id, @hore_hotel_id);
+
+SELECT * FROM hotel.Hotel_Reviews ORDER BY hore_id DESC;
+
+DELETE FROM Hotel.Hotel_Reviews 
+WHERE hore_id = 31; 
 
 SELECT 
 hore_id AS HoreId 

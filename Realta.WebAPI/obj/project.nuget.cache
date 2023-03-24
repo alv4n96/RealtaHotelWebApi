@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tTQZPy5TYIx/kFv7t8DZmRGBwn8olp/y9OVWMlFvKkXe/E6xFCaCQxsPNEnM7PFrh1qPoui5s8WTneBRpR3OmA==",
+  "dgSpecHash": "VTLWJndQnZEXEqmNj3M+53qvAOZ7jaknVHJiZ7RQq+88HBo0m4V40lYjcvixStuLhK4HIR5/wzezbdnS/0xBvg==",
   "success": true,
   "projectFilePath": "D:\\C#_PROJECTS\\RealtaHotelWebApi\\Realta.WebAPI\\Realta.WebAPI.csproj",
   "expectedPackageFiles": [
@@ -33,6 +33,7 @@
     "C:\\Users\\alvan\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\system.data.sqlclient\\4.8.5\\system.data.sqlclient.4.8.5.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512",
+    "C:\\Users\\alvan\\.nuget\\packages\\system.linq.dynamic.core\\1.3.1\\system.linq.dynamic.core.1.3.1.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\alvan\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
   ],

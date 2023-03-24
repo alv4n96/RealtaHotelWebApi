@@ -143,8 +143,7 @@ namespace Realta.Persistence.Repositories.v1
             SqlCommandModel model = new SqlCommandModel()
             {
                 CommandText = "INSERT INTO Hotel.Hotel_Reviews (hore_user_review, hore_rating, hore_created_on, hore_user_id, hore_hotel_id) " +
-                                "VALUES(@hore_user_review, @hore_rating, GETDATE(), @hore_user_id, @hore_hotel_id); " +
-                                "SELECT CAST(scope_identity() as int);",
+                "VALUES(@hore_user_review, @hore_rating, GETDATE(), @hore_user_id, @hore_hotel_id);",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel() {
@@ -170,27 +169,26 @@ namespace Realta.Persistence.Repositories.v1
                 }
             };
 
-            hotelReviews.HoreId = _adoContext.ExecuteScalar<int>(model);
-            _adoContext.Dispose();
+            Create(model);
+
         }
 
-        public void Remove(HotelReviews hotelReviews)
+        public void Remove(int horeId)
         {
             SqlCommandModel model = new SqlCommandModel()
             {
-                CommandText = "DELETE FROM Hotel.Hotel_Reviews " +
-                "WHERE hore_id = @hore_id; ",
+                CommandText = "DELETE FROM Hotel.Hotel_Reviews WHERE hore_id = @hore_id",
                 CommandType = CommandType.Text,
                 CommandParameters = new SqlCommandParameterModel[] {
                     new SqlCommandParameterModel() {
                         ParameterName = "@hore_id",
                         DataType = DbType.Int32,
-                        Value = hotelReviews.HoreId
+                        Value = horeId
                     }
                 }
             };
 
-            _adoContext.ExecuteNonQuery(model);
+            Delete(model);
             _adoContext.Dispose();
         }
 

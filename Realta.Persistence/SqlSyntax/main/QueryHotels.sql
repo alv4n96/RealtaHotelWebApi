@@ -39,16 +39,18 @@ WHERE hotel_id = 1;
 
 SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%Hotel%';
 
-SELECT * FROM [Hotel].[Hotels] WHERE hotel_name LIKE '%am%';
+SELECT * FROM [Hotel].[Hotels] ORDER BY hotel_id DESC;
 
-
+USE WEBApiDbDemo
 
 DBCC CHECKIDENT ('Hotel.Hotels', RESEED, 15 );
 
 DELETE FROM Hotel.Hotels
-WHERE hotel_id = 17;
+WHERE hotel_id = 19
 
 SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
+
+SELECT * FROM Master.address
 
 UPDATE Hotel.Hotels  
 SET hotel_name = 'TestEdit Hotel Malang',

@@ -11,6 +11,56 @@ SELECT faci_endate FROM Hotel.Facilities;
 
 SELECT * FROM Hotel.Facility_Price_History where faph_faci_id = 43; SELECT * FROM Hotel.Facilities WHERE faci_id = 43; 
 
+--DATA 1
+INSERT INTO Hotel.Facilities (
+    faci_name, 
+    faci_description, 
+    faci_max_number, 
+    faci_room_number, 
+    faci_startdate, 
+    faci_enddate, 
+    faci_low_price, 
+    faci_high_price, 
+    faci_expose_price, 
+    faci_discount, 
+    faci_tax_rate, 
+    faci_modified_date, 
+    faci_cagro_id, 
+    faci_hotel_id, 
+    faci_user_id)
+VALUES (
+    @faci_name, 
+    @faci_description, 
+    @faci_max_number, 
+    @faci_room_number, 
+    @faci_startdate, 
+    @faci_enddate, 
+    @faci_low_price, 
+    @faci_high_price, 
+    @faci_expose_price, 
+    @faci_discount, 
+    @faci_tax_rate, 
+    GETDATE(), 
+    @faci_cagro_id, 
+    @faci_hotel_id, 
+    @faci_user_id);
+
+SELECT * FROM Hotel.Facilities ORDER BY faci_id DESC;
+SELECT * FROM Hotel.Hotels ORDER BY hotel_id DESC;
+ 
+ALTER TABLE Hotel.facilities
+DROP CONSTRAINT faci_room_number_uq;
+
+SELECT 
+    cagro_id AS CagroId
+    ,cagro_name AS CagroName
+    ,cagro_description AS CagroDescription
+    ,cagro_type AS CagroType
+    ,cagro_icon AS CagroIcon
+    ,cagro_icon_url AS CagroIconUrl
+FROM master.category_group
+
+
 SELECT faph.*
 FROM Hotel.Facility_Price_History faph
 INNER JOIN Hotel.Facilities faci ON faph.faph_faci_id = faci.faci_id

@@ -102,3 +102,4 @@ D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Microsoft.AspNet
 D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\C#_PROJECTS\RealtaHotelWebApi\Realta.WebAPI\bin\Debug\net6.0\System.Linq.Dynamic.Core.dll
