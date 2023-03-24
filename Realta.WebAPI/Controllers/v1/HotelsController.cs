@@ -43,6 +43,7 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelName = h.HotelName,
                 HotelRatingStar = h.HotelRatingStar,
                 HotelPhonenumber = h.HotelPhonenumber,
+                HotelReasonStatus = h.HotelReasonStatus,
                 // HotelStatus = h.HotelStatus ? "available" : "unavailable",
                 HotelStatus = h.HotelStatus,
                 HotelModifiedDate = h.HotelModifiedDate,
@@ -100,6 +101,7 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelPhonenumber = hotels.HotelPhonenumber,
                 // HotelStatus = hotels.HotelStatus ? "available" : "unavailable",
                 HotelStatus = hotels.HotelStatus,
+                HotelReasonStatus = hotels.HotelReasonStatus,
                 HotelModifiedDate = hotels.HotelModifiedDate,
             };
 
@@ -108,7 +110,7 @@ namespace Realta.WebAPI.Controllers.v1
 
         // POST api/<HotelsController>
         [HttpPost]
-        public IActionResult Post([FromBody] HotelsDto dto)
+        public async Task<IActionResult> PostAsync([FromBody] HotelsDto dto)
         {
 
             if (dto == null)
@@ -120,32 +122,31 @@ namespace Realta.WebAPI.Controllers.v1
             var hotel = new Hotels()
             {
                 HotelName = dto.HotelName,
-                HotelDescription = dto.HotelDescription,
-                // HotelStatus = dto.HotelStatus == "available" ? true : false,
-                HotelStatus = dto.HotelStatus,
-                HotelRatingStar = dto.HotelRatingStar,
                 HotelPhonenumber = dto.HotelPhonenumber,
-                HotelAddrId = dto.HotelAddrId
+                HotelStatus = dto.HotelStatus,
+                // HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelAddrDescription = dto.HotelAddrDescription,
+                HotelDescription = dto.HotelDescription,
             };
 
             //post data to db
             _repositoryManager.HotelsRepository.Insert(hotel);
 
-            var result = _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotel.HotelId);
+            var result = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(hotel.HotelId);
 
 
             var resDto = new HotelsDto
             {
-                HotelId = hotel.HotelId,
-                HotelName = hotel.HotelName,
-                HotelDescription = hotel.HotelDescription,
-                // HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
-                HotelStatus = hotel.HotelStatus,
-                HotelReasonStatus = hotel.HotelReasonStatus,
-                HotelRatingStar = hotel.HotelRatingStar,
-                HotelPhonenumber = hotel.HotelPhonenumber,
-                HotelModifiedDate = hotel.HotelModifiedDate,
-                HotelAddrId = hotel.HotelAddrId
+                HotelId = result.HotelId,
+                HotelName = result.HotelName,
+                HotelDescription = result.HotelDescription,
+                // HotelStatus = result.HotelStatus ? "available" : "unavailable",
+                HotelStatus = result.HotelStatus,
+                HotelReasonStatus = result.HotelReasonStatus,
+                HotelRatingStar = result.HotelRatingStar,
+                HotelPhonenumber = result.HotelPhonenumber,
+                HotelModifiedDate = result.HotelModifiedDate,
+                HotelAddrId = result.HotelAddrId
             };
             //forward 
             return Ok(resDto);
@@ -153,7 +154,7 @@ namespace Realta.WebAPI.Controllers.v1
 
         // PUT api/<HotelsController>/5
         [HttpPut("{id}")]
-        public IActionResult EditHotel(int id, [FromBody] HotelsDto dto)
+        public async Task<IActionResult> EditHotel(int id, [FromBody] HotelsDto dto)
         {
 
             if (dto == null)
@@ -168,10 +169,8 @@ namespace Realta.WebAPI.Controllers.v1
                 HotelName = dto.HotelName,
                 HotelDescription = dto.HotelDescription,
                 // HotelStatus = dto.HotelStatus == "available" ? true : false,
-                HotelStatus = dto.HotelStatus,
-                HotelRatingStar = dto.HotelRatingStar,
                 HotelPhonenumber = dto.HotelPhonenumber,
-                HotelAddrId = dto.HotelAddrId
+                HotelAddrDescription = dto.HotelAddrDescription
             };
 
             _repositoryManager.HotelsRepository.Edit(hotel);
@@ -181,18 +180,20 @@ namespace Realta.WebAPI.Controllers.v1
                 return BadRequest("Internal edit record hotel error");
             }
 
+            var checker = await _repositoryManager.HotelsRepository.FindHotelsByIdAsync(id);
 
             var result = new HotelsDto
             {
-                HotelName = hotel.HotelName,
-                HotelDescription = hotel.HotelDescription,
-                // HotelStatus = hotel.HotelStatus ? "available" : "unavailable",
+                HotelId = id,
+                HotelName = checker.HotelName,
+                HotelDescription = checker.HotelDescription,
+                // HotelStatus = checker.HotelStatus ? "available" : "unavailable",
                 
-                HotelReasonStatus = hotel.HotelReasonStatus,
-                HotelRatingStar = hotel.HotelRatingStar,
-                HotelPhonenumber = hotel.HotelPhonenumber,
-                HotelModifiedDate = hotel.HotelModifiedDate,
-                HotelAddrId = hotel.HotelAddrId
+                HotelReasonStatus = checker.HotelReasonStatus,
+                HotelRatingStar = checker.HotelRatingStar,
+                HotelPhonenumber = checker.HotelPhonenumber,
+                HotelModifiedDate = checker.HotelModifiedDate,
+                HotelAddrId = checker.HotelAddrId
             };
 
             return Ok(result);
@@ -236,7 +237,7 @@ namespace Realta.WebAPI.Controllers.v1
             var hotel = new Hotels()
             {
                 HotelId = id,
-                HotelStatus = dto.HotelStatus == "available" ? true : false,
+                HotelStatus = dto.HotelStatus,
                 HotelReasonStatus = string.IsNullOrEmpty(dto.HotelReasonStatus) ? string.Empty : dto.HotelReasonStatus,
             };
 
