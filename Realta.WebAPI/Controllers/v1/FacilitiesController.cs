@@ -127,21 +127,23 @@ namespace Realta.WebAPI.Controllers.v1
                     FaciDescription = facilities.FaciDescription
                 };
 
-                var result = new HotelFaciByIdDto()
-                {
-                    Hotels = hotelDto,
-                    Facilities = facilitiesDto
-                };
+                // var result = new HotelFaciByIdDto()
+                // {
+                //     Hotels = hotelDto,
+                //     Facilities = facilitiesDto
+                // };
 
-                return Ok(result);
+                return Ok(facilitiesDto);
             }
             else
             {
-                return Ok(new
-                {
-                    hotel = hotelDto,
-                    facilities = "Data Not Found!"
-                });
+                _logger.LogError("Hotel object sent from client is null");
+                return BadRequest("Record doesn't exist or wrong parameter");
+                // return Ok(new
+                // {
+                //     hotel = hotelDto,
+                //     facilities = "Data Not Found!"
+                // });
             }
         }
         [HttpGet("{hotelId}/facilities/pageList/")]
@@ -168,11 +170,11 @@ namespace Realta.WebAPI.Controllers.v1
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
 
-            if (string.IsNullOrEmpty(dto.FaciMeasureUnit) || dto.FaciMeasureUnit != "people" && dto.FaciMeasureUnit != "beds")
-            {
-                _logger.LogError("facility measure unit got wrong parameter");
-                return BadRequest("facility measure unit should fill : people or beds");
-            }
+            //if (string.IsNullOrEmpty(dto.FaciMeasureUnit) || dto.FaciMeasureUnit != "people" && dto.FaciMeasureUnit != "beds")
+            //{
+            //    _logger.LogError("facility measure unit got wrong parameter");
+            //    return BadRequest("facility measure unit should fill : people or beds");
+            //}
 
             if (dto == null)
             {
@@ -180,12 +182,12 @@ namespace Realta.WebAPI.Controllers.v1
                 return BadRequest("Some parameters are missing");
             }
 
+
             var facilities = new Facilities()
             {
                 FaciName = dto.FaciName,
                 FaciDescription = string.IsNullOrEmpty(dto.FaciDescription) ? string.Empty : dto.FaciDescription,
-                FaciMaxNumber = dto.FaciMaxNumber == null ? 0 : dto.FaciMaxNumber,
-                FaciMeasureUnit = string.IsNullOrEmpty(dto.FaciMeasureUnit) ? string.Empty : dto.FaciMeasureUnit,
+                FaciMaxNumber = (int)(dto.FaciMaxNumber == null ? 0 : dto.FaciMaxNumber),
                 FaciRoomNumber = dto.FaciRoomNumber,
                 FaciStartdate = dto.FaciStartdate,
                 FaciEndDate = dto.FaciEndDate,
@@ -193,6 +195,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciHighPrice = dto.FaciHighPrice,
                 FaciDiscount = (decimal)(dto.FaciDiscount == null ? 0 : dto.FaciDiscount),
                 FaciTaxRate = (decimal)(dto.FaciTaxRate == null ? 0 : dto.FaciTaxRate),
+                FaciExposePrice = dto.FaciExposePrice,
                 FaciCagroId = dto.FaciCagroId,
                 FaciHotelId = hotelId,
                 FaciUserId = dto.FaciUserId,
@@ -201,34 +204,11 @@ namespace Realta.WebAPI.Controllers.v1
             //post data to db
             _repositoryManager.FacilitiesRepository.Insert(facilities);
 
-            var result = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, facilities.FaciId);
+            var faciId = _repositoryManager.FacilitiesRepository.GetIdSequence();
+            var result = await _repositoryManager.FacilitiesRepository.FindFacilitiesByIdAsync(hotelId, faciId);
 
+            return Ok(result);
 
-            var resDto = new FacilitiesDto()
-            {
-                FaciId = result.FaciId,
-                FaciName = result.FaciName,
-                FaciRoomNumber = result.FaciRoomNumber,
-                FaciMaxNumber = result.FaciMaxNumber,
-                FaciMeasureUnit = result.FaciMeasureUnit,
-                FaciStartdate = result.FaciStartdate,
-                FaciEndDate = result.FaciEndDate,
-                FaciLowPrice = result.FaciLowPrice,
-                FaciHighPrice = result.FaciHighPrice,
-                FaciDiscount = result.FaciDiscount,
-                FaciRatePrice = result.FaciRatePrice,
-                FaciTaxRate = result.FaciTaxRate,
-                FaciCagroId = result.FaciCagroId,
-                FaciUserId = result.FaciUserId,
-            };
-
-            if (resDto == null)
-            {
-                _logger.LogError("Hotel object sent from client is null");
-                return BadRequest("Record Data Error!");
-            }
-
-            return Ok(resDto);
         }
 
         // PUT api/<FacilitiesController>/5
@@ -242,12 +222,6 @@ namespace Realta.WebAPI.Controllers.v1
                 return BadRequest("Record doesn't exist or wrong parameter");
             }
 
-            if (string.IsNullOrEmpty(dto.FaciMeasureUnit) || dto.FaciMeasureUnit != "people" && dto.FaciMeasureUnit != "beds")
-            {
-                _logger.LogError("facility measure unit got wrong parameter");
-                return BadRequest("facility measure unit should fill : people or beds");
-            }
-
             if (dto == null)
             {
                 _logger.LogError("Hotel region object sent from client is null");
@@ -256,11 +230,10 @@ namespace Realta.WebAPI.Controllers.v1
 
             var facilities = new Facilities()
             {
-                FaciId = dto.FaciId,
+                FaciId = faciId,
                 FaciName = dto.FaciName,
                 FaciDescription = string.IsNullOrEmpty(dto.FaciDescription) ? string.Empty : dto.FaciDescription,
-                FaciMaxNumber = dto.FaciMaxNumber == null ? 0 : dto.FaciMaxNumber,
-                FaciMeasureUnit = string.IsNullOrEmpty(dto.FaciMeasureUnit) ? string.Empty : dto.FaciMeasureUnit,
+                FaciMaxNumber = (int)(dto.FaciMaxNumber == null ? 0 : dto.FaciMaxNumber),
                 FaciRoomNumber = dto.FaciRoomNumber,
                 FaciStartdate = dto.FaciStartdate,
                 FaciEndDate = dto.FaciEndDate,
@@ -268,6 +241,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciHighPrice = dto.FaciHighPrice,
                 FaciDiscount = (decimal)(dto.FaciDiscount == null ? 0 : dto.FaciDiscount),
                 FaciTaxRate = (decimal)(dto.FaciTaxRate == null ? 0 : dto.FaciTaxRate),
+                FaciExposePrice = dto.FaciExposePrice,
                 FaciCagroId = dto.FaciCagroId,
                 FaciHotelId = hotelId,
                 FaciUserId = dto.FaciUserId,
@@ -287,6 +261,7 @@ namespace Realta.WebAPI.Controllers.v1
                 FaciMeasureUnit = result.FaciMeasureUnit,
                 FaciStartdate = result.FaciStartdate,
                 FaciEndDate = result.FaciEndDate,
+                FaciExposePrice = result.FaciExposePrice,
                 FaciLowPrice = result.FaciLowPrice,
                 FaciHighPrice = result.FaciHighPrice,
                 FaciDiscount = result.FaciDiscount,
